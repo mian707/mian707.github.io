@@ -131,34 +131,22 @@
 
     .hero-fish {
       position: absolute;
-      right: 5vw;
-      top: 16vh;
-      width: min(60vw, 800px);
-      height: 400px;
-
-      background: url('assets/zebrafish-main.png') center / contain no-repeat;
-    
-      /* KEY IMPROVEMENTS */
-      filter:
-        brightness(1.25)
-        contrast(1.15)
-        saturate(1.2)
-        drop-shadow(0 0 40px rgba(34,244,223,0.45));
-    
+      right: 3vw;
+      top: 14vh;
+      width: min(62vw, 860px);
+      height: 430px;
+      background-image: url('assets/zebrafish-main.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      filter: brightness(1.28) contrast(1.18) saturate(1.22) drop-shadow(0 0 42px rgba(34,244,223,0.55));
       opacity: 1;
-    
-      /* Remove any visual box feeling */
-      mix-blend-mode: lighten;
-    
+      mix-blend-mode: normal;
       animation: fishFloat 6s ease-in-out infinite;
       pointer-events: none;
-    }
-
-    .hero-fish::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle, transparent 48%, rgba(2,8,18,0.45) 72%);
+      border: none;
+      outline: none;
+      box-shadow: none;
     }
 
     @keyframes fishFloat {
