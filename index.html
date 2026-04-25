@@ -3,208 +3,306 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Muhammad Arslan Aslam | Research Portfolio</title>
-  <meta name="description" content="Research portfolio of Muhammad Arslan Aslam: environmental toxicology, QSAR, zebrafish embryo toxicity assays, and chemical mechanism-of-action grouping." />
+  <title>Muhammad Arslan Aslam | Ecotoxicology & Chemical Safety</title>
+  <meta name="description" content="Research portfolio of Muhammad Arslan Aslam: environmental toxicology, QSAR, zebrafish embryo toxicity assays, toxic ratios, and chemical mechanism-of-action grouping." />
 
-  <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-
-  <!-- AOS animations -->
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
-  <!-- Google Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg: #07111f;
-      --panel: rgba(255,255,255,0.075);
-      --panel-strong: rgba(255,255,255,0.12);
-      --text: #eef6ff;
-      --muted: #b8c7d9;
-      --accent: #64ffda;
-      --accent-2: #7aa2ff;
-      --border: rgba(255,255,255,0.16);
+      --bg: #020914;
+      --bg-2: #061827;
+      --panel: rgba(5, 24, 39, 0.72);
+      --panel-2: rgba(8, 38, 58, 0.78);
+      --border: rgba(66, 245, 230, 0.28);
+      --text: #f4fbff;
+      --muted: #b4c8d8;
+      --accent: #20f3df;
+      --accent-2: #67a7ff;
+      --green: #9cf6c8;
+      --shadow: rgba(0, 255, 230, 0.16);
     }
 
     * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
     body {
       margin: 0;
       font-family: 'Inter', system-ui, sans-serif;
-      background: radial-gradient(circle at top left, #12345a 0%, var(--bg) 38%, #030712 100%);
       color: var(--text);
+      background:
+        radial-gradient(circle at 75% 12%, rgba(32, 243, 223, 0.18), transparent 28%),
+        radial-gradient(circle at 15% 18%, rgba(103, 167, 255, 0.18), transparent 30%),
+        linear-gradient(180deg, #020914 0%, #04111f 48%, #020914 100%);
       overflow-x: hidden;
     }
 
-    canvas#network-bg {
+    canvas#science-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      opacity: 0.58;
+    }
+
+    .texture {
       position: fixed;
       inset: 0;
       z-index: -2;
-      opacity: 0.5;
+      background:
+        linear-gradient(rgba(32,243,223,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(32,243,223,0.03) 1px, transparent 1px);
+      background-size: 46px 46px;
+      mask-image: linear-gradient(to bottom, black, transparent 85%);
+      pointer-events: none;
     }
 
-    .overlay {
+    .deep-overlay {
       position: fixed;
       inset: 0;
-      background: linear-gradient(180deg, rgba(7,17,31,0.25), rgba(7,17,31,0.92));
       z-index: -1;
+      background: linear-gradient(180deg, rgba(2,9,20,0.1), rgba(2,9,20,0.9));
+      pointer-events: none;
     }
 
     .navbar {
-      backdrop-filter: blur(14px);
-      background: rgba(3, 7, 18, 0.62) !important;
-      border-bottom: 1px solid var(--border);
+      background: rgba(2, 9, 20, 0.72) !important;
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(32,243,223,0.18);
     }
 
     .navbar-brand, .nav-link { color: var(--text) !important; }
-    .nav-link { font-size: 0.95rem; color: var(--muted) !important; }
-    .nav-link:hover { color: var(--accent) !important; }
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      display: inline-grid;
+      place-items: center;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-right: 0.55rem;
+      color: var(--accent);
+      box-shadow: 0 0 24px var(--shadow);
+    }
+    .nav-link { color: var(--muted) !important; font-size: 0.93rem; }
+    .nav-link:hover, .nav-link.active { color: var(--accent) !important; }
+
+    section { padding: 6rem 0; position: relative; }
 
     .hero {
       min-height: 100vh;
       display: flex;
       align-items: center;
-      padding-top: 5rem;
+      padding-top: 7rem;
     }
 
     .eyebrow {
       color: var(--accent);
+      font-weight: 800;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      letter-spacing: 0.16em;
-      font-weight: 700;
       font-size: 0.78rem;
+      margin-bottom: 1rem;
     }
 
     h1 {
-      font-size: clamp(2.6rem, 6vw, 5.6rem);
-      font-weight: 800;
-      line-height: 0.98;
-      margin: 1rem 0;
+      font-size: clamp(2.9rem, 7vw, 6.6rem);
+      line-height: 0.95;
+      font-weight: 900;
+      letter-spacing: -0.06em;
+      margin-bottom: 1.4rem;
     }
 
     .gradient-text {
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--green));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
     .lead {
       color: var(--muted);
-      max-width: 760px;
-      font-size: 1.15rem;
+      max-width: 780px;
       line-height: 1.75;
+      font-size: 1.13rem;
     }
 
     .glass {
-      background: var(--panel);
+      background: linear-gradient(145deg, rgba(5,24,39,0.84), rgba(8,38,58,0.52));
       border: 1px solid var(--border);
-      border-radius: 24px;
-      box-shadow: 0 22px 70px rgba(0,0,0,0.28);
+      border-radius: 28px;
+      box-shadow: 0 24px 70px rgba(0,0,0,0.36), inset 0 1px 0 rgba(255,255,255,0.06);
       backdrop-filter: blur(18px);
     }
 
+    .hero-visual {
+      min-height: 430px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .zfish {
+      width: 100%;
+      max-width: 520px;
+      filter: drop-shadow(0 0 30px rgba(32,243,223,0.28));
+      animation: swim 5.5s ease-in-out infinite;
+    }
+
+    @keyframes swim {
+      0%, 100% { transform: translateY(0) rotate(-1deg); }
+      50% { transform: translateY(-14px) rotate(1deg); }
+    }
+
+    .molecule-label {
+      position: absolute;
+      color: rgba(32,243,223,0.72);
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+    }
+    .m1 { top: 12%; right: 8%; }
+    .m2 { bottom: 18%; left: 10%; }
+    .m3 { bottom: 7%; right: 20%; }
+
     .btn-main {
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      color: #03111d;
+      color: #02101a;
       border: none;
-      font-weight: 700;
-      padding: 0.85rem 1.15rem;
       border-radius: 999px;
+      font-weight: 800;
+      padding: 0.88rem 1.2rem;
+      box-shadow: 0 12px 36px rgba(32,243,223,0.2);
     }
 
     .btn-outline-light {
       border-radius: 999px;
-      padding: 0.85rem 1.15rem;
+      padding: 0.88rem 1.2rem;
       border-color: var(--border);
+      color: var(--text);
     }
+    .btn-outline-light:hover { background: rgba(32,243,223,0.12); border-color: var(--accent); }
 
-    section { padding: 6rem 0; }
     .section-title {
-      font-weight: 800;
-      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
       margin-bottom: 1rem;
     }
-    .section-subtitle { color: var(--muted); max-width: 760px; }
+
+    .section-subtitle { color: var(--muted); max-width: 780px; line-height: 1.7; }
+    .muted { color: var(--muted); }
 
     .card-custom {
       height: 100%;
-      padding: 1.5rem;
-      transition: transform 0.25s ease, background 0.25s ease;
+      padding: 1.55rem;
+      transition: 0.25s ease;
+      overflow: hidden;
+      position: relative;
     }
-    .card-custom:hover {
-      transform: translateY(-6px);
-      background: var(--panel-strong);
+    .card-custom::after {
+      content: "";
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      right: -80px;
+      top: -80px;
+      background: radial-gradient(circle, rgba(32,243,223,0.14), transparent 70%);
     }
+    .card-custom:hover { transform: translateY(-7px); border-color: rgba(32,243,223,0.58); }
+
     .icon-box {
-      width: 48px;
-      height: 48px;
+      width: 54px;
+      height: 54px;
       display: grid;
       place-items: center;
-      border-radius: 16px;
-      background: rgba(100,255,218,0.12);
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: rgba(32,243,223,0.09);
       color: var(--accent);
-      font-size: 1.45rem;
-      margin-bottom: 1rem;
+      font-size: 1.65rem;
+      margin-bottom: 1.1rem;
     }
 
-    .muted { color: var(--muted); }
     .tag {
       display: inline-block;
-      padding: 0.45rem 0.7rem;
-      margin: 0.25rem;
+      padding: 0.42rem 0.72rem;
+      margin: 0.24rem;
       border-radius: 999px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid var(--border);
+      border: 1px solid rgba(32,243,223,0.22);
       color: var(--muted);
-      font-size: 0.88rem;
+      background: rgba(255,255,255,0.045);
+      font-size: 0.86rem;
+    }
+
+    .assay-strip {
+      border-left: 3px solid var(--accent);
+      padding-left: 1rem;
     }
 
     .timeline {
-      border-left: 2px solid rgba(100,255,218,0.34);
-      padding-left: 1.5rem;
+      border-left: 2px solid rgba(32,243,223,0.42);
+      padding-left: 1.6rem;
     }
     .timeline-item { position: relative; margin-bottom: 2rem; }
     .timeline-item::before {
       content: "";
       position: absolute;
-      left: -2.05rem;
+      left: -2.08rem;
       top: 0.35rem;
-      width: 14px;
-      height: 14px;
-      background: var(--accent);
+      width: 15px;
+      height: 15px;
       border-radius: 50%;
-      box-shadow: 0 0 0 6px rgba(100,255,218,0.12);
+      background: var(--accent);
+      box-shadow: 0 0 0 7px rgba(32,243,223,0.11), 0 0 30px rgba(32,243,223,0.42);
+    }
+
+    .stat {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
     }
 
     footer {
       padding: 2rem 0;
-      border-top: 1px solid var(--border);
+      border-top: 1px solid rgba(32,243,223,0.18);
       color: var(--muted);
     }
 
     a { color: var(--accent); text-decoration: none; }
-    a:hover { color: var(--accent-2); }
+    a:hover { color: var(--green); }
+
+    @media (max-width: 991px) {
+      .hero-visual { min-height: 300px; }
+      .zfish { max-width: 360px; }
+    }
   </style>
 </head>
 <body>
-  <canvas id="network-bg"></canvas>
-  <div class="overlay"></div>
+  <canvas id="science-bg"></canvas>
+  <div class="texture"></div>
+  <div class="deep-overlay"></div>
 
   <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
-      <a class="navbar-brand fw-bold" href="#home">MAA</a>
+      <a class="navbar-brand fw-bold d-flex align-items-center" href="#home">
+        <span class="brand-mark"><i class="bi bi-flask"></i></span>
+        <span>Muhammad Arslan Aslam</span>
+      </a>
       <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto gap-lg-3">
+          <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
           <li class="nav-item"><a class="nav-link" href="#research">Research</a></li>
+          <li class="nav-item"><a class="nav-link" href="#assays">Assays</a></li>
           <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
-          <li class="nav-item"><a class="nav-link" href="#publications">Publications</a></li>
+          <li class="nav-item"><a class="nav-link" href="#publications">Outputs</a></li>
           <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
         </ul>
       </div>
@@ -215,32 +313,51 @@
     <section id="home" class="hero">
       <div class="container">
         <div class="row align-items-center g-5">
-          <div class="col-lg-8" data-aos="fade-up">
-            <div class="eyebrow">Environmental toxicology · QSAR · Zebrafish assays</div>
-            <h1>Muhammad Arslan <span class="gradient-text">Aslam</span></h1>
+          <div class="col-lg-7" data-aos="fade-up">
+            <div class="eyebrow">Chemical safety · Zebrafish toxicology · QSAR</div>
+            <h1>Decoding <span class="gradient-text">chemical toxicity</span> in aquatic life.</h1>
             <p class="lead">
-              Marie Curie PhD researcher working at the interface of computational toxicology, aquatic ecotoxicology,
-              and mechanism-based chemical grouping. My current work focuses on baseline toxicity models, zebrafish embryo toxicity assays,
-              and toxic-ratio approaches for bisphenols, phthalates, and related additives.
+              I am Muhammad Arslan Aslam, a Marie Curie PhD researcher working on environmental toxicology, QSAR-based baseline toxicity prediction, zebrafish embryo toxicity assays, and mechanism-of-action grouping for bisphenols, phthalates, and related additives.
             </p>
             <div class="d-flex flex-wrap gap-3 mt-4">
-              <a class="btn btn-main" href="#research">View Research</a>
-              <a class="btn btn-outline-light" href="assets/Muhammad_Arslan_Aslam_CV.pdf" target="_blank">Download CV</a>
-              <a class="btn btn-outline-light" href="#contact">Contact</a>
+              <a class="btn btn-main" href="#research"><i class="bi bi-search-heart me-2"></i>Explore Research</a>
+              <a class="btn btn-outline-light" href="assets/Muhammad_Arslan_Aslam_CV.pdf" target="_blank"><i class="bi bi-download me-2"></i>Download CV</a>
             </div>
           </div>
-          <div class="col-lg-4" data-aos="fade-left">
-            <div class="glass p-4">
-              <h5 class="fw-bold mb-3">Current Focus</h5>
-              <p class="muted mb-3">Predicting and interpreting chemical toxicity using experimental and computational approaches.</p>
-              <div>
-                <span class="tag">QSAR</span>
-                <span class="tag">Zebrafish FET</span>
-                <span class="tag">MOA grouping</span>
-                <span class="tag">Toxic ratios</span>
-                <span class="tag">Bisphenols</span>
-                <span class="tag">Phthalates</span>
-              </div>
+
+          <div class="col-lg-5" data-aos="fade-left">
+            <div class="glass hero-visual p-4 d-flex align-items-center justify-content-center">
+              <span class="molecule-label m1">BPA · BPS · BPF</span>
+              <span class="molecule-label m2">logK<sub>ow</sub> → baseline toxicity</span>
+              <span class="molecule-label m3">toxic ratio → MOA</span>
+              <svg class="zfish" viewBox="0 0 760 300" role="img" aria-label="Stylized zebrafish with molecular background">
+                <defs>
+                  <linearGradient id="fishGrad" x1="0" x2="1">
+                    <stop offset="0%" stop-color="#e7fbff" stop-opacity="0.95"/>
+                    <stop offset="45%" stop-color="#20f3df" stop-opacity="0.65"/>
+                    <stop offset="100%" stop-color="#67a7ff" stop-opacity="0.78"/>
+                  </linearGradient>
+                  <filter id="glow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                </defs>
+                <g opacity="0.42" stroke="#20f3df" stroke-width="2" fill="none">
+                  <circle cx="105" cy="52" r="16"/><circle cx="155" cy="82" r="10"/><circle cx="205" cy="48" r="13"/>
+                  <path d="M120 60 L148 76 L194 52"/>
+                  <circle cx="595" cy="230" r="13"/><circle cx="650" cy="205" r="17"/><circle cx="696" cy="242" r="10"/>
+                  <path d="M606 224 L636 210 L686 236"/>
+                </g>
+                <g filter="url(#glow)">
+                  <path d="M115 156 C190 58, 390 58, 555 135 C606 158, 636 171, 676 170 C642 193, 606 217, 548 209 C385 270, 202 249, 114 171 C94 186, 64 197, 36 191 C62 171, 82 158, 115 156 Z" fill="url(#fishGrad)" stroke="#c9fbff" stroke-width="4" opacity="0.88"/>
+                  <path d="M547 135 C600 91, 668 78, 725 63 C700 110, 687 149, 676 170" fill="rgba(32,243,223,0.18)" stroke="#7defff" stroke-width="4"/>
+                  <path d="M548 209 C606 242, 663 260, 724 274 C698 229, 685 196, 676 170" fill="rgba(103,167,255,0.18)" stroke="#7defff" stroke-width="4"/>
+                  <circle cx="155" cy="150" r="24" fill="#020914" stroke="#f4fbff" stroke-width="5"/>
+                  <circle cx="160" cy="146" r="8" fill="#20f3df"/>
+                  <path d="M205 132 C315 112, 425 118, 545 154" stroke="#02101a" stroke-width="15" opacity="0.55"/>
+                  <path d="M210 164 C328 151, 438 159, 555 188" stroke="#02101a" stroke-width="11" opacity="0.45"/>
+                  <path d="M220 190 C335 206, 440 207, 535 198" stroke="#02101a" stroke-width="7" opacity="0.35"/>
+                  <path d="M340 104 C371 62, 427 48, 478 70 C444 92, 400 111, 340 104 Z" fill="rgba(231,251,255,0.35)" stroke="#c9fbff" stroke-width="3"/>
+                  <path d="M325 217 C363 262, 434 274, 484 238 C432 224, 380 216, 325 217 Z" fill="rgba(32,243,223,0.22)" stroke="#c9fbff" stroke-width="3"/>
+                </g>
+              </svg>
             </div>
           </div>
         </div>
@@ -249,20 +366,27 @@
 
     <section id="about">
       <div class="container">
-        <div class="row g-4 align-items-center">
-          <div class="col-lg-5" data-aos="fade-right">
-            <h2 class="section-title">About</h2>
-            <p class="section-subtitle">
-              I study how chemical structure, exposure, and biological response can be connected to improve hazard assessment of environmental contaminants.
-            </p>
-          </div>
-          <div class="col-lg-7" data-aos="fade-left">
-            <div class="glass p-4">
-              <p class="muted mb-0">
-                My background spans marine environmental science, ecotoxicological testing, image-based embryo analysis,
-                and computational toxicity prediction. I am especially interested in building interpretable approaches that connect
-                QSAR-derived baseline toxicity predictions with observed organism-level effects and mechanism-of-action hypotheses.
+        <div class="glass p-4 p-lg-5" data-aos="fade-up">
+          <div class="row g-5 align-items-center">
+            <div class="col-lg-6">
+              <h2 class="section-title">About Me</h2>
+              <p class="muted">
+                My work connects computational toxicology with organism-level bioassays to better understand how emerging additives affect aquatic organisms. I focus on interpretable, mechanism-aware approaches rather than prediction alone.
               </p>
+              <div class="mt-3">
+                <span class="tag">Environmental toxicology</span>
+                <span class="tag">Aquatic ecotoxicology</span>
+                <span class="tag">Chemical grouping</span>
+                <span class="tag">Developmental toxicity</span>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="row g-3">
+                <div class="col-sm-6"><div class="glass p-3 h-100"><div class="stat">QSAR</div><p class="muted mb-0">Baseline toxicity prediction</p></div></div>
+                <div class="col-sm-6"><div class="glass p-3 h-100"><div class="stat">FET</div><p class="muted mb-0">Zebrafish embryo toxicity</p></div></div>
+                <div class="col-sm-6"><div class="glass p-3 h-100"><div class="stat">TR</div><p class="muted mb-0">Toxic-ratio interpretation</p></div></div>
+                <div class="col-sm-6"><div class="glass p-3 h-100"><div class="stat">MOA</div><p class="muted mb-0">Mechanism-of-action grouping</p></div></div>
+              </div>
             </div>
           </div>
         </div>
@@ -271,30 +395,64 @@
 
     <section id="research">
       <div class="container">
-        <div class="mb-5" data-aos="fade-up">
-          <h2 class="section-title">Research Themes</h2>
-          <p class="section-subtitle">A concise overview of my main scientific interests and methods.</p>
+        <div class="text-center mb-5" data-aos="fade-up">
+          <h2 class="section-title">Research Areas</h2>
+          <p class="section-subtitle mx-auto">From molecular descriptors to living embryos: my research links chemical properties, predicted potency, and observed biological response.</p>
         </div>
         <div class="row g-4">
-          <div class="col-md-4" data-aos="fade-up">
+          <div class="col-md-6 col-lg-3" data-aos="fade-up">
+            <div class="glass card-custom">
+              <div class="icon-box"><i class="bi bi-node-plus"></i></div>
+              <h5 class="fw-bold">Chemical Space</h5>
+              <p class="muted">Bisphenols, phthalates, plastic additives, and structurally related emerging contaminants.</p>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
             <div class="glass card-custom">
               <div class="icon-box"><i class="bi bi-cpu"></i></div>
-              <h5 class="fw-bold">QSAR & Baseline Toxicity</h5>
-              <p class="muted">Using computational models to predict baseline toxicity and identify chemicals with excess toxicity.</p>
+              <h5 class="fw-bold">Toxicity Models</h5>
+              <p class="muted">QSAR and baseline toxicity models to identify chemicals with excess toxicity.</p>
             </div>
           </div>
-          <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
             <div class="glass card-custom">
               <div class="icon-box"><i class="bi bi-heart-pulse"></i></div>
-              <h5 class="fw-bold">Zebrafish Embryo Toxicity</h5>
-              <p class="muted">Screening bisphenols and phthalates for developmental, neuroactive, and cardiotoxic effects.</p>
+              <h5 class="fw-bold">Zebrafish Effects</h5>
+              <p class="muted">Developmental, neuroactive, and cardiotoxic effects in zebrafish embryo assays.</p>
             </div>
           </div>
-          <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+          <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
             <div class="glass card-custom">
               <div class="icon-box"><i class="bi bi-diagram-3"></i></div>
-              <h5 class="fw-bold">Mechanism-of-Action Grouping</h5>
-              <p class="muted">Grouping chemicals using toxic ratios, response profiles, and mechanistic interpretation.</p>
+              <h5 class="fw-bold">MOA Grouping</h5>
+              <p class="muted">Mechanism-based interpretation using toxic ratios and response profiles.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="assays">
+      <div class="container">
+        <div class="row g-5 align-items-center">
+          <div class="col-lg-5" data-aos="fade-right">
+            <h2 class="section-title">Zebrafish Assays</h2>
+            <p class="section-subtitle">A focused section for your experimental toxicology work. You can later add images, endpoints, workflow diagrams, or assay plates.</p>
+          </div>
+          <div class="col-lg-7" data-aos="fade-left">
+            <div class="glass p-4">
+              <div class="assay-strip mb-4">
+                <h5 class="fw-bold">Screening endpoints</h5>
+                <p class="muted mb-0">Lethality, malformations, hatching, heart rate, behavior, and development-related phenotypes.</p>
+              </div>
+              <div class="assay-strip mb-4">
+                <h5 class="fw-bold">Chemical prioritization</h5>
+                <p class="muted mb-0">Comparing predicted baseline toxicity with observed effects to flag potential specific modes of action.</p>
+              </div>
+              <div class="assay-strip">
+                <h5 class="fw-bold">Interpretation</h5>
+                <p class="muted mb-0">Integrating toxicity ratios, chemical descriptors, and phenotype patterns for evidence-based grouping.</p>
+              </div>
             </div>
           </div>
         </div>
@@ -306,7 +464,7 @@
         <div class="row g-5">
           <div class="col-lg-5" data-aos="fade-right">
             <h2 class="section-title">Experience</h2>
-            <p class="section-subtitle">Research and training across computational toxicology, marine ecotoxicology, and environmental sciences.</p>
+            <p class="section-subtitle">Research training across computational toxicology, marine ecotoxicology, and environmental sciences.</p>
           </div>
           <div class="col-lg-7" data-aos="fade-left">
             <div class="timeline">
@@ -320,7 +478,7 @@
               </div>
               <div class="timeline-item">
                 <h5 class="fw-bold">Research Intern · UPV/EHU PiE Marine Station</h5>
-                <p class="muted">Prepared water accommodated fractions, supported sea urchin embryo toxicity testing, and assisted image-based analysis.</p>
+                <p class="muted">Water accommodated fractions, sea urchin embryo toxicity testing, and image-based embryo analysis.</p>
               </div>
               <div class="timeline-item">
                 <h5 class="fw-bold">Erasmus Mundus MSc · Marine Environment and Resources</h5>
@@ -334,23 +492,23 @@
 
     <section id="publications">
       <div class="container">
-        <div class="mb-5" data-aos="fade-up">
-          <h2 class="section-title">Publications & Outputs</h2>
-          <p class="section-subtitle">Replace these placeholders with your papers, preprints, posters, datasets, or conference talks.</p>
+        <div class="text-center mb-5" data-aos="fade-up">
+          <h2 class="section-title">Publications & Research Outputs</h2>
+          <p class="section-subtitle mx-auto">Replace these examples with your publications, posters, datasets, or conference presentations.</p>
         </div>
         <div class="row g-4">
           <div class="col-md-6" data-aos="fade-up">
             <div class="glass card-custom">
-              <h5 class="fw-bold">Publication title goes here</h5>
-              <p class="muted">Authors. Journal or conference. Year.</p>
-              <a href="#">DOI / Link</a>
+              <h5 class="fw-bold">QSAR-based baseline toxicity prediction for bisphenol analogues</h5>
+              <p class="muted">Manuscript / project output. Add authors, journal, year, and DOI when available.</p>
+              <a href="#">DOI / Link <i class="bi bi-arrow-up-right"></i></a>
             </div>
           </div>
           <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
             <div class="glass card-custom">
-              <h5 class="fw-bold">Conference poster or presentation</h5>
-              <p class="muted">Meeting name. Location. Year.</p>
-              <a href="#">Poster / Slides</a>
+              <h5 class="fw-bold">Zebrafish embryo toxicity screening of plastic additives</h5>
+              <p class="muted">Poster, conference talk, dataset, or manuscript placeholder.</p>
+              <a href="#">Poster / Slides <i class="bi bi-arrow-up-right"></i></a>
             </div>
           </div>
         </div>
@@ -359,15 +517,16 @@
 
     <section id="contact">
       <div class="container">
-        <div class="glass p-5" data-aos="zoom-in">
+        <div class="glass p-4 p-lg-5" data-aos="zoom-in">
           <div class="row g-4 align-items-center">
-            <div class="col-lg-8">
+            <div class="col-lg-7">
               <h2 class="section-title mb-2">Let’s connect</h2>
-              <p class="muted mb-0">For collaborations, research discussions, or academic opportunities, contact me by email or through professional profiles.</p>
+              <p class="muted mb-0">I welcome research discussions, collaborations, and opportunities related to chemical safety, ecotoxicology, and alternative testing methods.</p>
             </div>
-            <div class="col-lg-4 text-lg-end">
+            <div class="col-lg-5 text-lg-end">
               <p class="mb-2"><i class="bi bi-envelope me-2"></i><a href="mailto:your.email@example.com">your.email@example.com</a></p>
               <p class="mb-2"><i class="bi bi-linkedin me-2"></i><a href="#">LinkedIn</a></p>
+              <p class="mb-2"><i class="bi bi-mortarboard me-2"></i><a href="#">Google Scholar</a></p>
               <p class="mb-0"><i class="bi bi-github me-2"></i><a href="#">GitHub</a></p>
             </div>
           </div>
@@ -379,54 +538,92 @@
   <footer>
     <div class="container d-flex flex-wrap justify-content-between gap-2">
       <span>© <span id="year"></span> Muhammad Arslan Aslam</span>
-      <span>Built with HTML, Bootstrap, Canvas, and GitHub Pages.</span>
+      <span>Ecotoxicology · QSAR · Zebrafish embryo toxicity</span>
     </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
-    AOS.init({ duration: 800, once: true });
+    AOS.init({ duration: 850, once: true });
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    const canvas = document.getElementById('network-bg');
+    const canvas = document.getElementById('science-bg');
     const ctx = canvas.getContext('2d');
-    let width, height, particles;
+    let W, H, nodes, molecules;
 
     function resize() {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-      particles = Array.from({ length: Math.min(90, Math.floor(width / 18)) }, () => ({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.45,
-        vy: (Math.random() - 0.5) * 0.45,
-        r: Math.random() * 1.8 + 0.8
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+      nodes = Array.from({ length: Math.min(105, Math.floor(W / 15)) }, () => ({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        vx: (Math.random() - 0.5) * 0.36,
+        vy: (Math.random() - 0.5) * 0.36,
+        r: Math.random() * 2 + 0.8
+      }));
+      molecules = Array.from({ length: 7 }, () => ({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        vx: (Math.random() - 0.5) * 0.25,
+        vy: (Math.random() - 0.5) * 0.25,
+        rot: Math.random() * Math.PI
       }));
     }
 
-    function draw() {
-      ctx.clearRect(0, 0, width, height);
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0 || p.x > width) p.vx *= -1;
-        if (p.y < 0 || p.y > height) p.vy *= -1;
+    function drawHex(x, y, size, rot) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(rot);
+      ctx.strokeStyle = 'rgba(32,243,223,0.24)';
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      for (let i = 0; i < 6; i++) {
+        const a = Math.PI / 3 * i;
+        const px = Math.cos(a) * size;
+        const py = Math.sin(a) * size;
+        if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+      }
+      ctx.closePath();
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, W, H);
+
+      molecules.forEach(m => {
+        m.x += m.vx; m.y += m.vy; m.rot += 0.002;
+        if (m.x < -60) m.x = W + 60; if (m.x > W + 60) m.x = -60;
+        if (m.y < -60) m.y = H + 60; if (m.y > H + 60) m.y = -60;
+        drawHex(m.x, m.y, 28, m.rot);
+        drawHex(m.x + 42, m.y + 6, 22, m.rot + 0.4);
+        ctx.beginPath();
+        ctx.moveTo(m.x + 24, m.y + 4);
+        ctx.lineTo(m.x + 22, m.y + 5);
+        ctx.strokeStyle = 'rgba(32,243,223,0.18)';
+        ctx.stroke();
+      });
+
+      for (let i = 0; i < nodes.length; i++) {
+        const p = nodes[i];
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0 || p.x > W) p.vx *= -1;
+        if (p.y < 0 || p.y > H) p.vy *= -1;
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(100,255,218,0.72)';
+        ctx.fillStyle = 'rgba(32,243,223,0.64)';
         ctx.fill();
 
-        for (let j = i + 1; j < particles.length; j++) {
-          const q = particles[j];
+        for (let j = i + 1; j < nodes.length; j++) {
+          const q = nodes[j];
           const dx = p.x - q.x;
           const dy = p.y - q.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 135) {
-            ctx.strokeStyle = `rgba(122,162,255,${1 - dist / 135})`;
-            ctx.lineWidth = 0.7;
+          if (dist < 122) {
+            ctx.strokeStyle = `rgba(103,167,255,${0.28 * (1 - dist / 122)})`;
+            ctx.lineWidth = 0.8;
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(q.x, q.y);
@@ -434,12 +631,12 @@
           }
         }
       }
-      requestAnimationFrame(draw);
+      requestAnimationFrame(animate);
     }
 
     window.addEventListener('resize', resize);
     resize();
-    draw();
+    animate();
   </script>
 </body>
 </html>
