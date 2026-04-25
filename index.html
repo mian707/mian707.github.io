@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Muhammad Arslan Aslam | Ecotoxicology & Chemical Safety</title>
-  <meta name="description" content="Research portfolio of Muhammad Arslan Aslam: environmental toxicology, QSAR, zebrafish embryo toxicity assays, toxic ratios, and chemical mechanism-of-action grouping." />
+  <title>Muhammad Arslan Aslam | Zebrafish Toxicology & Chemical Safety</title>
+  <meta name="description" content="Research portfolio of Muhammad Arslan Aslam: environmental toxicology, zebrafish embryo assays, QSAR, toxicity models, and chemical safety." />
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
@@ -15,21 +15,19 @@
 
   <style>
     :root {
-      --bg: #020914;
-      --bg-2: #061827;
-      --panel: rgba(5, 24, 39, 0.72);
-      --panel-2: rgba(8, 38, 58, 0.78);
-      --border: rgba(66, 245, 230, 0.28);
-      --text: #f4fbff;
-      --muted: #b4c8d8;
-      --accent: #20f3df;
-      --accent-2: #67a7ff;
-      --green: #9cf6c8;
-      --shadow: rgba(0, 255, 230, 0.16);
+      --bg: #020812;
+      --deep: #03111d;
+      --panel: rgba(4, 22, 34, 0.72);
+      --panel-strong: rgba(7, 32, 48, 0.86);
+      --line: rgba(39, 238, 224, 0.32);
+      --text: #f5fbff;
+      --muted: #b8c7d4;
+      --accent: #22f4df;
+      --accent-2: #59a8ff;
+      --green: #9df3be;
     }
 
     * { box-sizing: border-box; }
-
     html { scroll-behavior: smooth; }
 
     body {
@@ -37,260 +35,323 @@
       font-family: 'Inter', system-ui, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at 75% 12%, rgba(32, 243, 223, 0.18), transparent 28%),
-        radial-gradient(circle at 15% 18%, rgba(103, 167, 255, 0.18), transparent 30%),
-        linear-gradient(180deg, #020914 0%, #04111f 48%, #020914 100%);
+        radial-gradient(circle at 80% 8%, rgba(34, 244, 223, 0.16), transparent 28%),
+        radial-gradient(circle at 18% 16%, rgba(89, 168, 255, 0.15), transparent 30%),
+        linear-gradient(180deg, #020812 0%, #041322 52%, #020812 100%);
       overflow-x: hidden;
     }
 
     canvas#science-bg {
       position: fixed;
       inset: 0;
-      z-index: -3;
-      opacity: 0.58;
+      z-index: -5;
+      opacity: 0.55;
     }
 
-    .texture {
+    .water-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -4;
+      background:
+        radial-gradient(circle at 62% 18%, rgba(120, 210, 255, 0.22), transparent 10%),
+        radial-gradient(circle at 72% 42%, rgba(34, 244, 223, 0.1), transparent 18%),
+        linear-gradient(115deg, rgba(2,8,18,0.15), rgba(2,8,18,0.86)),
+        url('https://images.unsplash.com/photo-1551244072-5d12893278ab?auto=format&fit=crop&w=2400&q=80');
+      background-size: cover;
+      background-position: center;
+      filter: saturate(1.05) brightness(0.52) contrast(1.08);
+    }
+
+    .shade {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      background:
+        linear-gradient(90deg, rgba(2,8,18,0.92) 0%, rgba(2,8,18,0.55) 45%, rgba(2,8,18,0.34) 100%),
+        linear-gradient(180deg, rgba(2,8,18,0.08), rgba(2,8,18,0.96) 88%);
+    }
+
+    .molecule-layer {
       position: fixed;
       inset: 0;
       z-index: -2;
-      background:
-        linear-gradient(rgba(32,243,223,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(32,243,223,0.03) 1px, transparent 1px);
-      background-size: 46px 46px;
-      mask-image: linear-gradient(to bottom, black, transparent 85%);
       pointer-events: none;
+      opacity: 0.72;
     }
 
-    .deep-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      background: linear-gradient(180deg, rgba(2,9,20,0.1), rgba(2,9,20,0.9));
-      pointer-events: none;
+    .mol {
+      position: absolute;
+      width: 260px;
+      height: 150px;
+      color: rgba(34,244,223,0.52);
+      filter: drop-shadow(0 0 14px rgba(34,244,223,0.12));
+      animation: drift 12s ease-in-out infinite;
+    }
+
+    .mol svg { width: 100%; height: 100%; }
+    .mol-1 { top: 9%; left: 42%; animation-delay: -2s; }
+    .mol-2 { top: 15%; right: 4%; transform: scale(0.9); animation-delay: -5s; }
+    .mol-3 { top: 35%; right: 12%; transform: scale(0.78); animation-delay: -8s; }
+    .mol-4 { bottom: 8%; left: -2%; transform: scale(0.9); animation-delay: -3s; }
+    .mol-5 { bottom: 18%; right: -1%; transform: scale(0.76); animation-delay: -6s; }
+
+    @keyframes drift {
+      0%, 100% { translate: 0 0; opacity: 0.48; }
+      50% { translate: 18px -18px; opacity: 0.8; }
     }
 
     .navbar {
-      background: rgba(2, 9, 20, 0.72) !important;
+      background: rgba(2, 8, 18, 0.66) !important;
       backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(32,243,223,0.18);
+      border-bottom: 1px solid rgba(34,244,223,0.16);
     }
 
     .navbar-brand, .nav-link { color: var(--text) !important; }
-    .brand-mark {
-      width: 38px;
-      height: 38px;
-      display: inline-grid;
+    .brand-logo {
+      width: 44px;
+      height: 44px;
+      display: grid;
       place-items: center;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      margin-right: 0.55rem;
+      border: 1px solid rgba(34,244,223,0.35);
+      border-radius: 14px;
+      margin-right: 0.7rem;
       color: var(--accent);
-      box-shadow: 0 0 24px var(--shadow);
+      background: rgba(34,244,223,0.05);
+      box-shadow: 0 0 26px rgba(34,244,223,0.13);
     }
-    .nav-link { color: var(--muted) !important; font-size: 0.93rem; }
+    .brand-sub { display: block; color: var(--muted); font-size: 0.78rem; font-weight: 400; margin-top: 0.1rem; }
+    .nav-link { font-size: 0.92rem; color: var(--muted) !important; }
     .nav-link:hover, .nav-link.active { color: var(--accent) !important; }
+    .nav-link.active::after {
+      content: "";
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--accent);
+      margin: 0.35rem auto 0;
+      box-shadow: 0 0 10px var(--accent);
+    }
 
-    section { padding: 6rem 0; position: relative; }
+    section { position: relative; padding: 5.8rem 0; }
+    .hero { min-height: 100vh; display: flex; align-items: center; padding-top: 7rem; }
 
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding-top: 7rem;
+    .hero-fish {
+      position: absolute;
+      right: 5vw;
+      top: 16vh;
+      width: min(56vw, 740px);
+      height: 360px;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Zebrafish_%28Danio_rerio%29.jpg/1280px-Zebrafish_%28Danio_rerio%29.jpg') center / contain no-repeat;
+      mix-blend-mode: screen;
+      filter: drop-shadow(0 0 34px rgba(34,244,223,0.32)) saturate(1.2) contrast(1.05);
+      opacity: 0.86;
+      animation: fishFloat 6s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .hero-fish::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle, transparent 48%, rgba(2,8,18,0.45) 72%);
+    }
+
+    @keyframes fishFloat {
+      0%, 100% { transform: translateY(0) rotate(-1deg); }
+      50% { transform: translateY(-16px) rotate(1deg); }
     }
 
     .eyebrow {
       color: var(--accent);
       font-weight: 800;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      font-size: 0.78rem;
-      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+      font-size: clamp(1rem, 1.5vw, 1.35rem);
+      margin-bottom: 0.85rem;
     }
 
     h1 {
-      font-size: clamp(2.9rem, 7vw, 6.6rem);
+      font-size: clamp(3.2rem, 6.3vw, 6.4rem);
       line-height: 0.95;
       font-weight: 900;
       letter-spacing: -0.06em;
-      margin-bottom: 1.4rem;
+      margin-bottom: 1.2rem;
+      text-shadow: 0 8px 28px rgba(0,0,0,0.42);
     }
 
-    .gradient-text {
-      background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--green));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    .role {
+      color: var(--accent);
+      font-size: clamp(1.25rem, 2vw, 1.75rem);
+      font-weight: 600;
+      line-height: 1.35;
+      margin-bottom: 1.2rem;
     }
 
     .lead {
-      color: var(--muted);
-      max-width: 780px;
-      line-height: 1.75;
-      font-size: 1.13rem;
+      color: var(--text);
+      max-width: 560px;
+      line-height: 1.8;
+      font-size: 1.02rem;
     }
 
     .glass {
-      background: linear-gradient(145deg, rgba(5,24,39,0.84), rgba(8,38,58,0.52));
-      border: 1px solid var(--border);
-      border-radius: 28px;
-      box-shadow: 0 24px 70px rgba(0,0,0,0.36), inset 0 1px 0 rgba(255,255,255,0.06);
-      backdrop-filter: blur(18px);
+      background: linear-gradient(145deg, rgba(4,22,34,0.82), rgba(5,25,40,0.56));
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      box-shadow: 0 24px 70px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.05);
+      backdrop-filter: blur(16px);
     }
-
-    .hero-visual {
-      min-height: 430px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .zfish {
-      width: 100%;
-      max-width: 520px;
-      filter: drop-shadow(0 0 30px rgba(32,243,223,0.28));
-      animation: swim 5.5s ease-in-out infinite;
-    }
-
-    @keyframes swim {
-      0%, 100% { transform: translateY(0) rotate(-1deg); }
-      50% { transform: translateY(-14px) rotate(1deg); }
-    }
-
-    .molecule-label {
-      position: absolute;
-      color: rgba(32,243,223,0.72);
-      font-weight: 600;
-      font-size: 0.9rem;
-      letter-spacing: 0.04em;
-    }
-    .m1 { top: 12%; right: 8%; }
-    .m2 { bottom: 18%; left: 10%; }
-    .m3 { bottom: 7%; right: 20%; }
 
     .btn-main {
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      color: #02101a;
+      background: linear-gradient(135deg, #22f4df, #18cfc2);
+      color: #021018;
       border: none;
-      border-radius: 999px;
+      border-radius: 8px;
       font-weight: 800;
-      padding: 0.88rem 1.2rem;
-      box-shadow: 0 12px 36px rgba(32,243,223,0.2);
+      padding: 0.9rem 1.35rem;
+      box-shadow: 0 16px 42px rgba(34,244,223,0.22);
     }
+    .btn-main:hover { color: #021018; transform: translateY(-2px); }
 
-    .btn-outline-light {
-      border-radius: 999px;
-      padding: 0.88rem 1.2rem;
-      border-color: var(--border);
+    .btn-ghost {
+      border: 1px solid rgba(255,255,255,0.26);
       color: var(--text);
+      border-radius: 8px;
+      padding: 0.9rem 1.35rem;
+      background: rgba(255,255,255,0.03);
     }
-    .btn-outline-light:hover { background: rgba(32,243,223,0.12); border-color: var(--accent); }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); background: rgba(34,244,223,0.08); }
 
     .section-title {
-      font-size: clamp(2rem, 4vw, 3.4rem);
-      font-weight: 900;
-      letter-spacing: -0.04em;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 850;
+      letter-spacing: -0.035em;
       margin-bottom: 1rem;
     }
-
-    .section-subtitle { color: var(--muted); max-width: 780px; line-height: 1.7; }
-    .muted { color: var(--muted); }
-
-    .card-custom {
-      height: 100%;
-      padding: 1.55rem;
-      transition: 0.25s ease;
-      overflow: hidden;
-      position: relative;
-    }
-    .card-custom::after {
+    .section-title.centered::after {
       content: "";
-      position: absolute;
-      width: 160px;
-      height: 160px;
-      right: -80px;
-      top: -80px;
-      background: radial-gradient(circle, rgba(32,243,223,0.14), transparent 70%);
-    }
-    .card-custom:hover { transform: translateY(-7px); border-color: rgba(32,243,223,0.58); }
-
-    .icon-box {
-      width: 54px;
-      height: 54px;
-      display: grid;
-      place-items: center;
-      border-radius: 18px;
-      border: 1px solid var(--border);
-      background: rgba(32,243,223,0.09);
-      color: var(--accent);
-      font-size: 1.65rem;
-      margin-bottom: 1.1rem;
-    }
-
-    .tag {
-      display: inline-block;
-      padding: 0.42rem 0.72rem;
-      margin: 0.24rem;
-      border-radius: 999px;
-      border: 1px solid rgba(32,243,223,0.22);
-      color: var(--muted);
-      background: rgba(255,255,255,0.045);
-      font-size: 0.86rem;
-    }
-
-    .assay-strip {
-      border-left: 3px solid var(--accent);
-      padding-left: 1rem;
-    }
-
-    .timeline {
-      border-left: 2px solid rgba(32,243,223,0.42);
-      padding-left: 1.6rem;
-    }
-    .timeline-item { position: relative; margin-bottom: 2rem; }
-    .timeline-item::before {
-      content: "";
-      position: absolute;
-      left: -2.08rem;
-      top: 0.35rem;
-      width: 15px;
-      height: 15px;
-      border-radius: 50%;
+      display: block;
+      width: 44px;
+      height: 3px;
       background: var(--accent);
-      box-shadow: 0 0 0 7px rgba(32,243,223,0.11), 0 0 30px rgba(32,243,223,0.42);
+      margin: 0.75rem auto 0;
+      box-shadow: 0 0 12px var(--accent);
+    }
+    .section-subtitle, .muted { color: var(--muted); line-height: 1.7; }
+
+    .about-plate {
+      min-height: 260px;
+      background:
+        linear-gradient(90deg, rgba(4,22,34,0.92), rgba(4,22,34,0.38)),
+        url('https://images.unsplash.com/photo-1516684669134-de6f7c473a2a?auto=format&fit=crop&w=1600&q=80') center / cover;
+      overflow: hidden;
     }
 
-    .stat {
-      font-size: 2rem;
-      font-weight: 900;
+    .about-fish {
+      position: absolute;
+      left: 45%;
+      top: 18%;
+      width: 250px;
+      height: 170px;
+      border-radius: 50%;
+      border: 2px solid rgba(34,244,223,0.65);
+      background:
+        radial-gradient(circle, rgba(34,244,223,0.08), rgba(2,8,18,0.18) 55%, rgba(2,8,18,0.34)),
+        url('https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Zebrafish_%28Danio_rerio%29.jpg/640px-Zebrafish_%28Danio_rerio%29.jpg') center / cover;
+      box-shadow: 0 0 28px rgba(34,244,223,0.28), inset 0 0 26px rgba(34,244,223,0.16);
+      opacity: 0.9;
+    }
+
+    .info-list { list-style: none; padding: 0; margin: 0; }
+    .info-list li { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.3rem; }
+    .hex-icon {
+      width: 62px; height: 62px; flex: 0 0 62px;
+      display: grid; place-items: center;
       color: var(--accent);
-      line-height: 1;
+      font-size: 1.45rem;
+      background: rgba(34,244,223,0.07);
+      border: 1px solid var(--line);
+      clip-path: polygon(25% 6%, 75% 6%, 100% 50%, 75% 94%, 25% 94%, 0 50%);
     }
 
-    footer {
-      padding: 2rem 0;
-      border-top: 1px solid rgba(32,243,223,0.18);
-      color: var(--muted);
+    .research-card {
+      height: 100%;
+      padding: 1.7rem 1.2rem;
+      text-align: center;
+      transition: 0.25s ease;
+    }
+    .research-card:hover { transform: translateY(-7px); border-color: rgba(34,244,223,0.66); }
+    .research-card .icon {
+      color: var(--accent);
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      filter: drop-shadow(0 0 14px rgba(34,244,223,0.28));
     }
 
+    .stat-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.4rem;
+    }
+    .stat-card .hex-icon { width: 58px; height: 58px; flex-basis: 58px; }
+    .stat-number { font-size: 2rem; line-height: 1; font-weight: 900; color: var(--accent); }
+
+    .publication-card {
+      padding: 1.35rem;
+      height: 100%;
+    }
+
+    .contact-band {
+      background:
+        linear-gradient(90deg, rgba(4,22,34,0.64), rgba(4,22,34,0.92)),
+        url('https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Zebrafish_%28Danio_rerio%29.jpg/1280px-Zebrafish_%28Danio_rerio%29.jpg') left center / 420px auto no-repeat;
+    }
+
+    .social-hex {
+      width: 64px;
+      height: 64px;
+      display: inline-grid;
+      place-items: center;
+      color: var(--text);
+      font-size: 1.65rem;
+      margin: 0.25rem;
+      border: 1px solid var(--line);
+      background: rgba(4,22,34,0.56);
+      clip-path: polygon(25% 6%, 75% 6%, 100% 50%, 75% 94%, 25% 94%, 0 50%);
+      transition: 0.2s ease;
+    }
+    .social-hex:hover { color: var(--accent); transform: translateY(-3px); }
+
+    footer { padding: 2rem 0; color: var(--muted); border-top: 1px solid rgba(34,244,223,0.15); }
     a { color: var(--accent); text-decoration: none; }
     a:hover { color: var(--green); }
 
     @media (max-width: 991px) {
-      .hero-visual { min-height: 300px; }
-      .zfish { max-width: 360px; }
+      .hero-fish { position: relative; right: auto; top: auto; width: 100%; height: 260px; margin-top: 2rem; }
+      .about-fish { position: relative; left: auto; top: auto; width: 210px; margin: 1.5rem auto; }
+      .contact-band { background-size: 280px auto; background-position: center bottom; padding-bottom: 13rem !important; }
     }
   </style>
 </head>
+
 <body>
   <canvas id="science-bg"></canvas>
-  <div class="texture"></div>
-  <div class="deep-overlay"></div>
+  <div class="water-bg"></div>
+  <div class="shade"></div>
+
+  <div class="molecule-layer" aria-hidden="true">
+    <div class="mol mol-1"><svg viewBox="0 0 260 150"><g fill="none" stroke="currentColor" stroke-width="2"><polygon points="52,30 88,50 88,92 52,112 16,92 16,50"/><polygon points="124,26 160,46 160,88 124,108 88,88 88,46"/><path d="M160 66 L204 66 M204 66 L230 42 M204 66 L232 94"/><circle cx="204" cy="66" r="5" fill="currentColor"/></g><text x="15" y="138" fill="currentColor" font-size="19">OH</text><text x="212" y="36" fill="currentColor" font-size="18">Cl</text></svg></div>
+    <div class="mol mol-2"><svg viewBox="0 0 260 150"><g fill="none" stroke="currentColor" stroke-width="2"><polygon points="92,28 132,52 132,98 92,122 52,98 52,52"/><path d="M132 52 L182 36 L222 62 L216 112 L166 124 L132 98"/><circle cx="92" cy="75" r="5" fill="currentColor"/><circle cx="182" cy="36" r="5" fill="currentColor"/></g><text x="26" y="42" fill="currentColor" font-size="18">N</text><text x="220" y="60" fill="currentColor" font-size="18">O</text></svg></div>
+    <div class="mol mol-3"><svg viewBox="0 0 260 150"><g fill="none" stroke="currentColor" stroke-width="2"><polygon points="82,26 120,48 120,92 82,114 44,92 44,48"/><path d="M120 70 L168 70 L204 100"/><circle cx="168" cy="70" r="5" fill="currentColor"/></g><text x="19" y="40" fill="currentColor" font-size="18">NH₂</text><text x="206" y="112" fill="currentColor" font-size="18">OH</text></svg></div>
+    <div class="mol mol-4"><svg viewBox="0 0 260 150"><g fill="none" stroke="currentColor" stroke-width="2"><polygon points="62,34 102,58 102,104 62,128 22,104 22,58"/><path d="M102 82 L148 82 M148 82 L184 54 M148 82 L188 114"/><circle cx="148" cy="82" r="5" fill="currentColor"/></g><text x="10" y="28" fill="currentColor" font-size="18">Cl</text><text x="192" y="122" fill="currentColor" font-size="18">N</text></svg></div>
+    <div class="mol mol-5"><svg viewBox="0 0 260 150"><g fill="none" stroke="currentColor" stroke-width="2"><polygon points="72,22 112,46 112,92 72,116 32,92 32,46"/><polygon points="146,34 184,56 184,100 146,122 108,100 108,56"/><path d="M184 78 L226 78"/></g><text x="206" y="65" fill="currentColor" font-size="18">OH</text><text x="32" y="138" fill="currentColor" font-size="18">O</text></svg></div>
+  </div>
 
   <nav class="navbar navbar-expand-lg fixed-top">
-    <div class="container">
+    <div class="container-fluid px-lg-4">
       <a class="navbar-brand fw-bold d-flex align-items-center" href="#home">
-        <span class="brand-mark"><i class="bi bi-flask"></i></span>
-        <span>Muhammad Arslan Aslam</span>
+        <span class="brand-logo"><i class="bi bi-flask"></i></span>
+        <span>Muhammad Arslan Aslam <span class="brand-sub">Toxicologist | Zebrafish Researcher</span></span>
       </a>
       <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
@@ -300,9 +361,10 @@
           <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
           <li class="nav-item"><a class="nav-link" href="#research">Research</a></li>
-          <li class="nav-item"><a class="nav-link" href="#assays">Assays</a></li>
-          <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
-          <li class="nav-item"><a class="nav-link" href="#publications">Outputs</a></li>
+          <li class="nav-item"><a class="nav-link" href="#publications">Publications</a></li>
+          <li class="nav-item"><a class="nav-link" href="#assays">Zebrafish Assays</a></li>
+          <li class="nav-item"><a class="nav-link" href="#models">Toxicity Models</a></li>
+          <li class="nav-item"><a class="nav-link" href="assets/Muhammad_Arslan_Aslam_CV.pdf" target="_blank">CV</a></li>
           <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
         </ul>
       </div>
@@ -311,147 +373,82 @@
 
   <main>
     <section id="home" class="hero">
-      <div class="container">
-        <div class="row align-items-center g-5">
-          <div class="col-lg-7" data-aos="fade-up">
-            <div class="eyebrow">Chemical safety · Zebrafish toxicology · QSAR</div>
-            <h1>Decoding <span class="gradient-text">chemical toxicity</span> in aquatic life.</h1>
+      <div class="container-fluid px-lg-5">
+        <div class="row align-items-center">
+          <div class="col-lg-6" data-aos="fade-up">
+            <div class="eyebrow">Hi, I'm</div>
+            <h1>Muhammad<br>Arslan Aslam</h1>
+            <div class="role">Toxicologist | Environmental Scientist<br>Zebrafish Model Specialist</div>
             <p class="lead">
-              I am Muhammad Arslan Aslam, a Marie Curie PhD researcher working on environmental toxicology, QSAR-based baseline toxicity prediction, zebrafish embryo toxicity assays, and mechanism-of-action grouping for bisphenols, phthalates, and related additives.
+              I investigate the impact of environmental contaminants using zebrafish as a model organism to understand toxicity mechanisms and develop safer chemicals for a healthier future.
             </p>
             <div class="d-flex flex-wrap gap-3 mt-4">
-              <a class="btn btn-main" href="#research"><i class="bi bi-search-heart me-2"></i>Explore Research</a>
-              <a class="btn btn-outline-light" href="assets/Muhammad_Arslan_Aslam_CV.pdf" target="_blank"><i class="bi bi-download me-2"></i>Download CV</a>
+              <a class="btn btn-main" href="#research"><i class="bi bi-arrow-repeat me-2"></i>Explore My Research</a>
+              <a class="btn btn-ghost" href="assets/Muhammad_Arslan_Aslam_CV.pdf" target="_blank"><i class="bi bi-download me-2"></i>Download CV</a>
             </div>
           </div>
+          <div class="hero-fish" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
 
-          <div class="col-lg-5" data-aos="fade-left">
-            <div class="glass hero-visual p-4 d-flex align-items-center justify-content-center">
-              <span class="molecule-label m1">BPA · BPS · BPF</span>
-              <span class="molecule-label m2">logK<sub>ow</sub> → baseline toxicity</span>
-              <span class="molecule-label m3">toxic ratio → MOA</span>
-              <svg class="zfish" viewBox="0 0 760 300" role="img" aria-label="Stylized zebrafish with molecular background">
-                <defs>
-                  <linearGradient id="fishGrad" x1="0" x2="1">
-                    <stop offset="0%" stop-color="#e7fbff" stop-opacity="0.95"/>
-                    <stop offset="45%" stop-color="#20f3df" stop-opacity="0.65"/>
-                    <stop offset="100%" stop-color="#67a7ff" stop-opacity="0.78"/>
-                  </linearGradient>
-                  <filter id="glow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-                </defs>
-                <g opacity="0.42" stroke="#20f3df" stroke-width="2" fill="none">
-                  <circle cx="105" cy="52" r="16"/><circle cx="155" cy="82" r="10"/><circle cx="205" cy="48" r="13"/>
-                  <path d="M120 60 L148 76 L194 52"/>
-                  <circle cx="595" cy="230" r="13"/><circle cx="650" cy="205" r="17"/><circle cx="696" cy="242" r="10"/>
-                  <path d="M606 224 L636 210 L686 236"/>
-                </g>
-                <g filter="url(#glow)">
-                  <path d="M115 156 C190 58, 390 58, 555 135 C606 158, 636 171, 676 170 C642 193, 606 217, 548 209 C385 270, 202 249, 114 171 C94 186, 64 197, 36 191 C62 171, 82 158, 115 156 Z" fill="url(#fishGrad)" stroke="#c9fbff" stroke-width="4" opacity="0.88"/>
-                  <path d="M547 135 C600 91, 668 78, 725 63 C700 110, 687 149, 676 170" fill="rgba(32,243,223,0.18)" stroke="#7defff" stroke-width="4"/>
-                  <path d="M548 209 C606 242, 663 260, 724 274 C698 229, 685 196, 676 170" fill="rgba(103,167,255,0.18)" stroke="#7defff" stroke-width="4"/>
-                  <circle cx="155" cy="150" r="24" fill="#020914" stroke="#f4fbff" stroke-width="5"/>
-                  <circle cx="160" cy="146" r="8" fill="#20f3df"/>
-                  <path d="M205 132 C315 112, 425 118, 545 154" stroke="#02101a" stroke-width="15" opacity="0.55"/>
-                  <path d="M210 164 C328 151, 438 159, 555 188" stroke="#02101a" stroke-width="11" opacity="0.45"/>
-                  <path d="M220 190 C335 206, 440 207, 535 198" stroke="#02101a" stroke-width="7" opacity="0.35"/>
-                  <path d="M340 104 C371 62, 427 48, 478 70 C444 92, 400 111, 340 104 Z" fill="rgba(231,251,255,0.35)" stroke="#c9fbff" stroke-width="3"/>
-                  <path d="M325 217 C363 262, 434 274, 484 238 C432 224, 380 216, 325 217 Z" fill="rgba(32,243,223,0.22)" stroke="#c9fbff" stroke-width="3"/>
-                </g>
-              </svg>
+    <section id="about" class="pt-0">
+      <div class="container-fluid px-lg-5">
+        <div class="glass about-plate p-4 p-lg-5 position-relative" data-aos="fade-up">
+          <div class="row align-items-center g-4">
+            <div class="col-lg-5">
+              <h2 class="section-title"><i class="bi bi-person-fill me-2 text-info"></i>About Me</h2>
+              <p>I am a PhD researcher in environmental toxicology with a strong focus on ecotoxicology, zebrafish toxicology, and alternative methods for chemical safety assessment.</p>
+              <p>My research combines computational toxicology, molecular interpretation, and in vivo models to evaluate toxic effects of environmental contaminants and plastic additives.</p>
+              <a class="btn btn-ghost mt-2" href="#research">Know More About Me <i class="bi bi-arrow-right ms-2"></i></a>
+            </div>
+            <div class="col-lg-3"><div class="about-fish"></div></div>
+            <div class="col-lg-4">
+              <ul class="info-list">
+                <li><span class="hex-icon"><i class="bi bi-prescription2"></i></span><span><strong>Chemicals</strong><br><span class="muted">Assessing environmental contaminants and additives</span></span></li>
+                <li><span class="hex-icon"><i class="bi bi-water"></i></span><span><strong>Zebrafish Model</strong><br><span class="muted">In vivo developmental toxicity and phenotypic screening</span></span></li>
+                <li><span class="hex-icon"><i class="bi bi-diagram-3"></i></span><span><strong>Molecular Mechanisms</strong><br><span class="muted">Oxidative stress, endocrine activity, and MOA interpretation</span></span></li>
+              </ul>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="about">
-      <div class="container">
-        <div class="glass p-4 p-lg-5" data-aos="fade-up">
-          <div class="row g-5 align-items-center">
-            <div class="col-lg-6">
-              <h2 class="section-title">About Me</h2>
-              <p class="muted">
-                My work connects computational toxicology with organism-level bioassays to better understand how emerging additives affect aquatic organisms. I focus on interpretable, mechanism-aware approaches rather than prediction alone.
-              </p>
-              <div class="mt-3">
-                <span class="tag">Environmental toxicology</span>
-                <span class="tag">Aquatic ecotoxicology</span>
-                <span class="tag">Chemical grouping</span>
-                <span class="tag">Developmental toxicity</span>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="row g-3">
-                <div class="col-sm-6"><div class="glass p-3 h-100"><div class="stat">QSAR</div><p class="muted mb-0">Baseline toxicity prediction</p></div></div>
-                <div class="col-sm-6"><div class="glass p-3 h-100"><div class="stat">FET</div><p class="muted mb-0">Zebrafish embryo toxicity</p></div></div>
-                <div class="col-sm-6"><div class="glass p-3 h-100"><div class="stat">TR</div><p class="muted mb-0">Toxic-ratio interpretation</p></div></div>
-                <div class="col-sm-6"><div class="glass p-3 h-100"><div class="stat">MOA</div><p class="muted mb-0">Mechanism-of-action grouping</p></div></div>
-              </div>
-            </div>
-          </div>
+    <section id="research" class="pt-4">
+      <div class="container-fluid px-lg-5">
+        <h2 class="section-title centered text-center" data-aos="fade-up">Research Areas</h2>
+        <div class="row g-4 mt-3">
+          <div class="col-md-6 col-lg" data-aos="fade-up"><div class="glass research-card"><div class="icon"><i class="bi bi-water"></i></div><h5>Zebrafish Toxicology</h5><p class="muted">Developmental toxicity, behavior, and organ-specific endpoints</p></div></div>
+          <div class="col-md-6 col-lg" data-aos="fade-up" data-aos-delay="80"><div class="glass research-card"><div class="icon"><i class="bi bi-bounding-box-circles"></i></div><h5>Environmental Contaminants</h5><p class="muted">Bisphenols, phthalates, additives, and emerging pollutants</p></div></div>
+          <div class="col-md-6 col-lg" data-aos="fade-up" data-aos-delay="160"><div class="glass research-card"><div class="icon"><i class="bi bi-dna"></i></div><h5>Molecular Toxicology</h5><p class="muted">Mechanistic interpretation, stress response, and pathway-level effects</p></div></div>
+          <div class="col-md-6 col-lg" data-aos="fade-up" data-aos-delay="240"><div class="glass research-card"><div class="icon"><i class="bi bi-cup-hot"></i></div><h5>Alternative Methods</h5><p class="muted">3Rs principles and replacement-oriented toxicity testing</p></div></div>
+          <div class="col-md-6 col-lg" data-aos="fade-up" data-aos-delay="320"><div class="glass research-card"><div class="icon"><i class="bi bi-leaf"></i></div><h5>Safer Chemicals</h5><p class="muted">Evidence for sustainable and safer chemical assessment</p></div></div>
         </div>
-      </div>
-    </section>
 
-    <section id="research">
-      <div class="container">
-        <div class="text-center mb-5" data-aos="fade-up">
-          <h2 class="section-title">Research Areas</h2>
-          <p class="section-subtitle mx-auto">From molecular descriptors to living embryos: my research links chemical properties, predicted potency, and observed biological response.</p>
-        </div>
-        <div class="row g-4">
-          <div class="col-md-6 col-lg-3" data-aos="fade-up">
-            <div class="glass card-custom">
-              <div class="icon-box"><i class="bi bi-node-plus"></i></div>
-              <h5 class="fw-bold">Chemical Space</h5>
-              <p class="muted">Bisphenols, phthalates, plastic additives, and structurally related emerging contaminants.</p>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
-            <div class="glass card-custom">
-              <div class="icon-box"><i class="bi bi-cpu"></i></div>
-              <h5 class="fw-bold">Toxicity Models</h5>
-              <p class="muted">QSAR and baseline toxicity models to identify chemicals with excess toxicity.</p>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
-            <div class="glass card-custom">
-              <div class="icon-box"><i class="bi bi-heart-pulse"></i></div>
-              <h5 class="fw-bold">Zebrafish Effects</h5>
-              <p class="muted">Developmental, neuroactive, and cardiotoxic effects in zebrafish embryo assays.</p>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
-            <div class="glass card-custom">
-              <div class="icon-box"><i class="bi bi-diagram-3"></i></div>
-              <h5 class="fw-bold">MOA Grouping</h5>
-              <p class="muted">Mechanism-based interpretation using toxic ratios and response profiles.</p>
-            </div>
-          </div>
+        <div class="row g-3 mt-4 justify-content-center">
+          <div class="col-md-6 col-lg-3"><div class="glass stat-card"><span class="hex-icon"><i class="bi bi-flask"></i></span><div><div class="stat-number">5+</div><span>Years of research experience</span></div></div></div>
+          <div class="col-md-6 col-lg-3"><div class="glass stat-card"><span class="hex-icon"><i class="bi bi-file-earmark-text"></i></span><div><div class="stat-number">20+</div><span>Research outputs</span></div></div></div>
+          <div class="col-md-6 col-lg-3"><div class="glass stat-card"><span class="hex-icon"><i class="bi bi-people"></i></span><div><div class="stat-number">15+</div><span>Collaborations</span></div></div></div>
+          <div class="col-md-6 col-lg-3"><div class="glass stat-card"><span class="hex-icon"><i class="bi bi-easel"></i></span><div><div class="stat-number">25+</div><span>Conference presentations</span></div></div></div>
         </div>
       </div>
     </section>
 
     <section id="assays">
       <div class="container">
-        <div class="row g-5 align-items-center">
+        <div class="row g-4 align-items-center">
           <div class="col-lg-5" data-aos="fade-right">
             <h2 class="section-title">Zebrafish Assays</h2>
-            <p class="section-subtitle">A focused section for your experimental toxicology work. You can later add images, endpoints, workflow diagrams, or assay plates.</p>
+            <p class="section-subtitle">Experimental screening to connect chemical exposure with organism-level developmental and functional endpoints.</p>
           </div>
           <div class="col-lg-7" data-aos="fade-left">
             <div class="glass p-4">
-              <div class="assay-strip mb-4">
-                <h5 class="fw-bold">Screening endpoints</h5>
-                <p class="muted mb-0">Lethality, malformations, hatching, heart rate, behavior, and development-related phenotypes.</p>
-              </div>
-              <div class="assay-strip mb-4">
-                <h5 class="fw-bold">Chemical prioritization</h5>
-                <p class="muted mb-0">Comparing predicted baseline toxicity with observed effects to flag potential specific modes of action.</p>
-              </div>
-              <div class="assay-strip">
-                <h5 class="fw-bold">Interpretation</h5>
-                <p class="muted mb-0">Integrating toxicity ratios, chemical descriptors, and phenotype patterns for evidence-based grouping.</p>
+              <div class="row g-3">
+                <div class="col-md-6"><h5><i class="bi bi-activity text-info me-2"></i>Development</h5><p class="muted">Hatching, malformations, edema, growth, and survival endpoints.</p></div>
+                <div class="col-md-6"><h5><i class="bi bi-heart-pulse text-info me-2"></i>Cardiotoxicity</h5><p class="muted">Heart rate and visible cardiac phenotypes during early development.</p></div>
+                <div class="col-md-6"><h5><i class="bi bi-lightning-charge text-info me-2"></i>Neuroactivity</h5><p class="muted">Behavioral response patterns and potential neuroactive signatures.</p></div>
+                <div class="col-md-6"><h5><i class="bi bi-diagram-3 text-info me-2"></i>Interpretation</h5><p class="muted">Phenotype profiles linked to toxic ratios and mechanism-of-action hypotheses.</p></div>
               </div>
             </div>
           </div>
@@ -459,75 +456,55 @@
       </div>
     </section>
 
-    <section id="experience">
+    <section id="models">
       <div class="container">
-        <div class="row g-5">
-          <div class="col-lg-5" data-aos="fade-right">
-            <h2 class="section-title">Experience</h2>
-            <p class="section-subtitle">Research training across computational toxicology, marine ecotoxicology, and environmental sciences.</p>
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-6" data-aos="fade-right">
+            <div class="glass p-4 h-100">
+              <h2 class="section-title">Toxicity Models</h2>
+              <p class="muted">I use baseline toxicity prediction and toxic-ratio analysis to distinguish expected narcotic toxicity from potential specific modes of action.</p>
+            </div>
           </div>
-          <div class="col-lg-7" data-aos="fade-left">
-            <div class="timeline">
-              <div class="timeline-item">
-                <h5 class="fw-bold">Marie Curie PhD Researcher · Karolinska Institute</h5>
-                <p class="muted">Current · Environmental toxicology, chemical hazard assessment, and mechanism-based interpretation.</p>
-              </div>
-              <div class="timeline-item">
-                <h5 class="fw-bold">Researcher · Helmholtz Centre for Environmental Research UFZ</h5>
-                <p class="muted">2024–2025 · QSAR baseline toxicity models, zebrafish embryo toxicity assays, and toxic-ratio based grouping.</p>
-              </div>
-              <div class="timeline-item">
-                <h5 class="fw-bold">Research Intern · UPV/EHU PiE Marine Station</h5>
-                <p class="muted">Water accommodated fractions, sea urchin embryo toxicity testing, and image-based embryo analysis.</p>
-              </div>
-              <div class="timeline-item">
-                <h5 class="fw-bold">Erasmus Mundus MSc · Marine Environment and Resources</h5>
-                <p class="muted">University of Bordeaux, University of the Basque Country, University of Liège, and UFZ thesis placement.</p>
-              </div>
+          <div class="col-lg-6" data-aos="fade-left">
+            <div class="glass p-4 h-100">
+              <h5>Model-to-assay logic</h5>
+              <p class="muted mb-0">Predicted baseline toxicity → observed zebrafish effect concentration → toxic ratio → candidate MOA grouping and prioritization.</p>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="publications">
+    <section id="publications" class="pt-4">
       <div class="container">
-        <div class="text-center mb-5" data-aos="fade-up">
-          <h2 class="section-title">Publications & Research Outputs</h2>
-          <p class="section-subtitle mx-auto">Replace these examples with your publications, posters, datasets, or conference presentations.</p>
+        <div class="d-flex justify-content-between align-items-end flex-wrap gap-3 mb-4">
+          <h2 class="section-title centered text-center mx-auto">Recent Publications</h2>
+          <a href="#">View All Publications <i class="bi bi-arrow-right"></i></a>
         </div>
         <div class="row g-4">
-          <div class="col-md-6" data-aos="fade-up">
-            <div class="glass card-custom">
-              <h5 class="fw-bold">QSAR-based baseline toxicity prediction for bisphenol analogues</h5>
-              <p class="muted">Manuscript / project output. Add authors, journal, year, and DOI when available.</p>
-              <a href="#">DOI / Link <i class="bi bi-arrow-up-right"></i></a>
-            </div>
-          </div>
-          <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
-            <div class="glass card-custom">
-              <h5 class="fw-bold">Zebrafish embryo toxicity screening of plastic additives</h5>
-              <p class="muted">Poster, conference talk, dataset, or manuscript placeholder.</p>
-              <a href="#">Poster / Slides <i class="bi bi-arrow-up-right"></i></a>
-            </div>
-          </div>
+          <div class="col-md-4"><div class="glass publication-card"><p>QSAR-based baseline toxicity prediction for bisphenol analogues and related additives.</p><a href="#">Project output <i class="bi bi-box-arrow-up-right"></i></a></div></div>
+          <div class="col-md-4"><div class="glass publication-card"><p>Zebrafish embryo toxicity screening for developmental, neuroactive, and cardiotoxic endpoints.</p><a href="#">Poster / manuscript <i class="bi bi-box-arrow-up-right"></i></a></div></div>
+          <div class="col-md-4"><div class="glass publication-card"><p>Mechanism-of-action grouping using toxic ratios and response profiles.</p><a href="#">Research output <i class="bi bi-box-arrow-up-right"></i></a></div></div>
         </div>
       </div>
     </section>
 
-    <section id="contact">
-      <div class="container">
-        <div class="glass p-4 p-lg-5" data-aos="zoom-in">
+    <section id="contact" class="pt-4">
+      <div class="container-fluid px-lg-4">
+        <div class="glass contact-band p-4 p-lg-5" data-aos="fade-up">
           <div class="row g-4 align-items-center">
-            <div class="col-lg-7">
-              <h2 class="section-title mb-2">Let’s connect</h2>
-              <p class="muted mb-0">I welcome research discussions, collaborations, and opportunities related to chemical safety, ecotoxicology, and alternative testing methods.</p>
+            <div class="col-lg-4"></div>
+            <div class="col-lg-4">
+              <h3 class="fw-bold">Get in Touch</h3>
+              <p class="muted">I am open to discussing research collaborations and opportunities.</p>
+              <a class="btn btn-ghost" href="mailto:your.email@example.com"><i class="bi bi-envelope-fill me-2 text-info"></i>your.email@example.com</a>
             </div>
-            <div class="col-lg-5 text-lg-end">
-              <p class="mb-2"><i class="bi bi-envelope me-2"></i><a href="mailto:your.email@example.com">your.email@example.com</a></p>
-              <p class="mb-2"><i class="bi bi-linkedin me-2"></i><a href="#">LinkedIn</a></p>
-              <p class="mb-2"><i class="bi bi-mortarboard me-2"></i><a href="#">Google Scholar</a></p>
-              <p class="mb-0"><i class="bi bi-github me-2"></i><a href="#">GitHub</a></p>
+            <div class="col-lg-4 text-lg-center">
+              <h3 class="fw-bold">Connect With Me</h3>
+              <a class="social-hex" href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+              <a class="social-hex" href="#" aria-label="Google Scholar"><i class="bi bi-mortarboard-fill"></i></a>
+              <a class="social-hex" href="#" aria-label="ResearchGate">RG</a>
+              <a class="social-hex" href="#" aria-label="GitHub"><i class="bi bi-github"></i></a>
             </div>
           </div>
         </div>
@@ -538,7 +515,7 @@
   <footer>
     <div class="container d-flex flex-wrap justify-content-between gap-2">
       <span>© <span id="year"></span> Muhammad Arslan Aslam</span>
-      <span>Ecotoxicology · QSAR · Zebrafish embryo toxicity</span>
+      <span>Environmental toxicology · Zebrafish model · Chemical safety</span>
     </div>
   </footer>
 
@@ -550,80 +527,42 @@
 
     const canvas = document.getElementById('science-bg');
     const ctx = canvas.getContext('2d');
-    let W, H, nodes, molecules;
+    let W, H, particles;
 
     function resize() {
       W = canvas.width = window.innerWidth;
       H = canvas.height = window.innerHeight;
-      nodes = Array.from({ length: Math.min(105, Math.floor(W / 15)) }, () => ({
-        x: Math.random() * W,
-        y: Math.random() * H,
-        vx: (Math.random() - 0.5) * 0.36,
-        vy: (Math.random() - 0.5) * 0.36,
-        r: Math.random() * 2 + 0.8
-      }));
-      molecules = Array.from({ length: 7 }, () => ({
+      particles = Array.from({ length: Math.min(130, Math.floor(W / 12)) }, () => ({
         x: Math.random() * W,
         y: Math.random() * H,
         vx: (Math.random() - 0.5) * 0.25,
         vy: (Math.random() - 0.5) * 0.25,
-        rot: Math.random() * Math.PI
+        r: Math.random() * 2.1 + 0.4
       }));
-    }
-
-    function drawHex(x, y, size, rot) {
-      ctx.save();
-      ctx.translate(x, y);
-      ctx.rotate(rot);
-      ctx.strokeStyle = 'rgba(32,243,223,0.24)';
-      ctx.lineWidth = 1.2;
-      ctx.beginPath();
-      for (let i = 0; i < 6; i++) {
-        const a = Math.PI / 3 * i;
-        const px = Math.cos(a) * size;
-        const py = Math.sin(a) * size;
-        if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
-      }
-      ctx.closePath();
-      ctx.stroke();
-      ctx.restore();
     }
 
     function animate() {
       ctx.clearRect(0, 0, W, H);
-
-      molecules.forEach(m => {
-        m.x += m.vx; m.y += m.vy; m.rot += 0.002;
-        if (m.x < -60) m.x = W + 60; if (m.x > W + 60) m.x = -60;
-        if (m.y < -60) m.y = H + 60; if (m.y > H + 60) m.y = -60;
-        drawHex(m.x, m.y, 28, m.rot);
-        drawHex(m.x + 42, m.y + 6, 22, m.rot + 0.4);
-        ctx.beginPath();
-        ctx.moveTo(m.x + 24, m.y + 4);
-        ctx.lineTo(m.x + 22, m.y + 5);
-        ctx.strokeStyle = 'rgba(32,243,223,0.18)';
-        ctx.stroke();
-      });
-
-      for (let i = 0; i < nodes.length; i++) {
-        const p = nodes[i];
-        p.x += p.vx; p.y += p.vy;
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
         if (p.x < 0 || p.x > W) p.vx *= -1;
         if (p.y < 0 || p.y > H) p.vy *= -1;
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(32,243,223,0.64)';
+        ctx.fillStyle = 'rgba(150,225,255,0.45)';
         ctx.fill();
 
-        for (let j = i + 1; j < nodes.length; j++) {
-          const q = nodes[j];
+        for (let j = i + 1; j < particles.length; j++) {
+          const q = particles[j];
           const dx = p.x - q.x;
           const dy = p.y - q.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 122) {
-            ctx.strokeStyle = `rgba(103,167,255,${0.28 * (1 - dist / 122)})`;
-            ctx.lineWidth = 0.8;
+          const d = Math.sqrt(dx * dx + dy * dy);
+          if (d < 115) {
+            ctx.strokeStyle = `rgba(34,244,223,${0.18 * (1 - d / 115)})`;
+            ctx.lineWidth = 0.7;
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(q.x, q.y);
