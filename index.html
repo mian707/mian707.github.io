@@ -133,12 +133,23 @@
       position: absolute;
       right: 5vw;
       top: 16vh;
-      width: min(56vw, 740px);
-      height: 360px;
+      width: min(60vw, 800px);
+      height: 400px;
+
       background: url('assets/zebrafish-main.png') center / contain no-repeat;
-      mix-blend-mode: screen;
-      filter: drop-shadow(0 0 34px rgba(34,244,223,0.32)) saturate(1.2) contrast(1.05);
-      opacity: 0.86;
+    
+      /* KEY IMPROVEMENTS */
+      filter:
+        brightness(1.25)
+        contrast(1.15)
+        saturate(1.2)
+        drop-shadow(0 0 40px rgba(34,244,223,0.45));
+    
+      opacity: 1;
+    
+      /* Remove any visual box feeling */
+      mix-blend-mode: lighten;
+    
       animation: fishFloat 6s ease-in-out infinite;
       pointer-events: none;
     }
