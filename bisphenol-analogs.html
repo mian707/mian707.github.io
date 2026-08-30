@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bisphenol analogs in zebrafish embryos | Muhammad Arslan Aslam</title>
+  <meta name="description" content="A scroll-driven walkthrough of Aslam, Massei &amp; Scholz (2026), Aquatic Toxicology: comparative effect assessment of bisphenol analogs by high content analysis in zebrafish embryos." />
+  <link rel="canonical" href="https://mian707.github.io/bisphenol-analogs.html" />
+  <meta name="theme-color" content="#020812" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23041622'/><path d='M16 4.5l9.5 5.75v11.5L16 27.5 6.5 21.75V10.25z' fill='none' stroke='%2322f4df' stroke-width='2.2'/><circle cx='16' cy='16' r='3.1' fill='%2322f4df'/></svg>" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://mian707.github.io/bisphenol-analogs.html" />
+  <meta property="og:title" content="Comparative effect assessment of bisphenol analogs in zebrafish embryos" />
+  <meta property="og:description" content="BPA was restricted. Its replacements were not obviously safer. High content screening in zebrafish embryos, read against predicted baseline toxicity." />
+  <meta property="og:image" content="https://mian707.github.io/assets/og-cover.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #020812; --line: rgba(39,238,224,0.32);
+      --text: #f5fbff; --muted: #b8c7d4; --accent: #22f4df; --accent-2: #59a8ff;
+      --tshadow: 0 1px 2px rgba(2,6,12,.95), 0 3px 12px rgba(2,6,12,.78), 0 10px 44px rgba(2,6,12,.8);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; overflow-x: clip; }
+    body {
+      margin: 0; font-family: 'Inter', system-ui, sans-serif; color: var(--text);
+      overflow-x: clip;
+      background:
+        radial-gradient(circle at 78% 6%, rgba(34,244,223,0.13), transparent 30%),
+        radial-gradient(circle at 16% 18%, rgba(89,168,255,0.12), transparent 32%),
+        linear-gradient(180deg, #020812 0%, #041322 54%, #020812 100%);
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: #9df3be; }
+
+    .navbar { background: rgba(2,8,18,0.72) !important; backdrop-filter: blur(16px); border-bottom: 1px solid rgba(34,244,223,0.16); }
+    .navbar-brand { color: var(--text) !important; }
+    .nav-link { font-size: 0.9rem; color: var(--muted) !important; }
+    .nav-link:hover { color: var(--accent) !important; }
+    .brand-logo {
+      width: 38px; height: 38px; display: grid; place-items: center;
+      border: 1px solid rgba(34,244,223,0.35); border-radius: 12px; margin-right: 0.65rem;
+      color: var(--accent); background: rgba(34,244,223,0.05); flex: 0 0 38px;
+    }
+
+    .glass {
+      background: linear-gradient(145deg, rgba(4,22,34,0.82), rgba(5,25,40,0.56));
+      border: 1px solid var(--line); border-radius: 20px;
+      box-shadow: 0 24px 70px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.05);
+      backdrop-filter: blur(16px);
+    }
+
+    /* ---------- pinned 3D molecule stage ----------
+       Default is a plain 100vh title card, so the page is correct with no JS,
+       on phones, and for reduced motion. .live is added only once the renderer
+       is actually running. */
+    .mol-scroll { height: 100vh; position: relative; }
+    .mol-scroll.live { height: 640vh; }
+    .mol-stage { position: sticky; top: 0; height: 100vh; overflow: hidden; isolation: isolate; }
+    .mol-canvas { position: absolute; inset: 0; width: 100%; height: 100%; will-change: transform; transform: translateZ(0); }
+
+    .mol-beat { display: none; }
+    .mol-scroll.live .mol-beat {
+      display: flex; position: absolute; inset: 0; align-items: center;
+      pointer-events: none; opacity: 0; visibility: hidden; text-shadow: var(--tshadow);
+    }
+    .mol-beat::before {
+      content: ""; position: absolute; inset: -4%; pointer-events: none;
+      opacity: calc(0.3 + 0.7 * var(--k, 1));
+      background: radial-gradient(ellipse 56% 56% at 25% 50%, rgba(2,6,12,0.72) 0%, rgba(2,6,12,0.44) 46%, rgba(2,6,12,0) 74%);
+    }
+    .beat-inner { position: relative; max-width: 560px; padding: 0 5vw; }
+    .beat-kicker { color: var(--accent); font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; font-size: 0.78rem; margin-bottom: 0.85rem; }
+    .beat-title { font-size: clamp(1.7rem, 3.1vw, 2.7rem); font-weight: 850; letter-spacing: -0.035em; line-height: 1.14; margin-bottom: 0.9rem; }
+    .beat-body { color: #e6f2fa; line-height: 1.75; font-size: clamp(0.98rem, 1.15vw, 1.1rem); max-width: 44ch; }
+
+    /* live compound readout, driven by whichever molecule is on screen */
+    .hud {
+      position: absolute; right: 4vw; bottom: 6vh;
+      display: none; align-items: center; gap: 1.4rem;
+      padding: 0.8rem 1.3rem; border-radius: 14px;
+      background: rgba(6,20,32,0.66); border: 1px solid rgba(34,244,223,0.26);
+      backdrop-filter: blur(12px); text-shadow: 0 1px 3px rgba(5,5,10,.85);
+    }
+    .mol-scroll.live .hud { display: flex; }
+    .hud-id { padding-right: 1.3rem; border-right: 1px solid rgba(255,255,255,0.12); }
+    .hud-name { font-weight: 800; font-size: 1.02rem; letter-spacing: -0.02em; white-space: nowrap; }
+    .hud-sub { color: var(--accent); font-size: 0.74rem; font-weight: 700; letter-spacing: 0.1em; }
+    .hud-row { display: flex; flex-direction: column; gap: 0.1rem; font-size: 0.82rem; }
+    .hud-row span { color: var(--muted); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; }
+    .hud-row b { font-weight: 600; font-variant-numeric: tabular-nums; }
+
+    .mol-fallback { position: absolute; inset: 0; display: flex; align-items: center; }
+    .mol-scroll.live .mol-fallback { display: none; }
+
+    .scroll-cue {
+      position: absolute; left: 5vw; bottom: 6.5vh;
+      display: none; align-items: center; gap: 0.5rem; color: var(--muted);
+      font-size: 0.76rem; letter-spacing: 0.16em; text-transform: uppercase;
+      text-shadow: var(--tshadow); animation: cue 2.4s ease-in-out infinite;
+    }
+    .mol-scroll.live .scroll-cue { display: flex; }
+    .mol-scroll.live.moved .scroll-cue { opacity: 0; transition: opacity .4s ease; }
+    @keyframes cue { 0%,100% { translate: 0 0; } 50% { translate: 0 6px; } }
+
+    /* ---------- article body ---------- */
+    section.paper { padding: 5rem 0; position: relative; }
+    .section-title { font-size: clamp(1.55rem, 2.6vw, 2.25rem); font-weight: 850; letter-spacing: -0.035em; margin-bottom: 1rem; }
+    .muted { color: var(--muted); line-height: 1.75; }
+    .lede { font-size: 1.1rem; line-height: 1.85; color: #e6f2fa; }
+    .finding { border-left: 3px solid var(--accent); padding: 0.35rem 0 0.35rem 1.35rem; margin: 1.6rem 0; }
+    .finding h4 { font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.5rem; font-size: 1.1rem; }
+    .chip {
+      display: inline-block; padding: 0.32rem 0.8rem; border-radius: 999px; font-size: 0.78rem;
+      background: rgba(34,244,223,0.08); border: 1px solid rgba(34,244,223,0.28); color: var(--accent);
+      margin: 0 0.35rem 0.5rem 0; font-weight: 600;
+    }
+    .cmp-table { width: 100%; font-size: 0.92rem; border-collapse: collapse; min-width: 520px; }
+    .cmp-table th, .cmp-table td { padding: 0.7rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.08); text-align: left; }
+    .cmp-table th { color: var(--accent); font-weight: 700; font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.08em; }
+    .cmp-table td { font-variant-numeric: tabular-nums; }
+    .cmp-table tbody tr:hover { background: rgba(34,244,223,0.04); }
+    .table-wrap { overflow-x: auto; }
+    .bar { height: 6px; border-radius: 3px; background: linear-gradient(90deg, var(--accent-2), var(--accent)); }
+    .todo {
+      border: 1px dashed rgba(34,244,223,0.42); border-radius: 14px; padding: 1.1rem 1.25rem;
+      background: rgba(34,244,223,0.04); color: var(--muted); font-size: 0.92rem; line-height: 1.7;
+    }
+    .cite { font-size: 0.94rem; line-height: 1.85; }
+    footer { padding: 2rem 0; color: var(--muted); border-top: 1px solid rgba(34,244,223,0.15); }
+
+    @media (max-width: 991px) {
+      .hud { display: none !important; }
+      .beat-inner { max-width: 100%; }
+    }
+    .brand-short { display: none; }
+    /* keep the brand and both links on one row on phones */
+    @media (max-width: 640px) {
+      .navbar .container-fluid { flex-wrap: nowrap; gap: 0.5rem; }
+      .navbar-brand { font-size: 0.84rem; line-height: 1.2; min-width: 0; flex: 0 1 auto; overflow: hidden; }
+      .brand-full { display: none; }
+      .brand-short { display: inline; white-space: nowrap; }
+      .brand-logo { width: 30px; height: 30px; flex: 0 0 30px; border-radius: 9px; margin-right: 0.45rem; }
+      .navbar .nav-link { font-size: 0.74rem; white-space: nowrap; padding: 0 !important; }
+      .navbar .ms-auto { gap: 0.8rem !important; flex: 0 0 auto; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar fixed-top">
+    <div class="container-fluid px-lg-4">
+      <a class="navbar-brand fw-bold d-flex align-items-center" href="index.html">
+        <span class="brand-logo"><i class="bi bi-eyedropper"></i></span>
+        <span class="brand-full">Muhammad Arslan Aslam</span><span class="brand-short">M. A. Aslam</span>
+      </a>
+      <div class="ms-auto d-flex gap-3 align-items-center">
+        <a class="nav-link" href="index.html"><i class="bi bi-arrow-left me-1"></i>Portfolio</a>
+        <a class="nav-link" href="https://doi.org/10.1016/j.aquatox.2026.107822" target="_blank" rel="noopener">Read the paper <i class="bi bi-box-arrow-up-right ms-1"></i></a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section id="walkthrough" class="mol-scroll">
+      <div class="mol-stage">
+        <canvas class="mol-canvas" aria-hidden="true"></canvas>
+
+        <div class="mol-beat" data-band="0,0.18">
+          <div class="beat-inner">
+            <div class="beat-kicker">The compound</div>
+            <h1 class="beat-title">Bisphenol A was restricted, not retired.</h1>
+            <p class="beat-body">BPA is a plastic additive with endocrine-disrupting properties. That was enough to get it banned from certain products &mdash; not enough to remove the need for a chemical that does its job.</p>
+          </div>
+        </div>
+
+        <div class="mol-beat" data-band="0.17,0.53">
+          <div class="beat-inner">
+            <div class="beat-kicker">The substitutes</div>
+            <h2 class="beat-title">It was replaced by molecules that look almost exactly like it.</h2>
+            <p class="beat-body">BPE, BPG, BPAP and BPZ all keep the same two phenol rings. Only the bridge between them changes. Substitutes designed this way may be equally, or even more, bioactive.</p>
+          </div>
+        </div>
+
+        <div class="mol-beat" data-band="0.52,0.67">
+          <div class="beat-inner">
+            <div class="beat-kicker">Why the bridge matters</div>
+            <h2 class="beat-title">Every substitution makes the molecule more hydrophobic.</h2>
+            <p class="beat-body">BPA sits at logP 3.3 &mdash; the lowest of the set. Every one of its four replacements is more hydrophobic, up to 6.3. And hydrophobicity is what drives baseline, narcotic toxicity.</p>
+          </div>
+        </div>
+
+        <div class="mol-beat" data-band="0.66,0.87">
+          <div class="beat-inner">
+            <div class="beat-kicker">The reference</div>
+            <h2 class="beat-title">Measured against two known baseline toxicants.</h2>
+            <p class="beat-body">Diphenylamine and 4-methylaniline are presumed to act by narcosis alone. They set the line separating &ldquo;toxic because it is hydrophobic&rdquo; from &ldquo;toxic through a specific mechanism&rdquo;.</p>
+          </div>
+        </div>
+
+        <div class="mol-beat" data-band="0.86,1">
+          <div class="beat-inner">
+            <div class="beat-kicker">The result</div>
+            <h2 class="beat-title">Effects sat within the range of predicted baseline toxicity.</h2>
+            <p class="beat-body">For every bisphenol tested. And the most sensitive endpoint across all of them was one that is easy to miss by eye: the posterior swim bladder simply failing to appear.</p>
+          </div>
+        </div>
+
+        <div class="hud" aria-hidden="true">
+          <div class="hud-id">
+            <div class="hud-name" id="hudName">Bisphenol A</div>
+            <div class="hud-sub" id="hudKey">BPA</div>
+          </div>
+          <div class="hud-row"><span>Formula</span><b id="hudFormula">C15H16O2</b></div>
+          <div class="hud-row"><span>MW</span><b id="hudMw">228.29</b></div>
+          <div class="hud-row"><span>logP</span><b id="hudLogp">3.3</b></div>
+          <div class="hud-row"><span>CID</span><b id="hudCid">6623</b></div>
+        </div>
+
+        <div class="mol-fallback">
+          <div class="beat-inner">
+            <div class="beat-kicker">Aquatic Toxicology &middot; 2026</div>
+            <h1 class="beat-title">Comparative effect assessment of bisphenol analogs in zebrafish embryos</h1>
+            <p class="beat-body">BPA was restricted for its endocrine activity, then replaced by analogues never assessed to the same depth. This study screened five of them in zebrafish embryos and read the results against predicted baseline toxicity.</p>
+            <a class="chip mt-3" href="#question">Read the study <i class="bi bi-arrow-down ms-1"></i></a>
+          </div>
+        </div>
+
+        <div class="scroll-cue" aria-hidden="true"><i class="bi bi-chevron-down"></i> Scroll</div>
+      </div>
+    </section>
+
+    <section class="paper" id="question">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <h2 class="section-title">The regrettable substitution problem</h2>
+            <p class="lede">
+              When a chemical is restricted, the pressure is to replace it quickly with something structurally close enough to do the same job. The replacement inherits the properties that made the original useful &mdash; and often the ones that made it a problem. The question is whether anyone checks before it is in production.
+            </p>
+            <p class="muted">
+              BPA was banned from certain products specifically because of its endocrine-disrupting properties. The substitutes that followed &mdash; bisphenol E, G, AP and Z &mdash; were not assessed to the same depth. This study asked a narrower and more tractable question than &ldquo;are they safe&rdquo;: across a set of non-endocrine, (neuro)developmental endpoints, do these analogues do anything their hydrophobicity alone would not predict?
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="paper" id="assay">
+      <div class="container">
+        <div class="row justify-content-center g-4">
+          <div class="col-lg-8">
+            <h2 class="section-title">How it was measured</h2>
+            <p class="muted">
+              A high-content screening assay in zebrafish (<em>Danio rerio</em>) embryos, built on automated quantitative image and video analysis rather than scoring by eye. That choice is the methodological core of the study: it removes observer bias and makes the results reproducible in a way manual phenotype scoring is not.
+            </p>
+            <div class="row g-3 mt-2">
+              <div class="col-md-6"><div class="glass p-3 h-100">
+                <h5><i class="bi bi-droplet-half text-info me-2"></i>Exposure design</h5>
+                <p class="muted mb-0" style="font-size:.92rem">Five concentrations per bisphenol. The highest was set at <em>predicted baseline toxicity</em>, then a two-fold serial dilution below it.</p>
+              </div></div>
+              <div class="col-md-6"><div class="glass p-3 h-100">
+                <h5><i class="bi bi-activity text-info me-2"></i>Endpoints</h5>
+                <p class="muted mb-0" style="font-size:.92rem">Behaviour, heart rate, and quantified deviation of morphological endpoints from controls.</p>
+              </div></div>
+              <div class="col-md-6"><div class="glass p-3 h-100">
+                <h5><i class="bi bi-graph-up text-info me-2"></i>Modelling</h5>
+                <p class="muted mb-0" style="font-size:.92rem">Concentration&ndash;response modelling on every endpoint to derive effect concentrations.</p>
+              </div></div>
+              <div class="col-md-6"><div class="glass p-3 h-100">
+                <h5><i class="bi bi-rulers text-info me-2"></i>Specificity</h5>
+                <p class="muted mb-0" style="font-size:.92rem">Effect ratios against observed mortality, and comparison to two presumed baseline toxicants.</p>
+              </div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="paper" id="findings">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <h2 class="section-title">What came out of it</h2>
+
+            <div class="finding">
+              <h4>The posterior swim bladder was the most sensitive endpoint</h4>
+              <p class="muted mb-0">Across every bisphenol tested, absence of the posterior swim bladder responded at lower concentrations than any other endpoint &mdash; and it was most sensitive of all for bisphenol E. It is also exactly the kind of endpoint automated imaging catches and a human scorer, working quickly, does not.</p>
+            </div>
+
+            <div class="finding">
+              <h4>The effects were consistent with baseline toxicity</h4>
+              <p class="muted mb-0">Compared against predicted baseline toxicity, the developmental effects of all five bisphenols fell within the range expected from hydrophobicity alone. On these (neuro)developmental endpoints, none of the substitutes showed potency beyond narcosis.</p>
+            </div>
+
+            <div class="finding">
+              <h4>A screening route for the analogues nobody has tested yet</h4>
+              <p class="muted mb-0">There are far more BPA analogues than there is capacity to characterise in detail. The detailed assessment of BPA and its four substitutes was used to build a screening approach for prioritising which of the remaining analogues deserve that depth of work.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="paper" id="compounds">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-9">
+            <h2 class="section-title">The compounds</h2>
+            <p class="muted">Identity and physicochemical values below are from PubChem, keyed by CID so each row is independently checkable. logP is shown because it is the property that sets the baseline-toxicity prediction these results were read against.</p>
+            <div class="glass p-3 p-lg-4 mt-4">
+              <div class="table-wrap">
+                <table class="cmp-table">
+                  <thead>
+                    <tr><th>Compound</th><th>Bridge</th><th>Formula</th><th>MW</th><th>logP</th><th style="width:26%">Hydrophobicity</th><th>CID</th></tr>
+                  </thead>
+                  <tbody id="cmpBody"></tbody>
+                </table>
+              </div>
+            </div>
+            <p class="muted mt-3" style="font-size:.86rem">
+              Bisphenol naming is not fully standardised across sources. Each row links to the PubChem record used here so the exact structure can be confirmed against the compounds actually tested.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="paper" id="cite">
+      <div class="container">
+        <div class="row justify-content-center g-4">
+          <div class="col-lg-8">
+            <h2 class="section-title">The paper</h2>
+            <div class="glass p-4">
+              <p class="cite mb-3">
+                Aslam, M. A., Massei, R., &amp; Scholz, S. (2026). Comparative effect assessment of bisphenol analogs by high content analysis in zebrafish (<em>Danio rerio</em>) embryos. <em>Aquatic Toxicology</em>, 295, 107822.
+              </p>
+              <a class="chip" href="https://doi.org/10.1016/j.aquatox.2026.107822" target="_blank" rel="noopener">10.1016/j.aquatox.2026.107822 <i class="bi bi-box-arrow-up-right ms-1"></i></a>
+              <span class="chip">Open access &middot; CC BY 4.0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container d-flex flex-wrap justify-content-between gap-2">
+      <span>&copy; <span id="year"></span> Muhammad Arslan Aslam</span>
+      <span><a href="index.html">Back to portfolio</a></span>
+    </div>
+  </footer>
+
+  <script>
+    const MOLECULES = {"BPA":{"cid":6623,"name":"Bisphenol A","formula":"C15H16O2","mw":228.29,"logp":3.3,"atoms":[[4.704,1.734,-0.108,"O"],[-4.673,1.76,0.108,"O"],[0.007,-1.39,-0.0,"C"],[1.248,-0.564,-0.029,"C"],[-1.291,-0.516,0.03,"C"],[-0.139,-2.359,1.234,"C"],[0.027,-2.363,-1.232,"C"],[1.47,0.325,-1.08,"C"],[-1.447,0.333,1.08,"C"],[2.187,-0.681,0.996,"C"],[-2.169,-0.669,-0.997,"C"],[2.632,1.097,-1.107,"C"],[-2.604,1.111,1.106,"C"],[3.349,0.091,0.97,"C"],[-3.326,0.11,-0.97,"C"],[3.571,0.981,-0.082,"C"],[-3.544,1.0,0.081,"C"],[0.671,-3.098,1.256,"H"],[-0.13,-1.829,2.193,"H"],[-1.083,-2.917,1.187,"H"],[0.935,-2.98,-1.209,"H"],[-0.822,-3.058,-1.228,"H"],[0.042,-1.836,-2.193,"H"],[0.752,0.437,-1.888,"H"],[-0.722,0.434,1.879,"H"],[2.064,-1.357,1.835,"H"],[-2.056,-1.337,-1.839,"H"],[2.793,1.787,-1.931,"H"],[-2.761,1.802,1.93,"H"],[4.077,-0.004,1.771,"H"],[-4.055,0.02,-1.771,"H"],[4.693,2.292,-0.905,"H"],[-4.659,2.317,0.905,"H"]],"bonds":[[0,15,1],[0,31,1],[1,16,1],[1,32,1],[2,3,1],[2,4,1],[2,5,1],[2,6,1],[3,7,2],[3,9,1],[4,8,2],[4,10,1],[5,17,1],[5,18,1],[5,19,1],[6,20,1],[6,21,1],[6,22,1],[7,11,1],[7,23,1],[8,12,1],[8,24,1],[9,13,2],[9,25,1],[10,14,2],[10,26,1],[11,15,2],[11,27,1],[12,16,2],[12,28,1],[13,15,1],[13,29,1],[14,16,1],[14,30,1]],"radius":5.014},"BPE":{"cid":608116,"name":"Bisphenol E","formula":"C14H14O2","mw":214.26,"logp":3.9,"atoms":[[-4.721,-1.566,0.094,"O"],[4.688,-1.615,0.225,"O"],[0.006,1.492,-0.284,"C"],[-1.243,0.683,-0.184,"C"],[1.279,0.647,-0.146,"C"],[0.056,2.732,0.644,"C"],[-1.779,0.084,-1.324,"C"],[2.156,0.607,-1.202,"C"],[-1.875,0.527,1.049,"C"],[1.488,-0.034,1.029,"C"],[-2.948,-0.672,-1.23,"C"],[3.314,-0.161,-1.076,"C"],[-3.044,-0.229,1.143,"C"],[2.646,-0.801,1.155,"C"],[-3.58,-0.829,0.004,"C"],[3.559,-0.865,0.103,"C"],[0.006,1.927,-1.296,"H"],[0.921,3.357,0.393,"H"],[0.152,2.466,1.702,"H"],[-0.845,3.344,0.527,"H"],[-1.297,0.195,-2.291,"H"],[1.975,1.151,-2.124,"H"],[-1.484,0.973,1.958,"H"],[0.799,0.011,1.865,"H"],[-3.355,-1.134,-2.125,"H"],[4.021,-0.206,-1.9,"H"],[-3.531,-0.349,2.107,"H"],[2.826,-1.343,2.08,"H"],[-4.948,-1.905,-0.788,"H"],[4.695,-2.032,1.103,"H"]],"bonds":[[0,14,1],[0,28,1],[1,15,1],[1,29,1],[2,3,1],[2,4,1],[2,5,1],[2,16,1],[3,6,2],[3,8,1],[4,7,2],[4,9,1],[5,17,1],[5,18,1],[5,19,1],[6,10,1],[6,20,1],[7,11,1],[7,21,1],[8,12,2],[8,22,1],[9,13,2],[9,23,1],[10,14,2],[10,24,1],[11,15,2],[11,25,1],[12,14,1],[12,26,1],[13,15,1],[13,27,1]],"radius":4.974},"BPG":{"cid":228537,"name":"Bisphenol G","formula":"C21H28O2","mw":312.4,"logp":6.3,"atoms":[[4.468,1.188,1.455,"O"],[-4.447,1.156,-1.496,"O"],[0.002,-1.957,0.04,"C"],[1.182,-1.124,0.409,"C"],[-1.232,-1.091,-0.381,"C"],[-0.546,-2.903,1.175,"C"],[0.43,-2.953,-1.095,"C"],[1.742,-0.253,-0.526,"C"],[-1.728,-0.223,0.54,"C"],[2.846,0.526,-0.18,"C"],[-2.828,0.548,0.164,"C"],[3.432,1.453,-1.193,"C"],[-3.409,1.517,1.14,"C"],[1.727,-1.215,1.691,"C"],[-1.718,-1.27,-1.638,"C"],[3.39,0.435,1.101,"C"],[-3.373,0.411,-1.113,"C"],[2.831,-0.436,2.036,"C"],[-2.818,-0.498,-2.014,"C"],[2.437,2.542,-1.637,"C"],[3.978,0.709,-2.425,"C"],[-2.408,2.616,1.543,"C"],[-3.959,0.823,2.4,"C"],[0.21,-3.637,1.48,"H"],[-0.856,-2.355,2.072,"H"],[-1.421,-3.468,0.828,"H"],[1.279,-3.564,-0.758,"H"],[-0.371,-3.653,-1.36,"H"],[0.764,-2.445,-2.007,"H"],[1.316,-0.179,-1.523,"H"],[-1.293,-0.119,1.528,"H"],[4.287,1.987,-0.761,"H"],[-4.261,2.038,0.689,"H"],[1.331,-1.876,2.454,"H"],[-1.331,-1.953,-2.381,"H"],[3.245,-0.517,3.038,"H"],[-3.233,-0.614,-3.012,"H"],[1.579,2.121,-2.171,"H"],[2.926,3.258,-2.306,"H"],[2.055,3.096,-0.772,"H"],[4.705,-0.055,-2.127,"H"],[4.482,1.406,-3.102,"H"],[3.183,0.212,-2.991,"H"],[-1.552,2.211,2.092,"H"],[-2.892,3.36,2.184,"H"],[-2.024,3.135,0.657,"H"],[-4.69,0.053,2.132,"H"],[-4.459,1.549,3.051,"H"],[-3.166,0.344,2.985,"H"],[4.704,0.992,2.378,"H"],[-4.684,0.925,-2.41,"H"]],"bonds":[[0,15,1],[0,49,1],[1,16,1],[1,50,1],[2,3,1],[2,4,1],[2,5,1],[2,6,1],[3,7,2],[3,13,1],[4,8,2],[4,14,1],[5,23,1],[5,24,1],[5,25,1],[6,26,1],[6,27,1],[6,28,1],[7,9,1],[7,29,1],[8,10,1],[8,30,1],[9,11,1],[9,15,2],[10,12,1],[10,16,2],[11,19,1],[11,20,1],[11,31,1],[12,21,1],[12,22,1],[12,32,1],[13,17,2],[13,33,1],[14,18,2],[14,34,1],[15,17,1],[16,18,1],[17,35,1],[18,36,1],[19,37,1],[19,38,1],[19,39,1],[20,40,1],[20,41,1],[20,42,1],[21,43,1],[21,44,1],[21,45,1],[22,46,1],[22,47,1],[22,48,1]],"radius":4.847},"BPAP":{"cid":623849,"name":"Bisphenol AP","formula":"C20H18O2","mw":290.4,"logp":4.4,"atoms":[[-4.785,-2.202,-0.731,"O"],[4.354,-2.98,-0.661,"O"],[0.025,0.36,0.73,"C"],[-1.329,-0.362,0.319,"C"],[1.244,-0.58,0.339,"C"],[0.148,1.754,0.213,"C"],[0.014,0.376,2.322,"C"],[-1.313,-1.053,-0.839,"C"],[2.224,-0.018,-0.399,"C"],[-2.368,-0.215,1.167,"C"],[1.185,-1.854,0.78,"C"],[-0.469,2.109,-0.986,"C"],[0.879,2.701,0.93,"C"],[-2.503,-1.685,-1.2,"C"],[3.294,-0.844,-0.743,"C"],[-3.557,-0.848,0.805,"C"],[2.256,-2.68,0.435,"C"],[-0.354,3.413,-1.47,"C"],[0.993,4.005,0.447,"C"],[-3.625,-1.583,-0.378,"C"],[3.31,-2.175,-0.326,"C"],[0.377,4.36,-0.753,"C"],[-0.312,-0.574,2.765,"H"],[-0.609,1.179,2.736,"H"],[1.025,0.539,2.718,"H"],[-0.468,-1.121,-1.514,"H"],[2.259,1.001,-0.756,"H"],[-2.386,0.378,2.069,"H"],[0.379,-2.265,1.375,"H"],[-1.035,1.413,-1.593,"H"],[1.398,2.468,1.853,"H"],[-2.545,-2.249,-2.129,"H"],[4.108,-0.439,-1.338,"H"],[-4.432,-0.757,1.444,"H"],[2.263,-3.716,0.764,"H"],[-0.83,3.689,-2.406,"H"],[1.568,4.742,1.0,"H"],[0.468,5.375,-1.131,"H"],[-4.651,-2.664,-1.576,"H"],[4.991,-2.466,-1.188,"H"]],"bonds":[[0,19,1],[0,38,1],[1,20,1],[1,39,1],[2,3,1],[2,4,1],[2,5,1],[2,6,1],[3,7,2],[3,9,1],[4,8,2],[4,10,1],[5,11,2],[5,12,1],[6,22,1],[6,23,1],[6,24,1],[7,13,1],[7,25,1],[8,14,1],[8,26,1],[9,15,2],[9,27,1],[10,16,2],[10,28,1],[11,17,1],[11,29,1],[12,18,2],[12,30,1],[13,19,2],[13,31,1],[14,20,2],[14,32,1],[15,19,1],[15,33,1],[16,20,1],[16,34,1],[17,21,2],[17,35,1],[18,21,1],[18,36,1],[21,37,1]],"radius":5.318},"BPZ":{"cid":232446,"name":"Bisphenol Z","formula":"C18H20O2","mw":268.3,"logp":5.4,"atoms":[[-3.978,-3.143,0.045,"O"],[5.09,-1.6,0.005,"O"],[-0.011,0.949,-0.022,"C"],[-0.209,1.868,-1.28,"C"],[-0.054,1.926,1.208,"C"],[-1.479,2.72,-1.231,"C"],[-1.282,2.843,1.267,"C"],[-1.474,3.635,-0.017,"C"],[-1.091,-0.165,-0.004,"C"],[1.381,0.254,-0.015,"C"],[-1.572,-0.646,1.212,"C"],[1.999,-0.074,-1.219,"C"],[-1.577,-0.681,-1.204,"C"],[2.004,-0.039,1.197,"C"],[-2.543,-1.647,1.228,"C"],[3.247,-0.697,-1.212,"C"],[-2.547,-1.682,-1.188,"C"],[3.252,-0.663,1.203,"C"],[-3.031,-2.166,0.028,"C"],[3.873,-0.992,-0.001,"C"],[-0.193,1.335,-2.234,"H"],[0.648,2.556,-1.343,"H"],[0.834,2.576,1.177,"H"],[-0.012,1.416,2.175,"H"],[-2.374,2.089,-1.22,"H"],[-1.539,3.331,-2.139,"H"],[-1.179,3.536,2.11,"H"],[-2.18,2.246,1.463,"H"],[-0.667,4.371,-0.116,"H"],[-2.413,4.197,0.03,"H"],[-1.209,-0.286,2.167,"H"],[1.541,0.12,-2.182,"H"],[-1.215,-0.37,-2.176,"H"],[1.555,0.161,2.162,"H"],[-2.909,-2.019,2.182,"H"],[3.725,-0.955,-2.154,"H"],[-2.918,-2.088,-2.125,"H"],[3.726,-0.894,2.153,"H"],[-4.195,-3.355,0.968,"H"],[5.375,-1.728,0.926,"H"]],"bonds":[[0,18,1],[0,38,1],[1,19,1],[1,39,1],[2,3,1],[2,4,1],[2,8,1],[2,9,1],[3,5,1],[3,20,1],[3,21,1],[4,6,1],[4,22,1],[4,23,1],[5,7,1],[5,24,1],[5,25,1],[6,7,1],[6,26,1],[6,27,1],[7,28,1],[7,29,1],[8,10,2],[8,12,1],[9,11,2],[9,13,1],[10,14,1],[10,30,1],[11,15,1],[11,31,1],[12,16,2],[12,32,1],[13,17,2],[13,33,1],[14,18,2],[14,34,1],[15,19,2],[15,35,1],[16,18,1],[16,36,1],[17,19,1],[17,37,1]],"radius":5.336},"DPA":{"cid":11487,"name":"Diphenylamine","formula":"C12H11N","mw":169.22,"logp":3.5,"atoms":[[0.0,-1.04,0.001,"N"],[-1.291,-0.474,-0.03,"C"],[1.29,-0.475,0.031,"C"],[-2.364,-1.152,0.548,"C"],[2.364,-1.152,-0.549,"C"],[-1.495,0.765,-0.638,"C"],[1.496,0.765,0.639,"C"],[-3.641,-0.591,0.519,"C"],[3.641,-0.591,-0.52,"C"],[-2.772,1.326,-0.668,"C"],[2.773,1.325,0.668,"C"],[-3.845,0.647,-0.089,"C"],[3.845,0.647,0.088,"C"],[-0.001,-2.056,-0.0,"H"],[-2.218,-2.117,1.026,"H"],[2.217,-2.117,-1.027,"H"],[-0.683,1.305,-1.116,"H"],[0.684,1.305,1.118,"H"],[-4.476,-1.119,0.969,"H"],[4.476,-1.119,-0.971,"H"],[-2.932,2.288,-1.146,"H"],[2.933,2.287,1.146,"H"],[-4.84,1.083,-0.113,"H"],[4.84,1.083,0.112,"H"]],"bonds":[[0,1,1],[0,2,1],[0,13,1],[1,3,2],[1,5,1],[2,4,2],[2,6,1],[3,7,1],[3,14,1],[4,8,1],[4,15,1],[5,9,2],[5,16,1],[6,10,2],[6,17,1],[7,11,2],[7,18,1],[8,12,2],[8,19,1],[9,11,1],[9,20,1],[10,12,1],[10,21,1],[11,22,1],[12,23,1]],"radius":3.9},"MA":{"cid":7813,"name":"4-Methylaniline","formula":"C7H9N","mw":107.15,"logp":1.4,"atoms":[[-2.815,0.0,-0.0,"N"],[1.385,0.0,-0.0,"C"],[-1.405,-0.0,0.0,"C"],[0.687,-1.208,0.0,"C"],[0.687,1.208,0.0,"C"],[-0.708,-1.208,0.0,"C"],[-0.708,1.208,0.0,"C"],[2.876,0.0,0.0,"C"],[1.219,-2.156,-0.002,"H"],[1.219,2.156,-0.002,"H"],[-1.24,-2.156,-0.0,"H"],[-1.24,2.156,-0.0,"H"],[3.271,0.879,0.521,"H"],[3.271,-0.882,0.515,"H"],[3.252,0.003,-1.028,"H"],[-3.321,0.876,-0.001,"H"],[-3.322,-0.875,-0.001,"H"]],"bonds":[[0,2,1],[0,15,1],[0,16,1],[1,3,2],[1,4,1],[1,7,1],[2,5,2],[2,6,1],[3,5,1],[3,8,1],[4,6,2],[4,9,1],[5,10,1],[6,11,1],[7,12,1],[7,13,1],[7,14,1]],"radius":2.876}};
+
+    const BRIDGE = {
+      BPA:  'C(CH₃)₂',
+      BPE:  'CH(CH₃)',
+      BPG:  'C(CH₃)₂, isopropyl-substituted rings',
+      BPAP: 'C(CH₃)(phenyl)',
+      BPZ:  'cyclohexylidene',
+      DPA:  'secondary amine (reference)',
+      MA:   'single ring (reference)'
+    };
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    /* compound table, built from the same verified data the 3D stage uses */
+    (() => {
+      const body = document.getElementById('cmpBody');
+      if (!body) return;
+      const rows = ['BPA','BPE','BPG','BPAP','BPZ','DPA','MA'];
+      const maxLog = Math.max(...rows.map(k => MOLECULES[k].logp));
+      body.innerHTML = rows.map(k => {
+        const m = MOLECULES[k];
+        const pct = Math.round(m.logp / maxLog * 100);
+        const ref = (k === 'DPA' || k === 'MA');
+        return `<tr${ref ? ' style="opacity:.72"' : ''}>
+          <td><b>${m.name}</b>${ref ? ' <span style="font-size:.76rem;color:var(--muted)">ref.</span>' : ''}</td>
+          <td class="muted">${BRIDGE[k]}</td>
+          <td>${m.formula.replace(/(\d+)/g, '<sub>$1</sub>')}</td>
+          <td>${m.mw.toFixed(2)}</td>
+          <td>${m.logp.toFixed(1)}</td>
+          <td><div class="bar" style="width:${pct}%"></div></td>
+          <td><a href="https://pubchem.ncbi.nlm.nih.gov/compound/${m.cid}" target="_blank" rel="noopener">${m.cid}</a></td>
+        </tr>`;
+      }).join('');
+    })();
+
+    /* ---------- scroll-driven 3D molecule stage ----------
+       Real PubChem 3D conformers, drawn as ball-and-stick with a painter's-
+       algorithm depth sort and perspective projection. Scroll drives both the
+       rotation and which compound is on screen. */
+    (() => {
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const small = window.matchMedia('(max-width: 991px)');
+      const section = document.getElementById('walkthrough');
+      if (!section) return;
+      const stage = section.querySelector('.mol-stage');
+      const canvas = section.querySelector('.mol-canvas');
+      const ctx = canvas.getContext('2d');
+
+      const ELEM = {
+        C: { r: 0.30, col: [143, 184, 201] },
+        O: { r: 0.30, col: [255, 122, 107] },
+        N: { r: 0.30, col: [95, 168, 255] },
+        H: { r: 0.17, col: [200, 226, 240] }
+      };
+      const FALLBACK_ELEM = { r: 0.28, col: [190, 200, 210] };
+
+      /* which compound owns which stretch of scroll */
+      const STOPS = [
+        { k: 'BPA',  from: 0.00, to: 0.18 },
+        { k: 'BPE',  from: 0.18, to: 0.29 },
+        { k: 'BPG',  from: 0.29, to: 0.40 },
+        { k: 'BPAP', from: 0.40, to: 0.51 },
+        { k: 'BPZ',  from: 0.51, to: 0.67 },
+        { k: 'DPA',  from: 0.67, to: 0.77 },
+        { k: 'MA',   from: 0.77, to: 0.87 },
+        { k: 'BPA',  from: 0.87, to: 1.01 }
+      ];
+      const SWAP = 0.028;   // cross-fade window at each boundary
+
+      /* A single global rotation lands each compound at an arbitrary angle, and
+         a bisphenol seen edge-on is unreadable. Pick, per molecule, the rotation
+         that spreads its heavy atoms widest, and spin around that. */
+      const BEST = {};
+      function bestAngle(mol) {
+        let best = 0, bestScore = -1;
+        for (let a = 0; a < Math.PI; a += Math.PI / 60) {
+          const c = Math.cos(a), s = Math.sin(a);
+          let minX = 1e9, maxX = -1e9, minY = 1e9, maxY = -1e9;
+          for (const at of mol.atoms) {
+            if (at[3] === 'H') continue;
+            const x = at[0] * c - at[2] * s, y = at[1];
+            if (x < minX) minX = x;
+            if (x > maxX) maxX = x;
+            if (y < minY) minY = y;
+            if (y > maxY) maxY = y;
+          }
+          const score = (maxX - minX) * (maxY - minY);
+          if (score > bestScore) { bestScore = score; best = a; }
+        }
+        return best;
+      }
+      for (const k in MOLECULES) BEST[k] = bestAngle(MOLECULES[k]);
+
+      const beats = [...section.querySelectorAll('.mol-beat')].map(el => {
+        const [a, b] = el.dataset.band.split(',').map(Number);
+        return { el, a, b, lastOpacity: -1, lastK: -1 };
+      });
+
+      const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+      const smoothstep = (p, e0, e1) => { const t = clamp((p - e0) / (e1 - e0), 0, 1); return t * t * (3 - 2 * t); };
+
+      function progress() {
+        const range = section.offsetHeight - window.innerHeight;
+        if (range <= 0) return 0;
+        return clamp(-section.getBoundingClientRect().top / range, 0, 1);
+      }
+
+      /* returns up to two compounds with blend weights */
+      function activeMix(p) {
+        for (let i = 0; i < STOPS.length; i++) {
+          const s = STOPS[i];
+          if (p < s.from || p >= s.to) continue;
+          const local = clamp((p - s.from) / (s.to - s.from), 0, 1);
+          const next = STOPS[i + 1];
+          if (next && p > s.to - SWAP) {
+            const t = smoothstep(p, s.to - SWAP, s.to);
+            const nl = clamp((p - next.from) / (next.to - next.from), 0, 1);
+            return [{ k: s.k, w: 1 - t, local }, { k: next.k, w: t, local: nl }];
+          }
+          return [{ k: s.k, w: 1, local }];
+        }
+        return [{ k: STOPS[STOPS.length - 1].k, w: 1, local: 1 }];
+      }
+
+      function sizeCanvas() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.round(stage.clientWidth * dpr);
+        canvas.height = Math.round(stage.clientHeight * dpr);
+      }
+
+      /* project one molecule and paint it, depth-sorted, at a given alpha */
+      function drawMolecule(mol, rotY, rotX, alpha, scaleMul) {
+        const W = canvas.width, H = canvas.height;
+        // put the model right of centre on wide screens so text has the left
+        const cx = W * (W / H > 1.15 ? 0.60 : 0.5), cy = H * 0.46;
+        const unit = Math.min(W, H) / (mol.radius * 2.35) * scaleMul;
+        const DIST = 26;
+
+        const cY = Math.cos(rotY), sY = Math.sin(rotY);
+        const cX = Math.cos(rotX), sX = Math.sin(rotX);
+
+        const pts = mol.atoms.map(a => {
+          let x = a[0], y = a[1], z = a[2];
+          let nx = x * cY - z * sY, nz = x * sY + z * cY;
+          let ny = y * cX - nz * sX; nz = y * sX + nz * cX;
+          const f = DIST / (DIST - nz);
+          return { x: cx + nx * unit * f, y: cy - ny * unit * f, z: nz, f, el: a[3] };
+        });
+
+        const zs = pts.map(p => p.z);
+        const zMin = Math.min(...zs), zSpan = Math.max(1e-6, Math.max(...zs) - zMin);
+        const shade = z => 0.42 + 0.58 * ((z - zMin) / zSpan);   // far = dimmer
+
+        const items = [];
+        for (const b of mol.bonds) items.push({ type: 'b', z: (pts[b[0]].z + pts[b[1]].z) / 2, a: pts[b[0]], c: pts[b[1]] });
+        for (const p of pts) items.push({ type: 'a', z: p.z, p });
+        items.sort((m, n) => m.z - n.z);
+
+        ctx.globalAlpha = alpha;
+        ctx.lineCap = 'round';
+        for (const it of items) {
+          if (it.type === 'b') {
+            const s = shade(it.z);
+            const skip = it.a.el === 'H' || it.c.el === 'H';
+            ctx.strokeStyle = `rgba(${Math.round(150 * s)},${Math.round(190 * s)},${Math.round(205 * s)},${skip ? 0.5 : 0.92})`;
+            ctx.lineWidth = Math.max(1, unit * (skip ? 0.10 : 0.17) * it.a.f);
+            ctx.beginPath();
+            ctx.moveTo(it.a.x, it.a.y);
+            ctx.lineTo(it.c.x, it.c.y);
+            ctx.stroke();
+          } else {
+            const e = ELEM[it.p.el] || FALLBACK_ELEM;
+            const s = shade(it.p.z);
+            const rad = Math.max(1.2, e.r * unit * it.p.f);
+            const col = e.col.map(v => Math.round(v * s));
+            const hi = e.col.map(v => Math.round(Math.min(255, v * s * 1.55 + 42)));
+            const g = ctx.createRadialGradient(
+              it.p.x - rad * 0.35, it.p.y - rad * 0.4, rad * 0.1,
+              it.p.x, it.p.y, rad);
+            g.addColorStop(0, `rgb(${hi[0]},${hi[1]},${hi[2]})`);
+            g.addColorStop(1, `rgb(${col[0]},${col[1]},${col[2]})`);
+            ctx.fillStyle = g;
+            ctx.beginPath();
+            ctx.arc(it.p.x, it.p.y, rad, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+        ctx.globalAlpha = 1;
+      }
+
+      const hud = {
+        name: document.getElementById('hudName'), key: document.getElementById('hudKey'),
+        formula: document.getElementById('hudFormula'), mw: document.getElementById('hudMw'),
+        logp: document.getElementById('hudLogp'), cid: document.getElementById('hudCid')
+      };
+      let hudKey = null;
+      function updateHud(k) {
+        if (k === hudKey || !hud.name) return;
+        hudKey = k;
+        const m = MOLECULES[k];
+        hud.name.textContent = m.name;
+        hud.key.textContent = k;
+        hud.formula.innerHTML = m.formula.replace(/(\d+)/g, '<sub>$1</sub>');
+        hud.mw.textContent = m.mw.toFixed(2);
+        hud.logp.textContent = m.logp.toFixed(1);
+        hud.cid.textContent = m.cid;
+      }
+
+      let moved = false;
+      function updateBeats(p) {
+        for (let n = 0; n < beats.length; n++) {
+          const b = beats[n];
+          const f = Math.min(0.02, (b.b - b.a) / 3);
+          const fadeIn = n === 0 ? 1 : smoothstep(p, b.a, b.a + f);
+          const fadeOut = n === beats.length - 1 ? 1 : 1 - smoothstep(p, b.b - f, b.b);
+          const o = Number((fadeIn * fadeOut).toFixed(3));
+          const k = Number(clamp((p - b.a) / (f || 0.02), 0, 1).toFixed(3));
+          if (o !== b.lastOpacity) {
+            b.lastOpacity = o;
+            b.el.style.opacity = o;
+            b.el.style.visibility = o < 0.01 ? 'hidden' : 'visible';
+          }
+          if (k !== b.lastK) { b.lastK = k; b.el.style.setProperty('--k', k); }
+        }
+        const m = p > 0.03;
+        if (m !== moved) { moved = m; section.classList.toggle('moved', m); }
+      }
+
+      function render(p) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const SPIN = 1.5;                            // radians swept while a compound is on screen
+        const mix = activeMix(p);
+        for (const part of mix) {
+          const mol = MOLECULES[part.k];
+          if (!mol || part.w < 0.01) continue;
+          const rotY = (BEST[part.k] || 0) + (part.local - 0.5) * SPIN;
+          const rotX = Math.sin(part.local * Math.PI) * 0.26 - 0.1;
+          drawMolecule(mol, rotY, rotX, part.w, 0.86 + 0.14 * part.w);
+        }
+        updateHud(mix.reduce((a, b) => (b.w >= a.w ? b : a)).k);
+        updateBeats(p);
+      }
+
+      let target = 0, shown = 0, rafId = null, lastTick = 0, onScreen = true;
+      function tick(now) {
+        const dt = Math.min(100, now - (lastTick || now));
+        lastTick = now;
+        shown += (target - shown) * (1 - Math.pow(1 - 0.12, dt / 16.667));
+        if (Math.abs(target - shown) < 0.0002) { shown = target; rafId = null; lastTick = 0; }
+        else rafId = requestAnimationFrame(tick);
+        render(shown);
+      }
+      function onScroll() {
+        target = progress();
+        if (rafId === null && onScreen) { lastTick = 0; rafId = requestAnimationFrame(tick); }
+      }
+
+      if (prefersReducedMotion.matches || small.matches) return;   // static title card
+
+      section.classList.add('live');
+      sizeCanvas();
+      shown = target = progress();
+      render(shown);                                  // paint synchronously, not on first rAF
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      document.addEventListener('visibilitychange', () => { if (!document.hidden) onScroll(); });
+      let rt;
+      window.addEventListener('resize', () => {
+        clearTimeout(rt);
+        rt = setTimeout(() => { sizeCanvas(); render(shown); }, 150);
+      });
+      new IntersectionObserver(e => {
+        onScreen = e[0].isIntersecting;
+        if (onScreen && rafId === null) { lastTick = 0; rafId = requestAnimationFrame(tick); }
+      }, { rootMargin: '10% 0px' }).observe(section);
+    })();
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "Comparative effect assessment of bisphenol analogs by high content analysis in zebrafish (Danio rerio) embryos",
+    "author": [
+      { "@type": "Person", "name": "Muhammad Arslan Aslam" },
+      { "@type": "Person", "name": "Riccardo Massei" },
+      { "@type": "Person", "name": "Stefan Scholz" }
+    ],
+    "isPartOf": { "@type": "Periodical", "name": "Aquatic Toxicology" },
+    "volumeNumber": "295",
+    "pageStart": "107822",
+    "datePublished": "2026-06",
+    "sameAs": "https://doi.org/10.1016/j.aquatox.2026.107822",
+    "identifier": "https://doi.org/10.1016/j.aquatox.2026.107822"
+  }
+  </script>
+</body>
+</html>

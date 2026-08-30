@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The scientific journey | Muhammad Arslan Aslam</title>
+  <meta name="description" content="From an e-waste survey in Faisalabad to zebrafish embryo toxicology in Leipzig: the route, the degrees, and the questions that connect them." />
+  <link rel="canonical" href="https://mian707.github.io/journey.html" />
+  <meta name="theme-color" content="#020812" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23041622'/><path d='M16 4.5l9.5 5.75v11.5L16 27.5 6.5 21.75V10.25z' fill='none' stroke='%2322f4df' stroke-width='2.2'/><circle cx='16' cy='16' r='3.1' fill='%2322f4df'/></svg>" />
+
+  <meta property="og:type" content="profile" />
+  <meta property="og:url" content="https://mian707.github.io/journey.html" />
+  <meta property="og:title" content="The scientific journey — Muhammad Arslan Aslam" />
+  <meta property="og:description" content="Faisalabad to Leipzig: 8,171 km, four countries, and one question that kept narrowing." />
+  <meta property="og:image" content="https://mian707.github.io/assets/og-cover.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --line: rgba(39,238,224,0.32); --text: #f5fbff; --muted: #b8c7d4;
+      --accent: #22f4df; --accent-2: #59a8ff;
+      --tshadow: 0 1px 2px rgba(2,6,12,.95), 0 3px 12px rgba(2,6,12,.78), 0 10px 44px rgba(2,6,12,.8);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; overflow-x: clip; }
+    body {
+      margin: 0; font-family: 'Inter', system-ui, sans-serif; color: var(--text); overflow-x: clip;
+      background:
+        radial-gradient(circle at 78% 6%, rgba(34,244,223,0.13), transparent 30%),
+        radial-gradient(circle at 16% 18%, rgba(89,168,255,0.12), transparent 32%),
+        linear-gradient(180deg, #020812 0%, #041322 54%, #020812 100%);
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: #9df3be; }
+
+    .navbar { background: rgba(2,8,18,0.72) !important; backdrop-filter: blur(16px); border-bottom: 1px solid rgba(34,244,223,0.16); }
+    .navbar-brand { color: var(--text) !important; }
+    .nav-link { font-size: 0.9rem; color: var(--muted) !important; }
+    .nav-link:hover { color: var(--accent) !important; }
+    .brand-logo {
+      width: 38px; height: 38px; display: grid; place-items: center; flex: 0 0 38px;
+      border: 1px solid rgba(34,244,223,0.35); border-radius: 12px; margin-right: 0.65rem;
+      color: var(--accent); background: rgba(34,244,223,0.05);
+    }
+    .brand-short { display: none; }
+
+    .glass {
+      background: linear-gradient(145deg, rgba(4,22,34,0.82), rgba(5,25,40,0.56));
+      border: 1px solid var(--line); border-radius: 20px;
+      box-shadow: 0 24px 70px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.05);
+      backdrop-filter: blur(16px);
+    }
+
+    /* ---------- pinned globe stage ---------- */
+    .globe-scroll { height: 100vh; position: relative; }
+    .globe-scroll.live { height: 620vh; }
+    .globe-stage { position: sticky; top: 0; height: 100vh; overflow: hidden; isolation: isolate; }
+    .globe-canvas { position: absolute; inset: 0; width: 100%; height: 100%; will-change: transform; transform: translateZ(0); }
+
+    .stop { display: none; }
+    .globe-scroll.live .stop {
+      display: flex; position: absolute; inset: 0; align-items: center;
+      pointer-events: none; opacity: 0; visibility: hidden; text-shadow: var(--tshadow);
+    }
+    .stop::before {
+      content: ""; position: absolute; inset: -4%; pointer-events: none;
+      opacity: calc(0.3 + 0.7 * var(--k, 1));
+      background: radial-gradient(ellipse 54% 58% at 24% 50%, rgba(2,6,12,0.74) 0%, rgba(2,6,12,0.46) 46%, rgba(2,6,12,0) 74%);
+    }
+    .stop-inner { position: relative; max-width: 540px; padding: 0 5vw; }
+    .stop-where { color: var(--accent); font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; font-size: 0.78rem; margin-bottom: 0.5rem; }
+    .stop-when { color: var(--muted); font-size: 0.82rem; margin-bottom: 0.9rem; font-variant-numeric: tabular-nums; }
+    .stop-title { font-size: clamp(1.6rem, 2.9vw, 2.5rem); font-weight: 850; letter-spacing: -0.035em; line-height: 1.15; margin-bottom: 0.9rem; }
+    .stop-body { color: #e6f2fa; line-height: 1.75; font-size: clamp(0.96rem, 1.1vw, 1.06rem); max-width: 44ch; }
+    .stop-body strong { color: var(--text); font-weight: 700; }
+
+    .legs {
+      position: absolute; right: 4vw; bottom: 6vh; display: none;
+      align-items: center; gap: 1.1rem; padding: 0.75rem 1.2rem; border-radius: 14px;
+      background: rgba(6,20,32,0.66); border: 1px solid rgba(34,244,223,0.26);
+      backdrop-filter: blur(12px); text-shadow: 0 1px 3px rgba(5,5,10,.85);
+    }
+    .globe-scroll.live .legs { display: flex; }
+    .legs-city { font-weight: 800; font-size: 1rem; white-space: nowrap; }
+    .legs-country { color: var(--accent); font-size: 0.74rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+    .legs-div { width: 1px; align-self: stretch; background: rgba(255,255,255,0.12); }
+    .legs-stat { display: flex; flex-direction: column; gap: 0.1rem; font-size: 0.82rem; }
+    .legs-stat span { color: var(--muted); font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; }
+    .legs-stat b { font-weight: 600; font-variant-numeric: tabular-nums; }
+
+    .globe-fallback { position: absolute; inset: 0; display: flex; align-items: center; }
+    .globe-scroll.live .globe-fallback { display: none; }
+
+    .scroll-cue {
+      position: absolute; left: 5vw; bottom: 6.5vh; display: none;
+      align-items: center; gap: 0.5rem; color: var(--muted);
+      font-size: 0.76rem; letter-spacing: 0.16em; text-transform: uppercase;
+      text-shadow: var(--tshadow); animation: cue 2.4s ease-in-out infinite;
+    }
+    .globe-scroll.live .scroll-cue { display: flex; }
+    .globe-scroll.live.moved .scroll-cue { opacity: 0; transition: opacity .4s ease; }
+    @keyframes cue { 0%,100% { translate: 0 0; } 50% { translate: 0 6px; } }
+
+    /* ---------- article body ---------- */
+    section.page { padding: 5rem 0; position: relative; }
+    .section-title { font-size: clamp(1.55rem, 2.6vw, 2.25rem); font-weight: 850; letter-spacing: -0.035em; margin-bottom: 1rem; }
+    .muted { color: var(--muted); line-height: 1.75; }
+    .lede { font-size: 1.1rem; line-height: 1.85; color: #e6f2fa; }
+
+    .tl { position: relative; padding-left: 2rem; }
+    .tl::before { content: ""; position: absolute; left: 7px; top: 6px; bottom: 6px; width: 2px; background: linear-gradient(180deg, var(--accent), rgba(34,244,223,0.15)); }
+    .tl-item { position: relative; padding-bottom: 2.1rem; }
+    .tl-item::before {
+      content: ""; position: absolute; left: -2rem; top: 5px; width: 16px; height: 16px; border-radius: 50%;
+      background: #041622; border: 2px solid var(--accent); box-shadow: 0 0 12px rgba(34,244,223,0.4);
+    }
+    .tl-when { color: var(--accent); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; }
+    .tl-what { font-weight: 800; font-size: 1.08rem; margin: 0.3rem 0 0.15rem; letter-spacing: -0.02em; }
+    .tl-where { color: var(--muted); font-size: 0.9rem; margin-bottom: 0.5rem; }
+
+    .chip {
+      display: inline-block; padding: 0.32rem 0.8rem; border-radius: 999px; font-size: 0.78rem;
+      background: rgba(34,244,223,0.08); border: 1px solid rgba(34,244,223,0.28); color: var(--accent);
+      margin: 0 0.35rem 0.5rem 0; font-weight: 600;
+    }
+    .stat-big { font-size: 2rem; font-weight: 900; color: var(--accent); line-height: 1; }
+    footer { padding: 2rem 0; color: var(--muted); border-top: 1px solid rgba(34,244,223,0.15); }
+
+    @media (max-width: 991px) {
+      .legs { display: none !important; }
+      .stop-inner { max-width: 100%; }
+    }
+    @media (max-width: 640px) {
+      .navbar .container-fluid { flex-wrap: nowrap; gap: 0.5rem; }
+      .navbar-brand { font-size: 0.84rem; line-height: 1.2; min-width: 0; flex: 0 1 auto; overflow: hidden; }
+      .brand-full { display: none; }
+      .brand-short { display: inline; white-space: nowrap; }
+      .brand-logo { width: 30px; height: 30px; flex: 0 0 30px; border-radius: 9px; margin-right: 0.45rem; }
+      .navbar .nav-link { font-size: 0.74rem; white-space: nowrap; padding: 0 !important; }
+      .navbar .ms-auto { gap: 0.8rem !important; flex: 0 0 auto; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar fixed-top">
+    <div class="container-fluid px-lg-4">
+      <a class="navbar-brand fw-bold d-flex align-items-center" href="index.html">
+        <span class="brand-logo"><i class="bi bi-eyedropper"></i></span>
+        <span class="brand-full">Muhammad Arslan Aslam</span><span class="brand-short">M. A. Aslam</span>
+      </a>
+      <div class="ms-auto d-flex gap-3 align-items-center">
+        <a class="nav-link" href="index.html"><i class="bi bi-arrow-left me-1"></i>Portfolio</a>
+        <a class="nav-link" href="bisphenol-analogs.html">The paper</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section id="route" class="globe-scroll">
+      <div class="globe-stage">
+        <canvas class="globe-canvas" aria-hidden="true"></canvas>
+
+        <div class="stop" data-band="0,0.21">
+          <div class="stop-inner">
+            <div class="stop-where">Faisalabad &middot; Pakistan</div>
+            <div class="stop-when">BSc Environmental Sciences &middot; 3.84 / 4, bronze medallist</div>
+            <h1 class="stop-title">It started with where things end up.</h1>
+            <p class="stop-body">An undergraduate survey of electronic waste in Faisalabad: who knows what it is, what people do with it, and whether they would do otherwise. <strong>75% had not heard of e-waste. 82% did not know its hazards. 45% relied on informal recycling &mdash; and 91% said they would join a formal scheme.</strong> The question was already there: what happens to discarded chemicals, and to whoever meets them next.</p>
+          </div>
+        </div>
+
+        <div class="stop" data-band="0.20,0.41">
+          <div class="stop-inner">
+            <div class="stop-where">Bordeaux &middot; France</div>
+            <div class="stop-when">Sept 2022 &mdash; Erasmus Mundus MSc, first semester</div>
+            <h2 class="stop-title">A scholarship, and a degree that moves.</h2>
+            <p class="stop-body">The Erasmus Mundus MSc in <strong>Marine Environment and Resources</strong> does not sit in one place. Four institutions, four countries, one thread. Bordeaux was the first.</p>
+          </div>
+        </div>
+
+        <div class="stop" data-band="0.40,0.61">
+          <div class="stop-inner">
+            <div class="stop-where">Bilbao &middot; Spain</div>
+            <div class="stop-when">2nd semester &middot; research internship, Jan &ndash; Jun 2023</div>
+            <h2 class="stop-title">The first embryos.</h2>
+            <p class="stop-body">At the UPV/EHU <strong>PIE Marine Station</strong>: preparing water accommodated fractions from heavy and light oils, running sea urchin embryo toxicity tests, and quantifying the chemicals by LC-HRMS. Fertilisation success fell. Larval development faltered. This is where the work moved from surveying chemicals to measuring what they do to something developing.</p>
+          </div>
+        </div>
+
+        <div class="stop" data-band="0.60,0.79">
+          <div class="stop-inner">
+            <div class="stop-where">Li&egrave;ge &middot; Belgium</div>
+            <div class="stop-when">3rd semester</div>
+            <h2 class="stop-title">Third country, same thread.</h2>
+            <p class="stop-body">The last taught semester of the MER programme before the thesis &mdash; and before the move to Germany that turned the thread into a specialism.</p>
+          </div>
+        </div>
+
+        <div class="stop" data-band="0.78,1">
+          <div class="stop-inner">
+            <div class="stop-where">Leipzig &middot; Germany</div>
+            <div class="stop-when">Helmholtz Centre for Environmental Research (UFZ) &middot; 2024 &ndash; present</div>
+            <h2 class="stop-title">Where the question got specific.</h2>
+            <p class="stop-body">The master thesis &mdash; a high-content zebrafish assay comparing BPA with four of its substitutes &mdash; <strong>became a paper in Aquatic Toxicology</strong>. The work continued into three European projects: PARC, PrecisionTox, and DiPEM. From &ldquo;where do chemicals go&rdquo; to &ldquo;which endpoint, at which concentration, by which mechanism&rdquo;.</p>
+          </div>
+        </div>
+
+        <div class="legs" aria-hidden="true">
+          <div>
+            <div class="legs-city" id="legCity">Faisalabad</div>
+            <div class="legs-country" id="legCountry">Pakistan</div>
+          </div>
+          <div class="legs-div"></div>
+          <div class="legs-stat"><span>Stop</span><b id="legStop">1 / 5</b></div>
+          <div class="legs-stat"><span>Travelled</span><b id="legKm">0 km</b></div>
+        </div>
+
+        <div class="globe-fallback">
+          <div class="stop-inner">
+            <div class="stop-where">The scientific journey</div>
+            <h1 class="stop-title">Faisalabad to Leipzig, 8,171 km.</h1>
+            <p class="stop-body">An undergraduate e-waste survey in Pakistan, an Erasmus Mundus master's across France, Spain and Belgium, and a zebrafish toxicology thesis in Germany that became a published paper. Four countries, one narrowing question.</p>
+            <a class="chip mt-3" href="#education">See the timeline <i class="bi bi-arrow-down ms-1"></i></a>
+          </div>
+        </div>
+
+        <div class="scroll-cue" aria-hidden="true"><i class="bi bi-chevron-down"></i> Scroll</div>
+      </div>
+    </section>
+
+    <section class="page" id="education">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <h2 class="section-title">Education and training</h2>
+            <div class="tl mt-4">
+              <div class="tl-item">
+                <div class="tl-when">2024 &ndash; present</div>
+                <div class="tl-what">Researcher, Department of Ecotoxicology</div>
+                <div class="tl-where">Helmholtz Centre for Environmental Research (UFZ) &middot; Leipzig, Germany</div>
+                <p class="muted mb-0">Zebrafish embryo toxicity across three European projects &mdash; <strong>PARC</strong> (BPA and four analogues), <strong>PrecisionTox</strong> (high-throughput phenotypic screening of 200 chemicals, specificity ratios for mode-of-action inference), and <strong>DiPEM</strong> (mechanistically anchored digital biomarkers linking phenotype to adverse outcome pathways, supporting embryo-based NAMs over adult FSTRA under the 3Rs).</p>
+              </div>
+              <div class="tl-item">
+                <div class="tl-when">Sept 2022 &ndash; Aug 2024</div>
+                <div class="tl-what">Erasmus Mundus MSc, Marine Environment and Resources</div>
+                <div class="tl-where">Bordeaux (FR) &middot; UPV/EHU (ES) &middot; Li&egrave;ge (BE) &middot; UFZ (DE)</div>
+                <p class="muted mb-0">Thesis: <em>Comparative toxicity assessment of bisphenol additives using a high content zebrafish assay</em> &mdash; supervised by Dr Stefan Scholz, UFZ. Published in <em>Aquatic Toxicology</em> (2026). <a href="bisphenol-analogs.html">Walk through the paper &rarr;</a></p>
+              </div>
+              <div class="tl-item">
+                <div class="tl-when">Jan &ndash; Jun 2023</div>
+                <div class="tl-what">Research intern, PIE Marine Station</div>
+                <div class="tl-where">University of the Basque Country (UPV/EHU) &middot; Bilbao, Spain</div>
+                <p class="muted mb-0">Water accommodated fractions of heavy and light oils for sea urchin embryo toxicity testing; chemical identification and quantification by LC-HRMS. Significant reductions in fertilisation success and larval development.</p>
+              </div>
+              <div class="tl-item">
+                <div class="tl-when">Undergraduate</div>
+                <div class="tl-what">BSc Environmental Sciences &mdash; 3.84 / 4, bronze medallist</div>
+                <div class="tl-where">Government College University Faisalabad &middot; Pakistan</div>
+                <p class="muted mb-0">Thesis: <em>Awareness, disposal behaviours, willingness, and inflow of electronic waste in Faisalabad, Pakistan</em> &mdash; a mixed-methods study of surveys, field visits and questionnaires. Published in the <em>International Journal of Environment and Waste Management</em> (2025).</p>
+              </div>
+              <div class="tl-item">
+                <div class="tl-when">Specialisation</div>
+                <div class="tl-what">Concepts of Toxicology and Chemicals</div>
+                <div class="tl-where">Johns Hopkins University</div>
+                <p class="muted mb-0">Toxicology 21 and pathways of toxicity; risk assessment, regulatory frameworks, evidence-based toxicology, systematic review and meta-analysis, and bias in toxicity assays.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="awards">
+      <div class="container">
+        <div class="row justify-content-center g-4">
+          <div class="col-lg-8">
+            <h2 class="section-title">Awards and recognition</h2>
+            <div class="row g-3 mt-1">
+              <div class="col-md-4"><div class="glass p-3 h-100">
+                <h5 class="fw-bold" style="font-size:1rem">European Erasmus Mundus Scholarship</h5>
+                <p class="muted mb-0" style="font-size:.88rem">Full scholarship for the MER programme across four institutions.</p>
+              </div></div>
+              <div class="col-md-4"><div class="glass p-3 h-100">
+                <h5 class="fw-bold" style="font-size:1rem">Her Majesty the Queen&rsquo;s Scholarship</h5>
+                <p class="muted mb-0" style="font-size:.88rem">Asian Institute of Technology, Thailand.</p>
+              </div></div>
+              <div class="col-md-4"><div class="glass p-3 h-100">
+                <h5 class="fw-bold" style="font-size:1rem">Bronze medal &middot; 2nd in university</h5>
+                <p class="muted mb-0" style="font-size:.88rem">Ministry of Education, Pakistan.</p>
+              </div></div>
+            </div>
+
+            <h2 class="section-title mt-5">Presented at</h2>
+            <p class="muted mb-3">
+              PrecisionTox Annual Consortium Meeting, Brussels, June 2024 (presenter) &middot;
+              PARC Consortium Meeting, Hall in Tirol, Austria, May 2024 (poster) &middot;
+              AIT Sustainability Hackathon, 2021 (project presenter).
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="next">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <div class="glass p-4 p-lg-5">
+              <h2 class="section-title">Where it goes next</h2>
+              <p class="lede mb-4">The route from an e-waste questionnaire to automated phenotype screening was not planned as a straight line, but it reads as one: each stop narrowed the same question from <em>where do chemicals end up</em> to <em>what exactly do they do, and at what concentration</em>.</p>
+              <a class="chip" href="bisphenol-analogs.html">Read the bisphenol study <i class="bi bi-arrow-right ms-1"></i></a>
+              <a class="chip" href="index.html#contact">Get in touch <i class="bi bi-envelope ms-1"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container d-flex flex-wrap justify-content-between gap-2">
+      <span>&copy; <span id="year"></span> Muhammad Arslan Aslam</span>
+      <span><a href="index.html">Back to portfolio</a></span>
+    </div>
+  </footer>
+
+  <script>
+    const JOURNEY = {"cities":[{"key":"fsd","city":"Faisalabad","country":"Pakistan","lat":31.4187,"lon":73.0791,"v":[0.8164,0.5213,0.2484]},{"key":"bdx","city":"Bordeaux","country":"France","lat":44.8378,"lon":-0.5792,"v":[-0.0072,0.7051,0.7091]},{"key":"bio","city":"Bilbao","country":"Spain","lat":43.263,"lon":-2.935,"v":[-0.0373,0.6853,0.7273]},{"key":"lgg","city":"Li\u00e8ge","country":"Belgium","lat":50.6326,"lon":5.5797,"v":[0.0617,0.7731,0.6313]},{"key":"lej","city":"Leipzig","country":"Germany","lat":51.3397,"lon":12.3731,"v":[0.1339,0.7809,0.6102]}],"arcs":[[[0.8164,0.5213,0.2484],[0.8029,0.5338,0.2654],[0.7889,0.5459,0.2823],[0.7743,0.5577,0.299],[0.7593,0.5691,0.3155],[0.7438,0.5802,0.3318],[0.7279,0.5909,0.3479],[0.7115,0.6013,0.3638],[0.6946,0.6112,0.3794],[0.6773,0.6208,0.3948],[0.6596,0.63,0.41],[0.6414,0.6388,0.4249],[0.6229,0.6472,0.4395],[0.6039,0.6552,0.4539],[0.5846,0.6627,0.468],[0.5649,0.6699,0.4817],[0.5449,0.6766,0.4952],[0.5245,0.6829,0.5084],[0.5038,0.6888,0.5212],[0.4828,0.6943,0.5338],[0.4614,0.6993,0.5459],[0.4398,0.7039,0.5578],[0.4179,0.708,0.5693],[0.3958,0.7117,0.5804],[0.3734,0.7149,0.5912],[0.3507,0.7177,0.6016],[0.3278,0.7201,0.6116],[0.3048,0.7219,0.6212],[0.2815,0.7234,0.6305],[0.2581,0.7243,0.6393],[0.2345,0.7249,0.6478],[0.2107,0.7249,0.6558],[0.1868,0.7245,0.6634],[0.1628,0.7237,0.6706],[0.1387,0.7224,0.6774],[0.1146,0.7206,0.6838],[0.0903,0.7184,0.6897],[0.066,0.7158,0.6952],[0.0416,0.7127,0.7003],[0.0172,0.7091,0.7049],[-0.0072,0.7051,0.7091]],[[-0.0072,0.7051,0.7091],[-0.0079,0.7046,0.7095],[-0.0087,0.7041,0.71],[-0.0094,0.7037,0.7105],[-0.0102,0.7032,0.7109],[-0.0109,0.7027,0.7114],[-0.0117,0.7022,0.7119],[-0.0124,0.7017,0.7123],[-0.0132,0.7012,0.7128],[-0.0139,0.7008,0.7133],[-0.0147,0.7003,0.7137],[-0.0155,0.6998,0.7142],[-0.0162,0.6993,0.7146],[-0.017,0.6988,0.7151],[-0.0177,0.6983,0.7156],[-0.0185,0.6978,0.716],[-0.0192,0.6973,0.7165],[-0.02,0.6968,0.7169],[-0.0207,0.6964,0.7174],[-0.0215,0.6959,0.7179],[-0.0222,0.6954,0.7183],[-0.023,0.6949,0.7188],[-0.0237,0.6944,0.7192],[-0.0245,0.6939,0.7197],[-0.0252,0.6934,0.7201],[-0.026,0.6929,0.7206],[-0.0267,0.6924,0.721],[-0.0275,0.6919,0.7215],[-0.0283,0.6914,0.7219],[-0.029,0.6909,0.7224],[-0.0298,0.6904,0.7228],[-0.0305,0.6899,0.7233],[-0.0313,0.6894,0.7237],[-0.032,0.6889,0.7242],[-0.0328,0.6884,0.7246],[-0.0335,0.6879,0.7251],[-0.0343,0.6874,0.7255],[-0.035,0.6869,0.7259],[-0.0358,0.6864,0.7264],[-0.0365,0.6859,0.7268],[-0.0373,0.6853,0.7273]],[[-0.0373,0.6853,0.7273],[-0.0348,0.6878,0.7251],[-0.0323,0.6902,0.7229],[-0.0299,0.6926,0.7207],[-0.0274,0.695,0.7185],[-0.0249,0.6974,0.7163],[-0.0224,0.6997,0.714],[-0.02,0.7021,0.7118],[-0.0175,0.7044,0.7095],[-0.015,0.7068,0.7073],[-0.0125,0.7091,0.705],[-0.0101,0.7114,0.7027],[-0.0076,0.7137,0.7004],[-0.0051,0.716,0.6981],[-0.0026,0.7183,0.6958],[-0.0002,0.7205,0.6934],[0.0023,0.7228,0.6911],[0.0048,0.725,0.6887],[0.0073,0.7273,0.6863],[0.0098,0.7295,0.6839],[0.0122,0.7317,0.6816],[0.0147,0.7339,0.6791],[0.0172,0.736,0.6767],[0.0197,0.7382,0.6743],[0.0221,0.7404,0.6719],[0.0246,0.7425,0.6694],[0.0271,0.7446,0.6669],[0.0296,0.7467,0.6645],[0.032,0.7488,0.662],[0.0345,0.7509,0.6595],[0.037,0.753,0.657],[0.0395,0.7551,0.6544],[0.0419,0.7571,0.6519],[0.0444,0.7592,0.6494],[0.0469,0.7612,0.6468],[0.0493,0.7632,0.6443],[0.0518,0.7652,0.6417],[0.0543,0.7672,0.6391],[0.0567,0.7692,0.6365],[0.0592,0.7711,0.6339],[0.0617,0.7731,0.6313]],[[0.0617,0.7731,0.6313],[0.0635,0.7733,0.6308],[0.0653,0.7736,0.6303],[0.0671,0.7738,0.6298],[0.0689,0.7741,0.6293],[0.0707,0.7743,0.6288],[0.0725,0.7745,0.6283],[0.0743,0.7748,0.6279],[0.0762,0.775,0.6274],[0.078,0.7752,0.6269],[0.0798,0.7755,0.6263],[0.0816,0.7757,0.6258],[0.0834,0.7759,0.6253],[0.0852,0.7761,0.6248],[0.087,0.7763,0.6243],[0.0888,0.7765,0.6238],[0.0906,0.7767,0.6233],[0.0924,0.7769,0.6228],[0.0942,0.7771,0.6222],[0.096,0.7773,0.6217],[0.0978,0.7775,0.6212],[0.0996,0.7777,0.6207],[0.1014,0.7779,0.6201],[0.1032,0.7781,0.6196],[0.1051,0.7783,0.6191],[0.1069,0.7785,0.6185],[0.1087,0.7787,0.618],[0.1105,0.7788,0.6174],[0.1123,0.779,0.6169],[0.1141,0.7792,0.6163],[0.1159,0.7793,0.6158],[0.1177,0.7795,0.6152],[0.1195,0.7797,0.6147],[0.1213,0.7798,0.6141],[0.1231,0.78,0.6136],[0.1249,0.7801,0.613],[0.1267,0.7803,0.6125],[0.1285,0.7804,0.6119],[0.1303,0.7806,0.6113],[0.1321,0.7807,0.6108],[0.1339,0.7809,0.6102]]]};
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    /* ---------- scroll-driven 3D globe ----------
+       Real city coordinates on a unit sphere, great-circle routes between them,
+       and a camera that rotates to bring each stop to face the viewer. Same
+       renderer idea as the molecule stage: project, depth-sort, paint. */
+    (() => {
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const small = window.matchMedia('(max-width: 991px)');
+      const section = document.getElementById('route');
+      if (!section) return;
+      const stage = section.querySelector('.globe-stage');
+      const canvas = section.querySelector('.globe-canvas');
+      const ctx = canvas.getContext('2d');
+
+      const CITIES = JOURNEY.cities, ARCS = JOURNEY.arcs;
+      const N = CITIES.length;
+      const D2R = Math.PI / 180;
+
+      /* camera keyframe at the centre of each stop's band */
+      const KEYS = CITIES.map((c, i) => ({
+        at: (i + 0.5) / N,
+        rotY: c.lon * D2R,
+        rotX: c.lat * D2R
+      }));
+
+      const stops = [...section.querySelectorAll('.stop')].map(el => {
+        const [a, b] = el.dataset.band.split(',').map(Number);
+        return { el, a, b, lastOpacity: -1, lastK: -1 };
+      });
+
+      const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+      const smoothstep = (p, e0, e1) => { const t = clamp((p - e0) / (e1 - e0), 0, 1); return t * t * (3 - 2 * t); };
+
+      /* cumulative great-circle distance, for the readout */
+      const R_EARTH = 6371;
+      const legKm = [];
+      for (let i = 0; i < N - 1; i++) {
+        const a = CITIES[i].v, b = CITIES[i + 1].v;
+        legKm.push(Math.acos(clamp(a[0]*b[0] + a[1]*b[1] + a[2]*b[2], -1, 1)) * R_EARTH);
+      }
+
+      function progress() {
+        const range = section.offsetHeight - window.innerHeight;
+        if (range <= 0) return 0;
+        return clamp(-section.getBoundingClientRect().top / range, 0, 1);
+      }
+
+      function camera(p) {
+        if (p <= KEYS[0].at) return { rotY: KEYS[0].rotY, rotX: KEYS[0].rotX, idx: 0, seg: 0 };
+        if (p >= KEYS[N - 1].at) return { rotY: KEYS[N - 1].rotY, rotX: KEYS[N - 1].rotX, idx: N - 1, seg: 1 };
+        for (let i = 0; i < N - 1; i++) {
+          if (p >= KEYS[i].at && p < KEYS[i + 1].at) {
+            const t = smoothstep(p, KEYS[i].at, KEYS[i + 1].at);
+            return {
+              rotY: KEYS[i].rotY + (KEYS[i + 1].rotY - KEYS[i].rotY) * t,
+              rotX: KEYS[i].rotX + (KEYS[i + 1].rotX - KEYS[i].rotX) * t,
+              idx: t < 0.5 ? i : i + 1,
+              seg: i + t
+            };
+          }
+        }
+        return { rotY: KEYS[0].rotY, rotX: KEYS[0].rotX, idx: 0, seg: 0 };
+      }
+
+      function sizeCanvas() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.round(stage.clientWidth * dpr);
+        canvas.height = Math.round(stage.clientHeight * dpr);
+      }
+
+      const DIST = 3.4;
+      function project(v, rotY, rotX, R, cx, cy) {
+        const cY = Math.cos(rotY), sY = Math.sin(rotY);
+        const cX = Math.cos(rotX), sX = Math.sin(rotX);
+        let nx = v[0] * cY - v[2] * sY, nz = v[0] * sY + v[2] * cY;
+        const ny = v[1] * cX - nz * sX;
+        nz = v[1] * sX + nz * cX;
+        const f = DIST / (DIST - nz);
+        return { x: cx + nx * R * f, y: cy - ny * R * f, z: nz };
+      }
+
+      function render(p) {
+        const W = canvas.width, H = canvas.height;
+        ctx.clearRect(0, 0, W, H);
+        const cx = W * (W / H > 1.15 ? 0.63 : 0.5), cy = H * 0.5;
+        const cam = camera(p);
+        /* Bordeaux, Bilbao, Liege and Leipzig sit inside ~15 degrees of longitude,
+           so a fixed globe radius stacks them on top of each other. Dolly in as the
+           route narrows -- which is also what the story is doing. */
+        const zoom = 1 + 1.55 * (cam.seg / Math.max(1, N - 1));
+        const R = Math.min(W, H) * 0.32 * zoom;
+
+        /* the sphere itself */
+        const grad = ctx.createRadialGradient(cx - R * 0.35, cy - R * 0.4, R * 0.1, cx, cy, R);
+        grad.addColorStop(0, 'rgba(14,52,74,0.62)');
+        grad.addColorStop(1, 'rgba(3,14,24,0.86)');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(cx, cy, R, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(34,244,223,0.24)';
+        ctx.lineWidth = Math.max(1, R * 0.005);
+        ctx.stroke();
+
+        /* graticule, dimmed on the far hemisphere */
+        function graticuleLine(pts) {
+          let started = false;
+          for (const v of pts) {
+            const q = project(v, cam.rotY, cam.rotX, R, cx, cy);
+            const front = q.z > 0;
+            ctx.strokeStyle = front ? 'rgba(120,190,215,0.22)' : 'rgba(120,190,215,0.07)';
+            if (!started) { ctx.beginPath(); ctx.moveTo(q.x, q.y); started = true; }
+            else { ctx.lineTo(q.x, q.y); ctx.stroke(); ctx.beginPath(); ctx.moveTo(q.x, q.y); }
+          }
+          ctx.stroke();
+        }
+        ctx.lineWidth = Math.max(0.6, R * 0.003);
+        for (let lon = -180; lon < 180; lon += 30) {
+          const pts = [];
+          for (let lat = -90; lat <= 90; lat += 6) {
+            const la = lat * D2R, lo = lon * D2R;
+            pts.push([Math.cos(la) * Math.sin(lo), Math.sin(la), Math.cos(la) * Math.cos(lo)]);
+          }
+          graticuleLine(pts);
+        }
+        for (let lat = -60; lat <= 60; lat += 30) {
+          const pts = [];
+          for (let lon = -180; lon <= 180; lon += 6) {
+            const la = lat * D2R, lo = lon * D2R;
+            pts.push([Math.cos(la) * Math.sin(lo), Math.sin(la), Math.cos(la) * Math.cos(lo)]);
+          }
+          graticuleLine(pts);
+        }
+
+        /* the route, revealed leg by leg */
+        for (let i = 0; i < ARCS.length; i++) {
+          const reveal = clamp(cam.seg - i, 0, 1);
+          if (reveal <= 0) continue;
+          const pts = ARCS[i];
+          const upto = Math.max(1, Math.round(pts.length * reveal));
+          ctx.lineWidth = Math.max(1.4, R * 0.011);
+          ctx.lineCap = 'round';
+          for (let k = 0; k < upto - 1; k++) {
+            const a = project(pts[k], cam.rotY, cam.rotX, R, cx, cy);
+            const b = project(pts[k + 1], cam.rotY, cam.rotX, R, cx, cy);
+            const front = (a.z + b.z) / 2 > 0;
+            ctx.strokeStyle = front ? 'rgba(34,244,223,0.92)' : 'rgba(34,244,223,0.16)';
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+          }
+        }
+
+        /* City markers, then labels in a second pass. A label is dropped if it
+           would land on another label OR on any city dot -- checking only
+           label-vs-label left names sitting under the next marker. */
+        const geo = CITIES.map((c, i) => {
+          const q = project(c.v, cam.rotY, cam.rotX, R, cx, cy);
+          const reached = cam.seg >= i - 0.02;
+          const current = i === cam.idx;
+          const front = q.z > 0;
+          const rad = Math.max(2.5, R * (current ? 0.032 : 0.021)) * (front ? 1 : 0.6);
+          const alpha = front ? (reached ? 1 : 0.42) : (reached ? 0.24 : 0.12);
+          return { q, reached, current, front, rad, alpha, city: c.city };
+        });
+
+        geo.forEach(m => {
+          if (m.current && m.front) {
+            ctx.strokeStyle = `rgba(34,244,223,${0.5 * m.alpha})`;
+            ctx.lineWidth = Math.max(1, R * 0.005);
+            ctx.beginPath();
+            ctx.arc(m.q.x, m.q.y, m.rad * 2.5, 0, Math.PI * 2);
+            ctx.stroke();
+          }
+          const g = ctx.createRadialGradient(m.q.x - m.rad * 0.35, m.q.y - m.rad * 0.4, m.rad * 0.1, m.q.x, m.q.y, m.rad);
+          g.addColorStop(0, `rgba(190,255,248,${m.alpha})`);
+          g.addColorStop(1, `rgba(${m.reached ? '34,244,223' : '120,160,180'},${m.alpha})`);
+          ctx.fillStyle = g;
+          ctx.beginPath();
+          ctx.arc(m.q.x, m.q.y, m.rad, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        const hits = (a, b) => a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
+        const dotBox = m => ({ x: m.q.x - m.rad * 1.4, y: m.q.y - m.rad * 1.4, w: m.rad * 2.8, h: m.rad * 2.8 });
+        const placed = [];
+        const order = geo.map((m, i) => i).sort((a, b) => (a === cam.idx ? -1 : b === cam.idx ? 1 : a - b));
+
+        order.forEach(i => {
+          const m = geo[i];
+          if (!m.front || !(m.current || m.reached)) return;
+          const size = Math.max(10, Math.min(20, R * 0.042));
+          ctx.font = `${m.current ? 700 : 500} ${size}px Inter, system-ui, sans-serif`;
+          const w = ctx.measureText(m.city).width;
+          const lx = m.q.x + m.rad * 2.0, ly = m.q.y - m.rad * 1.6;
+          const box = { x: lx - 3, y: ly - size * 0.7, w: w + 6, h: size * 1.4 };
+          const clash = placed.some(b => hits(box, b)) ||
+                        geo.some((o, j) => j !== i && o.front && hits(box, dotBox(o)));
+          if (!m.current && clash) return;
+          placed.push(box);
+          ctx.fillStyle = m.current ? `rgba(245,251,255,${m.alpha})` : `rgba(184,199,212,${m.alpha * 0.75})`;
+          ctx.textBaseline = 'middle';
+          ctx.fillText(m.city, lx, ly);
+        });
+
+        updateReadout(cam);
+        updateStops(p);
+      }
+
+      const el = {
+        city: document.getElementById('legCity'), country: document.getElementById('legCountry'),
+        stop: document.getElementById('legStop'), km: document.getElementById('legKm')
+      };
+      let lastIdx = -1, lastKm = -1;
+      function updateReadout(cam) {
+        if (cam.idx !== lastIdx) {
+          lastIdx = cam.idx;
+          const c = CITIES[cam.idx];
+          if (el.city) { el.city.textContent = c.city; el.country.textContent = c.country; el.stop.textContent = `${cam.idx + 1} / ${N}`; }
+        }
+        let km = 0;
+        for (let i = 0; i < legKm.length; i++) km += legKm[i] * clamp(cam.seg - i, 0, 1);
+        const rounded = Math.round(km / 25) * 25;
+        if (rounded !== lastKm && el.km) { lastKm = rounded; el.km.textContent = rounded.toLocaleString() + ' km'; }
+      }
+
+      let moved = false;
+      function updateStops(p) {
+        for (let n = 0; n < stops.length; n++) {
+          const s = stops[n];
+          const f = Math.min(0.02, (s.b - s.a) / 3);
+          const fadeIn = n === 0 ? 1 : smoothstep(p, s.a, s.a + f);
+          const fadeOut = n === stops.length - 1 ? 1 : 1 - smoothstep(p, s.b - f, s.b);
+          const o = Number((fadeIn * fadeOut).toFixed(3));
+          const k = Number(clamp((p - s.a) / (f || 0.02), 0, 1).toFixed(3));
+          if (o !== s.lastOpacity) {
+            s.lastOpacity = o;
+            s.el.style.opacity = o;
+            s.el.style.visibility = o < 0.01 ? 'hidden' : 'visible';
+          }
+          if (k !== s.lastK) { s.lastK = k; s.el.style.setProperty('--k', k); }
+        }
+        const m = p > 0.03;
+        if (m !== moved) { moved = m; section.classList.toggle('moved', m); }
+      }
+
+      let target = 0, shown = 0, rafId = null, lastTick = 0, onScreen = true;
+      function tick(now) {
+        const dt = Math.min(100, now - (lastTick || now));
+        lastTick = now;
+        shown += (target - shown) * (1 - Math.pow(1 - 0.12, dt / 16.667));
+        if (Math.abs(target - shown) < 0.0002) { shown = target; rafId = null; lastTick = 0; }
+        else rafId = requestAnimationFrame(tick);
+        render(shown);
+      }
+      function onScroll() {
+        target = progress();
+        if (rafId === null && onScreen) { lastTick = 0; rafId = requestAnimationFrame(tick); }
+      }
+
+      if (reduced.matches || small.matches) return;
+
+      section.classList.add('live');
+      sizeCanvas();
+      shown = target = progress();
+      render(shown);
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      document.addEventListener('visibilitychange', () => { if (!document.hidden) onScroll(); });
+      let rt;
+      window.addEventListener('resize', () => {
+        clearTimeout(rt);
+        rt = setTimeout(() => { sizeCanvas(); render(shown); }, 150);
+      });
+      new IntersectionObserver(e => {
+        onScreen = e[0].isIntersecting;
+        if (onScreen && rafId === null) { lastTick = 0; rafId = requestAnimationFrame(tick); }
+      }, { rootMargin: '10% 0px' }).observe(section);
+    })();
+  </script>
+</body>
+</html>

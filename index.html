@@ -5,6 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Muhammad Arslan Aslam | Zebrafish Toxicology & Chemical Safety</title>
   <meta name="description" content="Research portfolio of Muhammad Arslan Aslam: environmental toxicology, zebrafish embryo assays, QSAR, toxicity models, and chemical safety." />
+  <link rel="canonical" href="https://mian707.github.io/" />
+  <meta name="theme-color" content="#020812" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23041622'/><path d='M16 4.5l9.5 5.75v11.5L16 27.5 6.5 21.75V10.25z' fill='none' stroke='%2322f4df' stroke-width='2.2'/><circle cx='16' cy='16' r='3.1' fill='%2322f4df'/></svg>" />
+
+  <meta property="og:type" content="profile" />
+  <meta property="og:url" content="https://mian707.github.io/" />
+  <meta property="og:title" content="Muhammad Arslan Aslam | Zebrafish Toxicology &amp; Chemical Safety" />
+  <meta property="og:description" content="Environmental toxicology, zebrafish embryo assays, QSAR baseline toxicity, and mechanism-of-action interpretation for safer chemicals." />
+  <meta property="og:image" content="https://mian707.github.io/assets/og-cover.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Muhammad Arslan Aslam | Zebrafish Toxicology &amp; Chemical Safety" />
+  <meta name="twitter:description" content="Environmental toxicology, zebrafish embryo assays, QSAR baseline toxicity, and mechanism-of-action interpretation for safer chemicals." />
+  <meta name="twitter:image" content="https://mian707.github.io/assets/og-cover.jpg" />
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
@@ -25,10 +40,13 @@
       --accent: #22f4df;
       --accent-2: #59a8ff;
       --green: #9df3be;
+      --tshadow: 0 1px 2px rgba(2,6,12,.95), 0 3px 12px rgba(2,6,12,.78), 0 10px 44px rgba(2,6,12,.8);
     }
 
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    /* AOS parks fade-left blocks off to the right before they animate in, which
+       otherwise leaves the page horizontally scrollable. */
+    html { scroll-behavior: smooth; overflow-x: clip; }
 
     body {
       margin: 0;
@@ -38,7 +56,9 @@
         radial-gradient(circle at 80% 8%, rgba(34, 244, 223, 0.16), transparent 28%),
         radial-gradient(circle at 18% 16%, rgba(89, 168, 255, 0.15), transparent 30%),
         linear-gradient(180deg, #020812 0%, #041322 52%, #020812 100%);
-      overflow-x: hidden;
+      /* clip, not hidden: `hidden` would make body a scroll container and kill
+         position:sticky on the hero stage. */
+      overflow-x: clip;
     }
 
     canvas#science-bg {
@@ -53,16 +73,8 @@
       inset: 0;
       z-index: -4;
       background: url('assets/underwater-bg.jpg') center / cover no-repeat;
-      background-size: cover;
-      background-position: center;
-      filter: none;
-    }
-
-    .shade {
-      position: fixed;
-      inset: 0;
-      z-index: -3;
-      background: transparent;
+      background-image: image-set(url('assets/underwater-bg.webp') type('image/webp'),
+                                  url('assets/underwater-bg.jpg') type('image/jpeg'));
     }
 
     .molecule-layer {
@@ -127,32 +139,164 @@
     }
 
     section { position: relative; padding: 5.8rem 0; }
-    .hero { min-height: 100vh; display: flex; align-items: center; padding-top: 7rem; }
 
-    .hero-fish {
+    /* ---------- Cinematic scroll hero ----------
+       Default state is a plain 100vh still hero, so the page is correct with no
+       JS, on phones, and for reduced-motion visitors. The .scrub class is added
+       only once the frame sequence has actually loaded. */
+    .hero-scroll { padding: 0; height: 100vh; }
+    .hero-scroll.scrub { height: 620vh; }
+
+    .hero-stage {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .hero-canvas, .hero-poster, .hero-still-img {
       position: absolute;
-      right: 3vw;
-      top: 14vh;
-      width: min(62vw, 860px);
-      height: 430px;
-      background-image: url('assets/zebrafish-main.png');
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: contain;
-      filter: brightness(1.28) contrast(1.18) saturate(1.22) drop-shadow(0 0 42px rgba(34,244,223,0.55));
-      opacity: 1;
-      mix-blend-mode: normal;
-      animation: fishFloat 6s ease-in-out infinite;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .hero-poster, .hero-still-img {
+      background: center / cover no-repeat;
+      background-image: url('assets/hero-poster.jpg');
+    }
+    /* Only fetched when the scrub hero is not running -- desktop never pays for it. */
+    .hero-still-img { background-image: none; }
+    .hero-scroll.no-video .hero-still-img { background-image: url('assets/hero-still.webp'); }
+    .hero-scroll.scrub .hero-still-img { display: none; }
+    .hero-canvas {
+      opacity: 0;
+      transition: opacity 0.55s ease;
+      will-change: transform;
+      transform: translateZ(0);
+    }
+    .hero-scroll.scrub .hero-canvas { opacity: 1; }
+    .hero-scroll.scrub .hero-poster { opacity: 0; transition: opacity 0.55s ease; }
+
+    .hero-scrim {
+      position: absolute;
+      inset: 0;
       pointer-events: none;
-      border: none;
-      outline: none;
-      box-shadow: none;
+      background: radial-gradient(ellipse 125% 95% at 50% 45%, rgba(2,8,18,0) 42%, rgba(2,8,18,0.48) 100%);
     }
 
-    @keyframes fishFloat {
-      0%, 100% { transform: translateY(0) rotate(-1deg); }
-      50% { transform: translateY(-16px) rotate(1deg); }
+    /* Caption bands: hidden until the scrub hero is actually live. */
+    .band { display: none; }
+    .hero-scroll.scrub .band {
+      display: flex;
+      position: absolute;
+      inset: 0;
+      align-items: center;
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+      text-shadow: var(--tshadow);
     }
+    .hero-scroll.scrub .band.at-bottom { align-items: flex-end; padding-bottom: 12vh; }
+    .hero-scroll.scrub .band.at-centre { justify-content: center; text-align: center; }
+    .band::before {
+      content: "";
+      position: absolute;
+      inset: -4%;
+      pointer-events: none;
+      opacity: calc(0.25 + 0.75 * var(--k, 1));
+      background: radial-gradient(ellipse 62% 58% at 26% 50%, rgba(2,6,12,0.58) 0%, rgba(2,6,12,0.38) 44%, rgba(2,6,12,0) 72%);
+    }
+    .band.at-bottom::before {
+      background: radial-gradient(ellipse 64% 46% at 26% 78%, rgba(2,6,12,0.58) 0%, rgba(2,6,12,0.38) 44%, rgba(2,6,12,0) 74%);
+    }
+    .band.at-centre::before { background: radial-gradient(ellipse 70% 58% at 50% 50%, rgba(2,6,12,0.60) 0%, rgba(2,6,12,0.40) 46%, rgba(2,6,12,0) 74%); }
+    .band.at-centre.at-bottom::before { background: radial-gradient(ellipse 78% 48% at 50% 84%, rgba(2,6,12,0.62) 0%, rgba(2,6,12,0.42) 44%, rgba(2,6,12,0) 76%); }
+    .band-inner { position: relative; max-width: 660px; padding: 0 6vw; }
+    .band .btn { text-shadow: none; pointer-events: auto; }
+    .band a { pointer-events: auto; }
+
+    .band-kicker {
+      color: var(--accent);
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-size: 0.82rem;
+      margin-bottom: 0.9rem;
+    }
+    .band h2.band-title {
+      font-size: clamp(1.9rem, 3.6vw, 3.1rem);
+      font-weight: 850;
+      letter-spacing: -0.035em;
+      line-height: 1.12;
+      margin-bottom: 1rem;
+    }
+    .band p.band-body {
+      font-size: clamp(1rem, 1.25vw, 1.15rem);
+      line-height: 1.75;
+      color: #e8f3fb;
+      max-width: 46ch;
+    }
+
+    /* Loading ring while the frame sequence streams in. */
+    .hero-ring {
+      position: absolute;
+      left: 50%;
+      bottom: 6.5vh;
+      transform: translateX(-50%);
+      width: 46px;
+      height: 46px;
+      color: var(--accent);
+      opacity: 0.9;
+    }
+    .hero-ring circle {
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+      transition: stroke-dashoffset 0.18s linear;
+    }
+    .hero-scroll.scrub .hero-ring, .hero-scroll.no-video .hero-ring { display: none; }
+
+    .scroll-cue {
+      position: absolute;
+      left: 50%;
+      bottom: 5.5vh;
+      transform: translateX(-50%);
+      display: none;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--muted);
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-shadow: var(--tshadow);
+      animation: cueBob 2.4s ease-in-out infinite;
+    }
+    .hero-scroll.scrub .scroll-cue, .hero-scroll.no-video .scroll-cue { display: flex; }
+    .hero-scroll.scrub.past-intro .scroll-cue { opacity: 0; transition: opacity 0.4s ease; }
+    @keyframes cueBob { 0%, 100% { translate: 0 0; } 50% { translate: 0 6px; } }
+
+    /* The still hero shown on phones, for reduced motion, and if frames fail. */
+    .hero-fallback {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      text-shadow: var(--tshadow);
+    }
+    /* The still is a photograph behind body copy, so it needs a real scrim
+       rather than the light global one. */
+    .hero-fallback::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(180deg, rgba(2,8,18,0.68) 0%, rgba(2,8,18,0.40) 50%, rgba(2,8,18,0.60) 100%),
+        radial-gradient(ellipse 92% 58% at 24% 42%, rgba(2,6,12,0.34) 0%, rgba(2,6,12,0) 74%);
+    }
+    .hero-fallback .band-inner { position: relative; }
+    .hero-scroll.scrub .hero-fallback { display: none; }
 
     .eyebrow {
       color: var(--accent);
@@ -234,8 +378,8 @@
     .about-plate {
       min-height: 260px;
       background:
-        linear-gradient(90deg, rgba(4,22,34,0.92), rgba(4,22,34,0.38)),
-        url('assets/lab-bg.jpg') center / cover;
+        linear-gradient(90deg, rgba(4,22,34,0.94), rgba(4,22,34,0.42)),
+        radial-gradient(circle at 76% 28%, rgba(34,244,223,0.12), transparent 62%);
       overflow: hidden;
     }
 
@@ -250,6 +394,10 @@
       background:
         radial-gradient(circle, rgba(34,244,223,0.08), rgba(2,8,18,0.18) 55%, rgba(2,8,18,0.34)),
         url('assets/zebrafish-embryo.png') center / cover;
+      background-image:
+        radial-gradient(circle, rgba(34,244,223,0.08), rgba(2,8,18,0.18) 55%, rgba(2,8,18,0.34)),
+        image-set(url('assets/zebrafish-embryo.webp') type('image/webp'),
+                  url('assets/zebrafish-embryo.png') type('image/png'));
       box-shadow: 0 0 28px rgba(34,244,223,0.28), inset 0 0 26px rgba(34,244,223,0.16);
       opacity: 0.9;
     }
@@ -293,11 +441,17 @@
       padding: 1.35rem;
       height: 100%;
     }
+    .pub-meta { color: var(--accent); font-size: 0.74rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.6rem; }
+    .pub-authors { color: var(--muted); font-size: 0.82rem; }
 
     .contact-band {
       background:
         linear-gradient(90deg, rgba(4,22,34,0.64), rgba(4,22,34,0.92)),
-        url('assets/zebrafish-main.png') left center / 420px auto no-repeat;
+        url('assets/contact-fish.png') left center / 420px auto no-repeat;
+      background-image:
+        linear-gradient(90deg, rgba(4,22,34,0.64), rgba(4,22,34,0.92)),
+        image-set(url('assets/contact-fish.webp') type('image/webp'),
+                  url('assets/contact-fish.png') type('image/png'));
     }
 
     .social-hex {
@@ -319,8 +473,24 @@
     a { color: var(--accent); text-decoration: none; }
     a:hover { color: var(--green); }
 
+    /* Keep the brand and the toggler on one row on small phones. */
+    @media (max-width: 575px) {
+      .navbar-brand { font-size: 0.92rem; max-width: calc(100% - 64px); line-height: 1.25; }
+      .brand-logo { width: 34px; height: 34px; flex: 0 0 34px; border-radius: 11px; margin-right: 0.55rem; }
+      .brand-sub { font-size: 0.66rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .mol { animation: none; }
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+      }
+    }
+
     @media (max-width: 991px) {
-      .hero-fish { position: relative; right: auto; top: auto; width: 100%; height: 260px; margin-top: 2rem; }
       .about-fish { position: relative; left: auto; top: auto; width: 210px; margin: 1.5rem auto; }
       .contact-band { background-size: 280px auto; background-position: center bottom; padding-bottom: 13rem !important; }
     }
@@ -330,7 +500,6 @@
 <body>
   <canvas id="science-bg"></canvas>
   <div class="water-bg"></div>
-  <div class="shade"></div>
 
   <div class="molecule-layer" aria-hidden="true">
     <div class="mol mol-1"><svg viewBox="0 0 260 150"><g fill="none" stroke="currentColor" stroke-width="2"><polygon points="52,30 88,50 88,92 52,112 16,92 16,50"/><polygon points="124,26 160,46 160,88 124,108 88,88 88,46"/><path d="M160 66 L204 66 M204 66 L230 42 M204 66 L232 94"/><circle cx="204" cy="66" r="5" fill="currentColor"/></g><text x="15" y="138" fill="currentColor" font-size="19">OH</text><text x="212" y="36" fill="currentColor" font-size="18">Cl</text></svg></div>
@@ -343,7 +512,7 @@
   <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container-fluid px-lg-4">
       <a class="navbar-brand fw-bold d-flex align-items-center" href="#home">
-        <span class="brand-logo"><i class="bi bi-flask"></i></span>
+        <span class="brand-logo"><i class="bi bi-eyedropper"></i></span>
         <span>Muhammad Arslan Aslam <span class="brand-sub">Toxicologist | Zebrafish Researcher</span></span>
       </a>
       <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -365,10 +534,61 @@
   </nav>
 
   <main>
-    <section id="home" class="hero">
-      <div class="container-fluid px-lg-5">
-        <div class="row align-items-center">
-          <div class="col-lg-6" data-aos="fade-up">
+    <section id="home" class="hero-scroll">
+      <div class="hero-stage">
+        <canvas class="hero-canvas" aria-hidden="true"></canvas>
+        <div class="hero-poster" aria-hidden="true"></div>
+        <div class="hero-still-img" aria-hidden="true"></div>
+        <div class="hero-scrim" aria-hidden="true"></div>
+
+        <!-- Scroll-scrubbed captions. Bands are keyed to where the fish is in
+             frame: it arrives from the distance, fills the shot, then turns. -->
+        <div class="band" data-band="0,0.20">
+          <div class="band-inner">
+            <div class="eyebrow">Hi, I'm</div>
+            <h1>Muhammad<br>Arslan Aslam</h1>
+            <div class="role">Toxicologist | Environmental Scientist<br>Zebrafish Model Specialist</div>
+          </div>
+        </div>
+
+        <div class="band" data-band="0.18,0.41">
+          <div class="band-inner">
+            <div class="band-kicker">The problem</div>
+            <h2 class="band-title">Bisphenols, phthalates and plastic additives keep reaching our waterways.</h2>
+            <p class="band-body">They enter use faster than conventional testing can characterise what they do.</p>
+          </div>
+        </div>
+
+        <div class="band at-bottom" data-band="0.39,0.62">
+          <div class="band-inner">
+            <div class="band-kicker">The model</div>
+            <h2 class="band-title">The zebrafish embryo makes those effects visible.</h2>
+            <p class="band-body">Transparent, fast-developing, and a vertebrate — in vivo evidence in days rather than years.</p>
+          </div>
+        </div>
+
+        <div class="band at-bottom" data-band="0.60,0.83">
+          <div class="band-inner">
+            <div class="band-kicker">What I measure</div>
+            <h2 class="band-title">Development<br>Cardiotoxicity<br>Neuroactivity</h2>
+            <p class="band-body">Hatching, malformations, heart rate and behavioural response — read against predicted baseline toxicity to separate narcosis from a specific mode of action.</p>
+          </div>
+        </div>
+
+        <div class="band at-centre at-bottom" data-band="0.81,1">
+          <div class="band-inner">
+            <h2 class="band-title">Evidence for safer chemicals.</h2>
+            <div class="d-flex flex-wrap gap-3 mt-4 justify-content-center">
+              <a class="btn btn-main" href="#research"><i class="bi bi-arrow-repeat me-2"></i>Explore My Research</a>
+              <a class="btn btn-ghost" href="assets/Muhammad_Arslan_Aslam_CV.pdf" target="_blank"><i class="bi bi-download me-2"></i>Download CV</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Shown when the scrub hero is not running: phones, reduced motion,
+             no JS, or a failed frame load. Carries the whole message on its own. -->
+        <div class="hero-fallback">
+          <div class="band-inner">
             <div class="eyebrow">Hi, I'm</div>
             <h1>Muhammad<br>Arslan Aslam</h1>
             <div class="role">Toxicologist | Environmental Scientist<br>Zebrafish Model Specialist</div>
@@ -380,8 +600,13 @@
               <a class="btn btn-ghost" href="assets/Muhammad_Arslan_Aslam_CV.pdf" target="_blank"><i class="bi bi-download me-2"></i>Download CV</a>
             </div>
           </div>
-          <div class="hero-fish" aria-hidden="true"></div>
         </div>
+
+        <svg class="hero-ring" viewBox="0 0 48 48" aria-hidden="true">
+          <circle cx="24" cy="24" r="20" fill="none" stroke="currentColor" stroke-width="3"
+                  stroke-dasharray="126" style="stroke-dashoffset:var(--ld,126)"/>
+        </svg>
+        <div class="scroll-cue" aria-hidden="true"><i class="bi bi-chevron-down"></i> Scroll</div>
       </div>
     </section>
 
@@ -393,7 +618,7 @@
               <h2 class="section-title"><i class="bi bi-person-fill me-2 text-info"></i>About Me</h2>
               <p>I am a PhD researcher in environmental toxicology with a strong focus on ecotoxicology, zebrafish toxicology, and alternative methods for chemical safety assessment.</p>
               <p>My research combines computational toxicology, molecular interpretation, and in vivo models to evaluate toxic effects of environmental contaminants and plastic additives.</p>
-              <a class="btn btn-ghost mt-2" href="#research">Know More About Me <i class="bi bi-arrow-right ms-2"></i></a>
+              <a class="btn btn-ghost mt-2" href="journey.html">Know More About Me <i class="bi bi-arrow-right ms-2"></i></a>
             </div>
             <div class="col-lg-3"><div class="about-fish"></div></div>
             <div class="col-lg-4">
@@ -414,13 +639,13 @@
         <div class="row g-4 mt-3">
           <div class="col-md-6 col-lg" data-aos="fade-up"><div class="glass research-card"><div class="icon"><i class="bi bi-water"></i></div><h5>Zebrafish Toxicology</h5><p class="muted">Developmental toxicity, behavior, and organ-specific endpoints</p></div></div>
           <div class="col-md-6 col-lg" data-aos="fade-up" data-aos-delay="80"><div class="glass research-card"><div class="icon"><i class="bi bi-bounding-box-circles"></i></div><h5>Environmental Contaminants</h5><p class="muted">Bisphenols, phthalates, additives, and emerging pollutants</p></div></div>
-          <div class="col-md-6 col-lg" data-aos="fade-up" data-aos-delay="160"><div class="glass research-card"><div class="icon"><i class="bi bi-dna"></i></div><h5>Molecular Toxicology</h5><p class="muted">Mechanistic interpretation, stress response, and pathway-level effects</p></div></div>
+          <div class="col-md-6 col-lg" data-aos="fade-up" data-aos-delay="160"><div class="glass research-card"><div class="icon"><i class="bi bi-hexagon"></i></div><h5>Molecular Toxicology</h5><p class="muted">Mechanistic interpretation, stress response, and pathway-level effects</p></div></div>
           <div class="col-md-6 col-lg" data-aos="fade-up" data-aos-delay="240"><div class="glass research-card"><div class="icon"><i class="bi bi-cup-hot"></i></div><h5>Alternative Methods</h5><p class="muted">3Rs principles and replacement-oriented toxicity testing</p></div></div>
-          <div class="col-md-6 col-lg" data-aos="fade-up" data-aos-delay="320"><div class="glass research-card"><div class="icon"><i class="bi bi-leaf"></i></div><h5>Safer Chemicals</h5><p class="muted">Evidence for sustainable and safer chemical assessment</p></div></div>
+          <div class="col-md-6 col-lg" data-aos="fade-up" data-aos-delay="320"><div class="glass research-card"><div class="icon"><i class="bi bi-shield-check"></i></div><h5>Safer Chemicals</h5><p class="muted">Evidence for sustainable and safer chemical assessment</p></div></div>
         </div>
 
         <div class="row g-3 mt-4 justify-content-center">
-          <div class="col-md-6 col-lg-3"><div class="glass stat-card"><span class="hex-icon"><i class="bi bi-flask"></i></span><div><div class="stat-number">5+</div><span>Years of research experience</span></div></div></div>
+          <div class="col-md-6 col-lg-3"><div class="glass stat-card"><span class="hex-icon"><i class="bi bi-clock-history"></i></span><div><div class="stat-number">5+</div><span>Years of research experience</span></div></div></div>
           <div class="col-md-6 col-lg-3"><div class="glass stat-card"><span class="hex-icon"><i class="bi bi-file-earmark-text"></i></span><div><div class="stat-number">20+</div><span>Research outputs</span></div></div></div>
           <div class="col-md-6 col-lg-3"><div class="glass stat-card"><span class="hex-icon"><i class="bi bi-people"></i></span><div><div class="stat-number">15+</div><span>Collaborations</span></div></div></div>
           <div class="col-md-6 col-lg-3"><div class="glass stat-card"><span class="hex-icon"><i class="bi bi-easel"></i></span><div><div class="stat-number">25+</div><span>Conference presentations</span></div></div></div>
@@ -472,10 +697,18 @@
       <div class="container">
         <div class="d-flex justify-content-between align-items-end flex-wrap gap-3 mb-4">
           <h2 class="section-title centered text-center mx-auto">Recent Publications</h2>
-          <a href="#">View All Publications <i class="bi bi-arrow-right"></i></a>
+          <a href="https://www.researchgate.net/profile/Muhammad-Arslan-Aslam" target="_blank" rel="noopener">View All Publications <i class="bi bi-arrow-right"></i></a>
         </div>
         <div class="row g-4">
-          <div class="col-md-4"><div class="glass publication-card"><p>QSAR-based baseline toxicity prediction for bisphenol analogues and related additives.</p><a href="#">Project output <i class="bi bi-box-arrow-up-right"></i></a></div></div>
+          <div class="col-md-4"><div class="glass publication-card d-flex flex-column">
+            <div class="pub-meta">Aquatic Toxicology &middot; 2026</div>
+            <p class="flex-grow-1">Comparative effect assessment of bisphenol analogs by high content analysis in zebrafish (<em>Danio rerio</em>) embryos.</p>
+            <div class="pub-authors">Aslam MA, Massei R, Scholz S &middot; 295, 107822</div>
+            <div class="d-flex flex-wrap gap-3 mt-2">
+              <a href="bisphenol-analogs.html">Walkthrough <i class="bi bi-arrow-right"></i></a>
+              <a href="https://doi.org/10.1016/j.aquatox.2026.107822" target="_blank" rel="noopener">DOI <i class="bi bi-box-arrow-up-right"></i></a>
+            </div>
+          </div></div>
           <div class="col-md-4"><div class="glass publication-card"><p>Zebrafish embryo toxicity screening for developmental, neuroactive, and cardiotoxic endpoints.</p><a href="#">Poster / manuscript <i class="bi bi-box-arrow-up-right"></i></a></div></div>
           <div class="col-md-4"><div class="glass publication-card"><p>Mechanism-of-action grouping using toxic ratios and response profiles.</p><a href="#">Research output <i class="bi bi-box-arrow-up-right"></i></a></div></div>
         </div>
@@ -490,14 +723,13 @@
             <div class="col-lg-4">
               <h3 class="fw-bold">Get in Touch</h3>
               <p class="muted">I am open to discussing research collaborations and opportunities.</p>
-              <a class="btn btn-ghost" href="mailto:your.email@example.com"><i class="bi bi-envelope-fill me-2 text-info"></i>your.email@example.com</a>
+              <a class="btn btn-ghost" href="mailto:arslan.aslam@ki.se"><i class="bi bi-envelope-fill me-2 text-info"></i>arslan.aslam@ki.se</a>
             </div>
             <div class="col-lg-4 text-lg-center">
               <h3 class="fw-bold">Connect With Me</h3>
-              <a class="social-hex" href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
-              <a class="social-hex" href="#" aria-label="Google Scholar"><i class="bi bi-mortarboard-fill"></i></a>
-              <a class="social-hex" href="#" aria-label="ResearchGate">RG</a>
-              <a class="social-hex" href="#" aria-label="GitHub"><i class="bi bi-github"></i></a>
+              <a class="social-hex" href="https://www.linkedin.com/in/arslan-aslam-104294174/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+              <a class="social-hex" href="https://www.researchgate.net/profile/Muhammad-Arslan-Aslam" target="_blank" rel="noopener" aria-label="ResearchGate">RG</a>
+              <a class="social-hex" href="mailto:arslan.aslam@ki.se" aria-label="Email"><i class="bi bi-envelope-fill"></i></a>
             </div>
           </div>
         </div>
@@ -515,60 +747,359 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
-    AOS.init({ duration: 850, once: true });
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    AOS.init({ duration: 850, once: true, disable: () => prefersReducedMotion.matches });
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    const canvas = document.getElementById('science-bg');
-    const ctx = canvas.getContext('2d');
-    let W, H, particles;
+    /* Highlight the nav link for whichever section is in view. The nav is not in
+       document order (Publications sits before Assays), so sort by position. */
+    (() => {
+      const links = [...document.querySelectorAll('.navbar-nav .nav-link[href^="#"]')]
+        .map(a => ({ a, section: document.querySelector(a.getAttribute('href')) }))
+        .filter(l => l.section)
+        .sort((x, y) => x.section.offsetTop - y.section.offsetTop);
+      if (!links.length) return;
 
-    function resize() {
-      W = canvas.width = window.innerWidth;
-      H = canvas.height = window.innerHeight;
-      particles = Array.from({ length: Math.min(130, Math.floor(W / 12)) }, () => ({
-        x: Math.random() * W,
-        y: Math.random() * H,
-        vx: (Math.random() - 0.5) * 0.25,
-        vy: (Math.random() - 0.5) * 0.25,
-        r: Math.random() * 2.1 + 0.4
-      }));
-    }
+      let queued = false;
+      function update() {
+        queued = false;
+        const marker = window.scrollY + window.innerHeight * 0.35;
+        const atBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
+        let current = links[0];
+        if (atBottom) {
+          current = links[links.length - 1];
+        } else {
+          for (const l of links) if (l.section.offsetTop <= marker) current = l;
+        }
+        for (const l of links) l.a.classList.toggle('active', l === current);
+      }
 
-    function animate() {
-      ctx.clearRect(0, 0, W, H);
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0 || p.x > W) p.vx *= -1;
-        if (p.y < 0 || p.y > H) p.vy *= -1;
+      window.addEventListener('scroll', () => {
+        if (queued) return;
+        queued = true;
+        setTimeout(update, 100);
+      }, { passive: true });
+      window.addEventListener('resize', update);
+      update();
+    })();
 
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(150,225,255,0.45)';
-        ctx.fill();
+    /* ---------- Scroll-scrubbed hero ----------
+       Scroll position through the pinned hero drives which frame of the zebrafish
+       shot is on screen. Frames are pre-decoded images drawn to a canvas, so there
+       is no video seeking: no keyframe stalls, no HTTP Range dependency. */
+    (() => {
+      const hero = document.getElementById('home');
+      if (!hero) return;
+      const stage  = hero.querySelector('.hero-stage');
+      const canvas = hero.querySelector('.hero-canvas');
+      const ring   = hero.querySelector('.hero-ring circle');
+      const ctx    = canvas.getContext('2d', { alpha: false });
 
-        for (let j = i + 1; j < particles.length; j++) {
-          const q = particles[j];
-          const dx = p.x - q.x;
-          const dy = p.y - q.y;
-          const d = Math.sqrt(dx * dx + dy * dy);
-          if (d < 115) {
-            ctx.strokeStyle = `rgba(34,244,223,${0.18 * (1 - d / 115)})`;
-            ctx.lineWidth = 0.7;
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(q.x, q.y);
-            ctx.stroke();
+      const FRAME_COUNT = 96;
+      const frameUrl = i => 'assets/hero/f' + String(i).padStart(3, '0') + '.webp';
+      const images = new Array(FRAME_COUNT);
+
+      const bands = [...hero.querySelectorAll('.band')].map(el => {
+        const [a, b] = el.dataset.band.split(',').map(Number);
+        return { el, a, b, lastOpacity: -1, lastK: -1 };
+      });
+
+      const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+      const smoothstep = (p, e0, e1) => {
+        const t = clamp((p - e0) / (e1 - e0), 0, 1);
+        return t * t * (3 - 2 * t);
+      };
+
+      function heroProgress() {
+        const range = hero.offsetHeight - window.innerHeight;
+        if (range <= 0) return 0;
+        return clamp(-hero.getBoundingClientRect().top / range, 0, 1);
+      }
+
+      let shownFrame = -1;
+
+      function paint(img, alpha) {
+        ctx.globalAlpha = alpha;
+        const cw = canvas.width, ch = canvas.height;
+        const scale = Math.max(cw / img.naturalWidth, ch / img.naturalHeight);
+        const w = img.naturalWidth * scale, h = img.naturalHeight * scale;
+        ctx.drawImage(img, (cw - w) / 2, (ch - h) / 2, w, h);
+        ctx.globalAlpha = 1;
+      }
+
+      /* Cross-dissolve between the two neighbouring frames instead of snapping to
+         the nearest one. 96 stills then read as continuous motion rather than a
+         flipbook, which is what actually makes the scrub feel smooth. */
+      function drawFrame(index, force) {
+        const at = clamp(index, 0, FRAME_COUNT - 1);
+        if (!force && Math.abs(at - shownFrame) < 0.01) return;
+        const lo = Math.floor(at);
+        const hi = Math.min(FRAME_COUNT - 1, lo + 1);
+        const base = images[lo];
+        if (!base) return;
+        shownFrame = at;
+        paint(base, 1);                       // opaque base fully covers the previous frame
+        const mix = at - lo;
+        if (hi !== lo && mix > 0.01 && images[hi]) paint(images[hi], mix);
+      }
+
+      function sizeCanvas() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width  = Math.round(stage.clientWidth  * dpr);
+        canvas.height = Math.round(stage.clientHeight * dpr);
+        drawFrame(shownFrame < 0 ? 0 : shownFrame, true);
+      }
+
+      let pastIntro = false;
+
+      function updateBands(p) {
+        for (let n = 0; n < bands.length; n++) {
+          const b = bands[n];
+          const feather = Math.min(0.02, (b.b - b.a) / 3);
+          const fadeIn  = n === 0 ? 1 : smoothstep(p, b.a, b.a + feather);
+          const fadeOut = n === bands.length - 1 ? 1 : 1 - smoothstep(p, b.b - feather, b.b);
+          const opacity = Number((fadeIn * fadeOut).toFixed(3));
+          const k = Number(clamp((p - b.a) / (feather || 0.02), 0, 1).toFixed(3));
+
+          if (opacity !== b.lastOpacity) {
+            b.lastOpacity = opacity;
+            b.el.style.opacity = opacity;
+            b.el.style.visibility = opacity < 0.01 ? 'hidden' : 'visible';
+          }
+          if (k !== b.lastK) {
+            b.lastK = k;
+            b.el.style.setProperty('--k', k);
           }
         }
+        const past = p > 0.04;
+        if (past !== pastIntro) {
+          pastIntro = past;
+          hero.classList.toggle('past-intro', past);
+        }
       }
-      requestAnimationFrame(animate);
-    }
 
-    window.addEventListener('resize', resize);
-    resize();
-    animate();
+      /* Ease toward the scroll target instead of snapping, on a loop that rests
+         once converged and never runs while the hero is off screen. */
+      let target = 0, shown = 0, rafId = null, lastTick = 0, onScreen = true;
+
+      function tick(now) {
+        const dt = Math.min(100, now - (lastTick || now));
+        lastTick = now;
+        shown += (target - shown) * (1 - Math.pow(1 - 0.12, dt / 16.667));
+        if (Math.abs(target - shown) < 0.0002) {
+          shown = target;
+          rafId = null;
+          lastTick = 0;
+        } else {
+          rafId = requestAnimationFrame(tick);
+        }
+        drawFrame(shown * (FRAME_COUNT - 1));
+        updateBands(shown);
+      }
+
+      function onScroll() {
+        target = heroProgress();
+        if (rafId === null && onScreen) {
+          lastTick = 0;
+          rafId = requestAnimationFrame(tick);
+        }
+      }
+
+      function loadFrames() {
+        return new Promise(resolve => {
+          let done = 0, inFlight = 0, next = 0, failed = 0;
+          const CONCURRENCY = 6;
+          function pump() {
+            while (inFlight < CONCURRENCY && next < FRAME_COUNT) {
+              const i = next++;
+              inFlight++;
+              const img = new Image();
+              img.decoding = 'async';
+              img.onload = img.onerror = () => {
+                if (img.naturalWidth) images[i] = img; else failed++;
+                done++; inFlight--;
+                if (ring) ring.style.setProperty('--ld', Math.round(126 * (1 - done / FRAME_COUNT)));
+                if (done === FRAME_COUNT) resolve(failed);
+                else pump();
+              };
+              img.src = frameUrl(i);
+            }
+          }
+          pump();
+        });
+      }
+
+      const small = window.matchMedia('(max-width: 991px)');
+
+      function shouldScrub() {
+        return !prefersReducedMotion.matches && !small.matches;
+      }
+
+      if (!shouldScrub()) {
+        hero.classList.add('no-video');   // still hero; frames are never downloaded
+        return;
+      }
+
+      loadFrames().then(failedCount => {
+        if (failedCount > FRAME_COUNT * 0.1) {   // too broken to scrub: stay still
+          hero.classList.add('no-video');
+          return;
+        }
+        hero.classList.add('scrub');
+        sizeCanvas();
+
+        /* Paint the opening state synchronously. Waiting for the first rAF would
+           leave the hero captionless if the page loads in a background tab. */
+        shown = target = heroProgress();
+        drawFrame(shown * (FRAME_COUNT - 1), true);
+        updateBands(shown);
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        document.addEventListener('visibilitychange', () => { if (!document.hidden) onScroll(); });
+
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(() => { sizeCanvas(); onScroll(); }, 150);
+        });
+
+        new IntersectionObserver(entries => {
+          onScreen = entries[0].isIntersecting;
+          if (onScreen && rafId === null) { lastTick = 0; rafId = requestAnimationFrame(tick); }
+        }, { rootMargin: '10% 0px' }).observe(hero);
+      });
+    })();
+
+    /* Drifting particle field.
+       Every dot is drawn in one fill and the links are bucketed by opacity so a
+       frame costs a handful of draw calls instead of one per pair. Capped near
+       30fps and parked entirely while the tab is hidden. */
+    (() => {
+      const canvas = document.getElementById('science-bg');
+      const ctx = canvas.getContext('2d');
+      const LINK = 115, LINK_SQ = LINK * LINK, BUCKETS = 4;
+      const segments = Array.from({ length: BUCKETS }, () => []);
+      let W = 0, H = 0, particles = [], rafId = null, lastFrame = 0;
+
+      function resize() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        W = window.innerWidth;
+        H = window.innerHeight;
+        canvas.width = Math.round(W * dpr);
+        canvas.height = Math.round(H * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        particles = Array.from({ length: Math.min(80, Math.floor(W / 18)) }, () => ({
+          x: Math.random() * W,
+          y: Math.random() * H,
+          vx: (Math.random() - 0.5) * 0.25,
+          vy: (Math.random() - 0.5) * 0.25,
+          r: Math.random() * 2.1 + 0.4
+        }));
+      }
+
+      function step() {
+        for (const p of particles) {
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0 || p.x > W) p.vx *= -1;
+          if (p.y < 0 || p.y > H) p.vy *= -1;
+        }
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+
+        ctx.fillStyle = 'rgba(150,225,255,0.45)';
+        ctx.beginPath();
+        for (const p of particles) {
+          ctx.moveTo(p.x + p.r, p.y);
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        }
+        ctx.fill();
+
+        for (const bucket of segments) bucket.length = 0;
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          for (let j = i + 1; j < particles.length; j++) {
+            const q = particles[j];
+            const dx = p.x - q.x, dy = p.y - q.y;
+            const distSq = dx * dx + dy * dy;
+            if (distSq >= LINK_SQ) continue;
+            const nearness = 1 - Math.sqrt(distSq) / LINK;
+            const bucket = Math.min(BUCKETS - 1, (nearness * BUCKETS) | 0);
+            segments[bucket].push(p.x, p.y, q.x, q.y);
+          }
+        }
+
+        ctx.lineWidth = 0.7;
+        for (let b = 0; b < BUCKETS; b++) {
+          const seg = segments[b];
+          if (!seg.length) continue;
+          ctx.strokeStyle = 'rgba(34,244,223,' + (0.18 * (b + 0.5) / BUCKETS).toFixed(3) + ')';
+          ctx.beginPath();
+          for (let k = 0; k < seg.length; k += 4) {
+            ctx.moveTo(seg[k], seg[k + 1]);
+            ctx.lineTo(seg[k + 2], seg[k + 3]);
+          }
+          ctx.stroke();
+        }
+      }
+
+      function frame(now) {
+        rafId = requestAnimationFrame(frame);
+        if (now - lastFrame < 32) return;
+        lastFrame = now;
+        step();
+        draw();
+      }
+
+      function start() {
+        if (rafId === null && !prefersReducedMotion.matches) rafId = requestAnimationFrame(frame);
+      }
+
+      function stop() {
+        if (rafId !== null) {
+          cancelAnimationFrame(rafId);
+          rafId = null;
+        }
+      }
+
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => { resize(); draw(); }, 150);
+      });
+
+      document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
+      prefersReducedMotion.addEventListener('change', () => { stop(); draw(); start(); });
+
+      resize();
+      draw();
+      start();
+    })();
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Muhammad Arslan Aslam",
+    "jobTitle": "Toxicologist / Environmental Scientist",
+    "url": "https://mian707.github.io/",
+    "email": "mailto:arslan.aslam@ki.se",
+    "knowsAbout": [
+      "Environmental toxicology",
+      "Zebrafish embryo toxicity",
+      "Ecotoxicology",
+      "QSAR",
+      "Chemical safety assessment"
+    ],
+    "sameAs": [
+      "https://www.linkedin.com/in/arslan-aslam-104294174/",
+      "https://www.researchgate.net/profile/Muhammad-Arslan-Aslam"
+    ]
+  }
   </script>
 </body>
 </html>
