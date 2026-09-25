@@ -442,7 +442,24 @@
       height: 100%;
     }
     .pub-meta { color: var(--accent); font-size: 0.74rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.6rem; }
-    .pub-authors { color: var(--muted); font-size: 0.82rem; }
+    .pub-title { font-weight: 600; line-height: 1.5; margin-bottom: 0.75rem; }
+    .pub-authors { color: var(--muted); font-size: 0.82rem; line-height: 1.55; }
+    .pub-me { color: var(--text); font-weight: 700; }
+    .pub-cite { color: var(--muted); font-size: 0.82rem; font-variant-numeric: tabular-nums; margin-top: 0.15rem; }
+    .pub-links { display: flex; flex-wrap: wrap; gap: 1.1rem; margin-top: 0.85rem; font-size: 0.9rem; }
+    .pub-kind { color: var(--accent); font-size: 0.74rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.4rem; }
+    .chapter-list { list-style: none; margin: 0; padding: 0; }
+    .chapter-list li {
+      display: grid; grid-template-columns: 3.2rem 1fr auto; gap: 1rem; align-items: baseline;
+      padding: 1rem 0; border-top: 1px solid rgba(255,255,255,0.07);
+    }
+    .chapter-list li:first-child { border-top: 0; }
+    .chapter-list .pub-title { margin-bottom: 0.3rem; }
+    .chapter-list a { font-size: 0.9rem; white-space: nowrap; }
+    .chapter-year { color: var(--accent); font-weight: 700; font-size: 0.86rem; font-variant-numeric: tabular-nums; }
+    @media (max-width: 575px) {
+      .chapter-list li { grid-template-columns: 1fr; gap: 0.35rem; }
+    }
 
     .contact-band {
       background:
@@ -695,23 +712,76 @@
 
     <section id="publications" class="pt-4">
       <div class="container">
-        <div class="d-flex justify-content-between align-items-end flex-wrap gap-3 mb-4">
-          <h2 class="section-title centered text-center mx-auto">Recent Publications</h2>
-          <a href="https://www.researchgate.net/profile/Muhammad-Arslan-Aslam" target="_blank" rel="noopener">View All Publications <i class="bi bi-arrow-right"></i></a>
-        </div>
+        <h2 class="section-title centered text-center">Publications</h2>
+        <p class="section-subtitle text-center mb-4">3 research articles &middot; 3 book chapters</p>
+
         <div class="row g-4">
-          <div class="col-md-4"><div class="glass publication-card d-flex flex-column">
+          <div class="col-md-6 col-lg-4"><article class="glass publication-card d-flex flex-column">
             <div class="pub-meta">Aquatic Toxicology &middot; 2026</div>
-            <p class="flex-grow-1">Comparative effect assessment of bisphenol analogs by high content analysis in zebrafish (<em>Danio rerio</em>) embryos.</p>
-            <div class="pub-authors">Aslam MA, Massei R, Scholz S &middot; 295, 107822</div>
-            <div class="d-flex flex-wrap gap-3 mt-2">
+            <p class="pub-title flex-grow-1">Comparative effect assessment of bisphenol analogs by high content analysis in zebrafish (<em>Danio rerio</em>) embryos</p>
+            <div class="pub-authors"><b class="pub-me">Aslam MA</b>, Massei R, Scholz S</div>
+            <div class="pub-cite">295, 107822</div>
+            <div class="pub-links">
               <a href="bisphenol-analogs.html">Walkthrough <i class="bi bi-arrow-right"></i></a>
               <a href="https://doi.org/10.1016/j.aquatox.2026.107822" target="_blank" rel="noopener">DOI <i class="bi bi-box-arrow-up-right"></i></a>
             </div>
-          </div></div>
-          <div class="col-md-4"><div class="glass publication-card"><p>Zebrafish embryo toxicity screening for developmental, neuroactive, and cardiotoxic endpoints.</p><a href="#">Poster / manuscript <i class="bi bi-box-arrow-up-right"></i></a></div></div>
-          <div class="col-md-4"><div class="glass publication-card"><p>Mechanism-of-action grouping using toxic ratios and response profiles.</p><a href="#">Research output <i class="bi bi-box-arrow-up-right"></i></a></div></div>
+          </article></div>
+
+          <div class="col-md-6 col-lg-4"><article class="glass publication-card d-flex flex-column">
+            <div class="pub-meta">Int. J. Environment and Waste Management &middot; 2025</div>
+            <p class="pub-title flex-grow-1">Awareness, disposal behaviours, willingness, and inflow of electronic waste in Faisalabad, Pakistan</p>
+            <div class="pub-authors"><b class="pub-me">Aslam MA</b>, Ahmad MM, Farid S, Hashmi SI</div>
+            <div class="pub-cite">36(4), 472&ndash;490</div>
+            <div class="pub-links">
+              <a href="journey.html">The story <i class="bi bi-arrow-right"></i></a>
+              <a href="https://doi.org/10.1504/ijewm.2025.144994" target="_blank" rel="noopener">DOI <i class="bi bi-box-arrow-up-right"></i></a>
+            </div>
+          </article></div>
+
+          <div class="col-md-6 col-lg-4"><article class="glass publication-card d-flex flex-column">
+            <div class="pub-meta">Int. J. Phytoremediation &middot; 2024</div>
+            <p class="pub-title flex-grow-1">Evaluation of heavy metal accumulation and tolerance in oxalic acid-treated <em>Phragmites australis</em> wetlands for textile effluent remediation</p>
+            <div class="pub-authors">Alghanem SMS, &hellip; <b class="pub-me">Aslam MA</b>, Abbas M, Abeed AHA</div>
+            <div class="pub-cite">26(12), 2048&ndash;2063</div>
+            <div class="pub-links">
+              <a href="https://doi.org/10.1080/15226514.2024.2372849" target="_blank" rel="noopener">DOI <i class="bi bi-box-arrow-up-right"></i></a>
+            </div>
+          </article></div>
         </div>
+
+        <div class="glass p-4 mt-4">
+          <div class="pub-kind">Book chapters</div>
+          <ul class="chapter-list">
+            <li>
+              <span class="chapter-year">2024</span>
+              <div>
+                <div class="pub-title">Plastic peril: unraveling microplastics threats to health and ecosystems</div>
+                <div class="pub-authors">Salimkumar AJ, Cleetus MCK, Essel DA, <b class="pub-me">Aslam MA</b>, &hellip; &middot; In <em>Fate of Microplastics in Wastewater Treatment Plants</em>, CRC Press</div>
+              </div>
+              <a href="https://www.routledge.com/Fate-of-Microplastics-in-Wastewater-Treatment-Plants-Occurrence-Identification-Potential-Factors-and-Future-Perspectives/Singh-Jayaswal-Yadav-Maharjan/p/book/9781032538778" target="_blank" rel="noopener">Book <i class="bi bi-box-arrow-up-right"></i></a>
+            </li>
+            <li>
+              <span class="chapter-year">2023</span>
+              <div>
+                <div class="pub-title">Biotechnological techniques for sustainable waste management</div>
+                <div class="pub-authors">Farid M, Farid S, <b class="pub-me">Aslam MA</b>, &hellip; &middot; In <em>Climate-Resilient Agriculture, Vol. 2</em>, Springer, 689&ndash;712</div>
+              </div>
+              <a href="https://doi.org/10.1007/978-3-031-37428-9_30" target="_blank" rel="noopener">DOI <i class="bi bi-box-arrow-up-right"></i></a>
+            </li>
+            <li>
+              <span class="chapter-year">2023</span>
+              <div>
+                <div class="pub-title">Principles and applications of environmental biotechnology for sustainable future</div>
+                <div class="pub-authors">Farid M, Ahsan A, &hellip; Ali S, <b class="pub-me">Aslam MA</b> &middot; In <em>Climate-Resilient Agriculture, Vol. 1</em>, Springer, 751&ndash;775</div>
+              </div>
+              <a href="https://doi.org/10.1007/978-3-031-37424-1_34" target="_blank" rel="noopener">DOI <i class="bi bi-box-arrow-up-right"></i></a>
+            </li>
+          </ul>
+        </div>
+
+        <p class="text-center mt-4 mb-0">
+          <a href="https://www.researchgate.net/profile/Muhammad-Arslan-Aslam" target="_blank" rel="noopener">Full profile on ResearchGate <i class="bi bi-arrow-right"></i></a>
+        </p>
       </div>
     </section>
 
