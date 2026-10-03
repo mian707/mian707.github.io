@@ -183,7 +183,7 @@
       position: absolute;
       inset: 0;
       pointer-events: none;
-      background: radial-gradient(ellipse 125% 95% at 50% 45%, rgba(2,8,18,0) 42%, rgba(2,8,18,0.48) 100%);
+      background: radial-gradient(ellipse 125% 95% at 50% 45%, rgba(2,8,18,0) 42%, rgba(2,8,18,0.18) 100%);
     }
 
     /* Caption bands: hidden until the scrub hero is actually live. */
@@ -206,13 +206,13 @@
       inset: -4%;
       pointer-events: none;
       opacity: calc(0.25 + 0.75 * var(--k, 1));
-      background: radial-gradient(ellipse 62% 58% at 26% 50%, rgba(2,6,12,0.58) 0%, rgba(2,6,12,0.38) 44%, rgba(2,6,12,0) 72%);
+      background: radial-gradient(ellipse 62% 58% at 26% 50%, rgba(2,6,12,0.36) 0%, rgba(2,6,12,0.16) 44%, rgba(2,6,12,0) 72%);
     }
     .band.at-bottom::before {
-      background: radial-gradient(ellipse 64% 46% at 26% 78%, rgba(2,6,12,0.58) 0%, rgba(2,6,12,0.38) 44%, rgba(2,6,12,0) 74%);
+      background: radial-gradient(ellipse 64% 46% at 26% 78%, rgba(2,6,12,0.36) 0%, rgba(2,6,12,0.16) 44%, rgba(2,6,12,0) 74%);
     }
     .band.at-centre::before { background: radial-gradient(ellipse 70% 58% at 50% 50%, rgba(2,6,12,0.60) 0%, rgba(2,6,12,0.40) 46%, rgba(2,6,12,0) 74%); }
-    .band.at-centre.at-bottom::before { background: radial-gradient(ellipse 78% 48% at 50% 84%, rgba(2,6,12,0.62) 0%, rgba(2,6,12,0.42) 44%, rgba(2,6,12,0) 76%); }
+    .band.at-centre.at-bottom::before { background: radial-gradient(ellipse 78% 48% at 50% 84%, rgba(2,6,12,0.38) 0%, rgba(2,6,12,0.18) 44%, rgba(2,6,12,0) 76%); }
     .band-inner { position: relative; max-width: 660px; padding: 0 6vw; }
     .band .btn { text-shadow: none; pointer-events: auto; }
     .band a { pointer-events: auto; }
@@ -437,6 +437,18 @@
     .stat-card .hex-icon { width: 58px; height: 58px; flex-basis: 58px; }
     .stat-number { font-size: 2rem; line-height: 1; font-weight: 900; color: var(--accent); }
 
+    section[id] { scroll-margin-top: 90px; }
+    .research-card, .publication-card, .social-hex, .btn {
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+    }
+    .research-card:hover, .publication-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(34,244,223,0.65);
+    }
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 5px;
+    }
     .publication-card {
       padding: 1.35rem;
       height: 100%;
@@ -511,6 +523,77 @@
       .about-fish { position: relative; left: auto; top: auto; width: 210px; margin: 1.5rem auto; }
       .contact-band { background-size: 280px auto; background-position: center bottom; padding-bottom: 13rem !important; }
     }
+
+    .phd-research { padding: 3rem 4vw; }
+    .phd-heading { max-width: 760px; }
+    .phd-layout { display: block; }
+    .phd-reading { padding: clamp(1.3rem, 2.4vw, 2.4rem); }
+    .phd-project + .phd-project { border-top: 1px solid var(--line); margin-top: 2rem; padding-top: 2rem; }
+    .phd-project h3 { font-size: clamp(1.3rem, 2.05vw, 2rem); line-height: 1.22; font-weight: 750; letter-spacing: -.025em; }
+    .phd-project h4 { font-size: .75rem; text-transform: uppercase; letter-spacing: .1em; color: var(--accent); margin: 1.3rem 0 .5rem; }
+    .phd-question { font-size: 1.03rem; line-height: 1.6; }
+    .phd-tags { font-size: .78rem; color: var(--accent); line-height: 1.7; margin: 1.3rem 0 0; }
+    .phd-orbit, .phd-progress { display: none; }
+    .phd-research.spiral-live { height: 440vh; padding: 0 4vw; }
+    .spiral-live .phd-stage { position: sticky; top: 84px; height: calc(100vh - 84px); display: flex; flex-direction: column; justify-content: center; gap: 1rem; }
+    .spiral-live .phd-layout { display: grid; grid-template-columns: 1.05fr 1fr; align-items: center; gap: 2vw; }
+    .spiral-live .phd-reading { min-height: 420px; }
+    .spiral-live .phd-project + .phd-project { border: 0; margin: 0; padding: 0; }
+    .spiral-live .phd-project[hidden] { display: none; }
+    .spiral-live .phd-orbit { display: block; position: relative; aspect-ratio: 1; width: min(100%, 540px); margin: auto; }
+    .phd-lines { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .phd-track { fill: none; stroke: url(#phd-gradient); stroke-width: 1.5; opacity: .55; }
+    .phd-core { fill: rgba(4,22,34,.86); stroke: rgba(34,244,223,.4); }
+    .phd-centre { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); text-align: center; }
+    .phd-centre strong { display: block; color: var(--accent); font-size: 1.4rem; }
+    .phd-centre span { display: block; color: var(--muted); font-size: .74rem; margin-top: .4rem; }
+    .phd-node { position: absolute; width: 118px; min-height: 82px; padding: .65rem; border-radius: 18px; border: 1px solid rgba(89,168,255,.55); color: var(--text); background: #071d2e; transform: translate(-50%,-50%); box-shadow: 0 10px 28px rgba(0,0,0,.22); }
+    .phd-node span { display: block; font-size: 1.25rem; font-weight: 800; color: var(--accent); }
+    .phd-node small { display: block; font-size: .7rem; line-height: 1.3; }
+    .phd-node[aria-pressed="true"] { border-color: var(--accent); background: #0b3d43; box-shadow: 0 0 30px rgba(34,244,223,.2); }
+    .spiral-live .phd-progress { display: flex; align-items: center; gap: 1rem; font-size: .75rem; color: var(--muted); }
+    .phd-progress div { height: 3px; background: rgba(255,255,255,.12); flex: 1; }
+    .phd-progress i { display: block; height: 100%; background: var(--accent); transform-origin: left; }
+    .phd-progress b { color: var(--accent); font-variant-numeric: tabular-nums; }
+    @media(max-height: 780px) { .spiral-live .phd-stage { gap: .4rem; } .spiral-live .phd-heading .muted { display: none; } .spiral-live .phd-reading { min-height: 350px; padding: 1.3rem; } .spiral-live .phd-project h3 { font-size: 1.4rem; } .spiral-live .phd-orbit { max-width: 400px; } }
+
+    /* Perspective gives the cards real depth around a vertical helix. */
+    .spiral-live .phd-orbit { height: min(58vh, 540px); aspect-ratio: auto; max-width: 540px; perspective: 1100px; perspective-origin: 50% 50%; isolation: isolate; }
+    .phd-centre, .phd-core { display: none; }
+    .phd-lines { height: 100%; overflow: hidden; }
+    .phd-track { stroke-width: 2; opacity: .36; }
+    .phd-node { left: 50%; top: 50%; width: 216px; height: 194px; min-height: 0; padding: 1rem 1.2rem; text-align: left; border-radius: 20px; transform-style: preserve-3d; backface-visibility: hidden; background: linear-gradient(140deg,#12394b,#051523); will-change: transform; }
+    .phd-card-top { display: flex; align-items: center; justify-content: space-between; }
+    .phd-card-top span { font-size: 1.1rem; }
+    .phd-card-top small { font-size: .6rem; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); }
+    .phd-illustration { display: block; height: 105px; width: 100%; fill: rgba(34,244,223,.07); stroke: #65e9df; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .phd-node strong { display: block; font-size: .85rem; line-height: 1.3; }
+    .phd-node[aria-pressed="true"] { background: linear-gradient(140deg,#15505a,#071f31); box-shadow: 0 18px 45px rgba(0,0,0,.35),0 0 35px rgba(34,244,223,.12); }
+    @media(max-height:780px) { .phd-node { width: 188px; height: 168px; padding: .75rem 1rem; } .phd-illustration { height: 84px; } }
+
+    /* Research exhibition: a quiet stage, illuminated specimens and two orbital rails. */
+    .phd-research { background: radial-gradient(ellipse at 78% 45%, #123847 0%, #071923 45%, #06121d 90%); border-block: 1px solid rgba(125,214,224,.15); }
+    .spiral-live .phd-heading { max-width: none; }
+    .spiral-live .phd-layout { grid-template-columns: 1fr 1.12fr; gap: 4vw; }
+    .spiral-live .phd-reading { background: transparent; border: 0; box-shadow: none; backdrop-filter: none; padding-left: 0; }
+    .spiral-live .phd-orbit { width: 100%; max-width: 660px; height: min(62vh,620px); overflow: hidden; mask-image: linear-gradient(transparent,black 12%,black 88%,transparent); }
+    .phd-orbit::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center,rgba(74,202,217,.12),transparent 65%); border-radius: 50%; }
+    .phd-track { stroke-width: 1.2; opacity: .65; }
+    .phd-track-secondary { fill: none; stroke: #658ba9; stroke-width: 1; opacity: .25; }
+    .phd-node { width: 270px; height: 252px; border-radius: 14px; padding: 1.2rem; border-color: rgba(147,209,226,.28); background: linear-gradient(150deg,#15394a,#091b29 75%); box-shadow: 0 25px 45px #0008, inset 0 1px #ffffff15; }
+    .phd-node[aria-pressed="true"] { background: linear-gradient(150deg,#1b4c5b,#0b2333 75%); border-color: #83dfda; box-shadow: 0 28px 55px #0009,0 0 45px #3acfc51a,inset 0 1px #ffffff30; }
+    .phd-card-top { border-bottom: 1px solid #ffffff19; padding-bottom: .55rem; }
+    .phd-card-top span { font-size: .82rem; letter-spacing: .12em; }
+    .phd-node strong { font-size: 1rem; font-weight: 600; }
+    .phd-illustration { height: 152px; stroke-width: 1.3; fill: none; }
+    .phd-illustration .solid { fill: #62ded6; stroke: none; }
+    .phd-illustration .dim { stroke: #6794ae; }
+    .phd-illustration text { fill: #a3c5d4; stroke: none; font: 5px monospace; letter-spacing: .5px; }
+    .phd-project:not([hidden]) { animation: research-arrive .4s ease-out; }
+    @keyframes research-arrive { from { opacity: .2; transform: translateY(9px); } to { opacity: 1; transform: none; } }
+    .phd-node:focus-visible { outline: 3px solid white; outline-offset: 5px; }
+    @media(max-height:780px) { .phd-node { width: 236px; height: 214px; padding: 1rem; } .phd-illustration { height: 120px; } }
+    @media(prefers-reduced-motion:reduce) { .phd-project:not([hidden]) { animation: none; } }
   </style>
 </head>
 
@@ -570,25 +653,25 @@
 
         <div class="band" data-band="0.18,0.41">
           <div class="band-inner">
-            <div class="band-kicker">The problem</div>
-            <h2 class="band-title">Bisphenols, phthalates and plastic additives keep reaching our waterways.</h2>
-            <p class="band-body">They enter use faster than conventional testing can characterise what they do.</p>
+            <div class="band-kicker">My doctoral research</div>
+            <h2 class="band-title">Assessing endocrine disruptors through their mechanisms.</h2>
+            <p class="band-body">In NeXED DC4 at Karolinska Institutet, I investigate how mechanistic evidence can support endocrine disruptor assessment for human health.</p>
           </div>
         </div>
 
         <div class="band at-bottom" data-band="0.39,0.62">
           <div class="band-inner">
-            <div class="band-kicker">The model</div>
-            <h2 class="band-title">The zebrafish embryo makes those effects visible.</h2>
-            <p class="band-body">Transparent, fast-developing, and a vertebrate — in vivo evidence in days rather than years.</p>
+            <div class="band-kicker">The zebrafish project</div>
+            <h2 class="band-title">Linking zebrafish responses to endocrine mechanisms.</h2>
+            <p class="band-body">My project explores zebrafish mechanistic data, including transcriptomics, and their relevance across species for human health assessment.</p>
           </div>
         </div>
 
         <div class="band at-bottom" data-band="0.60,0.83">
           <div class="band-inner">
-            <div class="band-kicker">What I measure</div>
-            <h2 class="band-title">Development<br>Cardiotoxicity<br>Neuroactivity</h2>
-            <p class="band-body">Hatching, malformations, heart rate and behavioural response — read against predicted baseline toxicity to separate narcosis from a specific mode of action.</p>
+            <div class="band-kicker">Connecting the evidence</div>
+            <h2 class="band-title">From molecular events<br>to health effects.</h2>
+            <p class="band-body">Adverse outcome pathways provide the framework for integrating computational, experimental and human evidence, linking early mechanistic events to health effects.</p>
           </div>
         </div>
 
@@ -633,9 +716,10 @@
           <div class="row align-items-center g-4">
             <div class="col-lg-5">
               <h2 class="section-title"><i class="bi bi-person-fill me-2 text-info"></i>About Me</h2>
-              <p>I am a PhD researcher in environmental toxicology with a strong focus on ecotoxicology, zebrafish toxicology, and alternative methods for chemical safety assessment.</p>
-              <p>My research combines computational toxicology, molecular interpretation, and in vivo models to evaluate toxic effects of environmental contaminants and plastic additives.</p>
-              <a class="btn btn-ghost mt-2" href="journey.html">Know More About Me <i class="bi bi-arrow-right ms-2"></i></a>
+              <p>I am a doctoral researcher in NeXED DC4 at the Institute of Environmental Medicine, Karolinska Institutet, Sweden. My research focuses on mechanism-based assessment of endocrine disruptors for human health.</p>
+              <p>I explore zebrafish mechanistic evidence, including transcriptomics, within adverse outcome pathways. This work combines experimental and computational approaches with literature-based analysis and considers cross-species extrapolation and regulatory application.</p>
+              <a class="btn btn-ghost mt-2" href="journey.html">My Scientific Journey <i class="bi bi-arrow-right ms-2"></i></a>
+            <a class="d-inline-block ms-3 mt-3" href="https://www.uantwerpen.be/en/projects/nexed/research/individual-research-projects/dc4/" target="_blank" rel="noopener">NeXED DC4 project <i class="bi bi-box-arrow-up-right"></i></a>
             </div>
             <div class="col-lg-3"><div class="about-fish"></div></div>
             <div class="col-lg-4">
@@ -650,25 +734,42 @@
       </div>
     </section>
 
-    <section id="research" class="pt-4">
-      <div class="container-fluid px-lg-5">
-        <h2 class="section-title centered text-center" data-aos="fade-up">Research Areas</h2>
-        <div class="row g-4 mt-3">
-          <div class="col-md-6 col-lg" data-aos="fade-up"><div class="glass research-card"><div class="icon"><i class="bi bi-water"></i></div><h5>Zebrafish Toxicology</h5><p class="muted">Developmental toxicity, behavior, and organ-specific endpoints</p></div></div>
-          <div class="col-md-6 col-lg" data-aos="fade-up" data-aos-delay="80"><div class="glass research-card"><div class="icon"><i class="bi bi-bounding-box-circles"></i></div><h5>Environmental Contaminants</h5><p class="muted">Bisphenols, phthalates, additives, and emerging pollutants</p></div></div>
-          <div class="col-md-6 col-lg" data-aos="fade-up" data-aos-delay="160"><div class="glass research-card"><div class="icon"><i class="bi bi-hexagon"></i></div><h5>Molecular Toxicology</h5><p class="muted">Mechanistic interpretation, stress response, and pathway-level effects</p></div></div>
-          <div class="col-md-6 col-lg" data-aos="fade-up" data-aos-delay="240"><div class="glass research-card"><div class="icon"><i class="bi bi-cup-hot"></i></div><h5>Alternative Methods</h5><p class="muted">3Rs principles and replacement-oriented toxicity testing</p></div></div>
-          <div class="col-md-6 col-lg" data-aos="fade-up" data-aos-delay="320"><div class="glass research-card"><div class="icon"><i class="bi bi-shield-check"></i></div><h5>Safer Chemicals</h5><p class="muted">Evidence for sustainable and safer chemical assessment</p></div></div>
+    <section id="research" class="phd-research">
+      <div class="phd-stage">
+        <div class="phd-heading"><div class="band-kicker">NeXED DC4 · Karolinska Institutet</div><h2 class="section-title">My PhD research</h2><p class="muted">Four connected studies, from published evidence to responses across life stages.</p></div>
+        <div class="phd-layout">
+          <div class="phd-reading glass"><article class="phd-project" id="phd-project-1" aria-labelledby="phd-title-1">
+ <div class="band-kicker">Study 01 / 04 · Literature evidence</div>
+ <h3 id="phd-title-1">Exploring AI-assisted screening and data extraction from toxicology literature: the case of bisphenols</h3>
+ <h4>Research question</h4><p class="phd-question">How can AI assist the identification and extraction of relevant evidence from bisphenol toxicology studies?</p>
+ <p class="muted">This study explores AI-assisted literature screening and structured data extraction. The focus is on how extracted evidence can be checked against the source literature and organised for toxicological assessment.</p><p class="phd-tags">Literature screening · Data extraction · Evidence evaluation</p></article><article class="phd-project" id="phd-project-2" aria-labelledby="phd-title-2">
+ <div class="band-kicker">Study 02 / 04 · Mechanistic framework</div>
+ <h3 id="phd-title-2">Adverse outcome networks as a framework to assess endocrine disruptors: key events and bisphenol classification</h3>
+ <h4>Research question</h4><p class="phd-question">How can key events within adverse outcome networks support the assessment and classification of bisphenols?</p>
+ <p class="muted">This study examines how mechanistic evidence can be organised into connected key events and adverse outcomes. It explores the role of these relationships in comparing bisphenols and supporting endocrine disruptor assessment.</p><p class="phd-tags">Adverse outcome networks · Key events · Bisphenol classification</p></article><article class="phd-project" id="phd-project-3" aria-labelledby="phd-title-3">
+ <div class="band-kicker">Study 03 / 04 · Embryo responses</div>
+ <h3 id="phd-title-3">Transcriptomic assessment of bisphenols in the zebrafish embryo toxicity assay</h3>
+ <h4>Research question</h4><p class="phd-question">What can transcriptomic responses tell us about the mechanisms associated with bisphenol exposure in zebrafish embryos?</p>
+ <p class="muted">This study focuses on gene-expression responses to bisphenols in the zebrafish embryo model. It explores how molecular responses can inform mechanistic interpretation and connect with the broader adverse outcome network.</p><p class="phd-tags">Transcriptomics · Zebrafish embryos · Mechanistic interpretation</p></article><article class="phd-project" id="phd-project-4" aria-labelledby="phd-title-4">
+ <div class="band-kicker">Study 04 / 04 · Adult responses</div>
+ <h3 id="phd-title-4">Long-term effects of bisphenols in the adult zebrafish assay</h3>
+ <h4>Research question</h4><p class="phd-question">How can studies in adult zebrafish extend the assessment of bisphenol effects beyond the embryo stage?</p>
+ <p class="muted">This study examines long-term effects of bisphenols in the adult zebrafish model. Its focus complements the embryo work by considering effects at a later life stage and their relevance to endocrine disruptor assessment.</p><p class="phd-tags">Adult zebrafish · Long-term effects · Endocrine assessment</p></article></div>
+          <div class="phd-orbit" aria-label="Explore the four doctoral studies">
+            <svg class="phd-lines" viewBox="0 0 600 600" aria-hidden="true"><defs><linearGradient id="phd-gradient"><stop stop-color="#59a8ff"/><stop offset="1" stop-color="#22f4df"/></linearGradient></defs><path class="phd-track"/><path class="phd-track-secondary"/><circle cx="300" cy="300" r="92" class="phd-core"/></svg>
+            <div class="phd-centre"><strong>NeXED</strong><span>Endocrine disruptor<br>assessment</span></div><button type="button" class="phd-node" data-project="0" aria-label="Show study 1: Literature evidence" aria-controls="phd-project-1"><div class="phd-card-top"><span>01</span><small>Doctoral study</small></div><svg class="phd-illustration" viewBox="0 0 200 145" aria-hidden="true"><rect class="dim" x="20" y="23" width="68" height="91" rx="4"/><rect x="31" y="14" width="68" height="91" rx="4"/><path d="M43 31h43M43 39h34M43 55h43M43 63h43M43 71h28M43 87h24M107 59h17m-5-4 5 4-5 4"/><rect x="133" y="31" width="48" height="66" rx="5"/><path d="M142 46h29M142 58h29M142 70h17"/><circle class="solid" cx="157" cy="87" r="3"/><text x="35" y="128">SOURCE LITERATURE</text><text x="130" y="111">STRUCTURED EVIDENCE</text></svg><strong>Literature evidence</strong></button><button type="button" class="phd-node" data-project="1" aria-label="Show study 2: Mechanistic framework" aria-controls="phd-project-2"><div class="phd-card-top"><span>02</span><small>Doctoral study</small></div><svg class="phd-illustration" viewBox="0 0 200 145" aria-hidden="true"><path class="dim" d="M27 74 72 35 121 55 170 28M27 74l45 35 49-54 49 48M72 35v74M121 55v53M72 109l49-1 49-5"/><circle cx="27" cy="74" r="10"/><circle class="solid" cx="27" cy="74" r="2"/><circle cx="72" cy="35" r="12"/><circle class="solid" cx="72" cy="35" r="2"/><circle cx="72" cy="109" r="10"/><circle class="solid" cx="72" cy="109" r="2"/><circle cx="121" cy="55" r="14"/><circle class="solid" cx="121" cy="55" r="2"/><circle cx="121" cy="108" r="8"/><circle class="solid" cx="121" cy="108" r="2"/><circle cx="170" cy="28" r="9"/><circle class="solid" cx="170" cy="28" r="2"/><circle cx="170" cy="103" r="12"/><circle class="solid" cx="170" cy="103" r="2"/><text x="15" y="137">MOLECULAR EVENTS → CONNECTED OUTCOMES</text></svg><strong>Mechanistic framework</strong></button><button type="button" class="phd-node" data-project="2" aria-label="Show study 3: Embryo responses" aria-controls="phd-project-3"><div class="phd-card-top"><span>03</span><small>Doctoral study</small></div><svg class="phd-illustration" viewBox="0 0 200 145" aria-hidden="true"><path d="M35 21c63 22-18 61 45 92M80 21c-63 22 18 61-45 92M38 27h38M46 43h22M37 60h41M47 78h22M38 99h37"/><path class="dim" d="M106 20v95M106 115h77"/><rect x="113" y="28" width="8" height="8" fill="#275b75" stroke="none"/><rect x="125" y="28" width="8" height="8" fill="#6893ac" stroke="none"/><rect x="137" y="28" width="8" height="8" fill="#aa8670" stroke="none"/><rect x="149" y="28" width="8" height="8" fill="#50bfb9" stroke="none"/><rect x="161" y="28" width="8" height="8" fill="#275b75" stroke="none"/><rect x="173" y="28" width="8" height="8" fill="#6893ac" stroke="none"/><rect x="113" y="40" width="8" height="8" fill="#50bfb9" stroke="none"/><rect x="125" y="40" width="8" height="8" fill="#275b75" stroke="none"/><rect x="137" y="40" width="8" height="8" fill="#6893ac" stroke="none"/><rect x="149" y="40" width="8" height="8" fill="#aa8670" stroke="none"/><rect x="161" y="40" width="8" height="8" fill="#50bfb9" stroke="none"/><rect x="173" y="40" width="8" height="8" fill="#275b75" stroke="none"/><rect x="113" y="52" width="8" height="8" fill="#aa8670" stroke="none"/><rect x="125" y="52" width="8" height="8" fill="#50bfb9" stroke="none"/><rect x="137" y="52" width="8" height="8" fill="#275b75" stroke="none"/><rect x="149" y="52" width="8" height="8" fill="#6893ac" stroke="none"/><rect x="161" y="52" width="8" height="8" fill="#aa8670" stroke="none"/><rect x="173" y="52" width="8" height="8" fill="#50bfb9" stroke="none"/><rect x="113" y="64" width="8" height="8" fill="#6893ac" stroke="none"/><rect x="125" y="64" width="8" height="8" fill="#aa8670" stroke="none"/><rect x="137" y="64" width="8" height="8" fill="#50bfb9" stroke="none"/><rect x="149" y="64" width="8" height="8" fill="#275b75" stroke="none"/><rect x="161" y="64" width="8" height="8" fill="#6893ac" stroke="none"/><rect x="173" y="64" width="8" height="8" fill="#aa8670" stroke="none"/><rect x="113" y="76" width="8" height="8" fill="#275b75" stroke="none"/><rect x="125" y="76" width="8" height="8" fill="#6893ac" stroke="none"/><rect x="137" y="76" width="8" height="8" fill="#aa8670" stroke="none"/><rect x="149" y="76" width="8" height="8" fill="#50bfb9" stroke="none"/><rect x="161" y="76" width="8" height="8" fill="#275b75" stroke="none"/><rect x="173" y="76" width="8" height="8" fill="#6893ac" stroke="none"/><rect x="113" y="88" width="8" height="8" fill="#50bfb9" stroke="none"/><rect x="125" y="88" width="8" height="8" fill="#275b75" stroke="none"/><rect x="137" y="88" width="8" height="8" fill="#6893ac" stroke="none"/><rect x="149" y="88" width="8" height="8" fill="#aa8670" stroke="none"/><rect x="161" y="88" width="8" height="8" fill="#50bfb9" stroke="none"/><rect x="173" y="88" width="8" height="8" fill="#275b75" stroke="none"/><text x="23" y="133">GENE EXPRESSION</text><text x="112" y="133">SCHEMATIC</text></svg><strong>Embryo transcriptomics</strong></button><button type="button" class="phd-node" data-project="3" aria-label="Show study 4: Adult responses" aria-controls="phd-project-4"><div class="phd-card-top"><span>04</span><small>Doctoral study</small></div><svg class="phd-illustration" viewBox="0 0 200 145" aria-hidden="true"><ellipse class="dim" cx="98" cy="67" rx="83" ry="46"/><path d="M34 67c26-32 72-32 102 0-30 32-76 32-102 0Zm102 0 27-22v44ZM78 42l15-15 15 16M78 91l17 16 11-16M52 56c23-8 47-8 66 0M49 65h77M52 74c23 8 47 8 66 0"/><circle class="solid" cx="45" cy="62" r="2"/><path class="dim" d="M30 122h134"/><circle class="solid" cx="31" cy="122" r="2"/><circle class="solid" cx="96" cy="122" r="2"/><circle class="solid" cx="164" cy="122" r="2"/><text x="30" y="138">EXPOSURE → LATER-LIFE RESPONSES</text></svg><strong>Adult zebrafish</strong></button>
+          </div>
         </div>
-
-        <div class="row g-3 mt-4 justify-content-center">
+        <div class="phd-progress" aria-hidden="true"><span>Scroll down through the research helix</span><div><i></i></div><b>01 / 04</b></div>
+      </div>
+    </section>
+    <section class="pt-4 pb-4" aria-label="Research experience"><div class="container-fluid px-lg-5">        <div class="row g-3 mt-4 justify-content-center">
           <div class="col-md-6 col-lg-3"><div class="glass stat-card"><span class="hex-icon"><i class="bi bi-clock-history"></i></span><div><div class="stat-number">5+</div><span>Years of research experience</span></div></div></div>
           <div class="col-md-6 col-lg-3"><div class="glass stat-card"><span class="hex-icon"><i class="bi bi-file-earmark-text"></i></span><div><div class="stat-number">6</div><span>Publications</span></div></div></div>
           <div class="col-md-6 col-lg-3"><div class="glass stat-card"><span class="hex-icon"><i class="bi bi-people"></i></span><div><div class="stat-number">12+</div><span>Collaborations</span></div></div></div>
           <div class="col-md-6 col-lg-3"><div class="glass stat-card"><span class="hex-icon"><i class="bi bi-easel"></i></span><div><div class="stat-number">3</div><span>Conference presentations</span></div></div></div>
         </div>
-      </div>
-    </section>
+</div></section>
 
     <section id="assays">
       <div class="container">
@@ -854,6 +955,96 @@
       update();
     })();
 
+
+    /* The static articles are the default. Enhancement pins a readable panel beside
+       a projected spiral, with buttons as a keyboard-accessible alternative to scroll. */
+    (() => {
+      const section = document.getElementById('research');
+      const articles = [...section.querySelectorAll('.phd-project')];
+      const nodes = [...section.querySelectorAll('.phd-node')];
+      const track = section.querySelector('.phd-track');
+      const media = matchMedia('(min-width: 1100px) and (min-height: 640px)');
+      let enabled = false, shown = 0, target = 0, raf = null, last = 0, active = -1;
+      const clamp = x => Math.max(0, Math.min(1, x));
+      function progress() {
+        const distance = section.offsetHeight - innerHeight;
+        return distance > 0 ? clamp((scrollY - section.offsetTop) / distance) : 0;
+      }
+      function helix(t, phase) {
+        const delta = t - phase;
+        const angle = delta * Math.PI * .82;
+        return {x: Math.sin(angle)*190, y: delta*285, z: Math.cos(angle)*170, angle};
+      }
+      function paint(p) {
+        const phase = Math.max(0, Math.min(3, p*4-.5));
+        const orbit = section.querySelector('.phd-orbit');
+        const height = orbit.clientHeight || 540;
+        const width = orbit.clientWidth || 540;
+        track.parentElement.setAttribute('viewBox', '0 0 ' + width + ' ' + height);
+        let path = '', secondary = '';
+        for (let j=0; j<=180; j++) {
+          const t=-.7+j/180*4.4;
+          const q = helix(t,phase);
+          const opposite=helix(t+1/.82,phase);
+          opposite.y=q.y;
+          const f2=1100/(1100-opposite.z);
+          secondary += (j ? 'L' : 'M') + (width/2+opposite.x*f2).toFixed(2) + ',' + (height/2+opposite.y*f2).toFixed(2);
+          const f = 1100/(1100-q.z);
+          path += (j ? 'L' : 'M') + (width/2+q.x*f).toFixed(2) + ',' + (height/2+q.y*f).toFixed(2);
+        }
+        track.setAttribute('d',path);
+        section.querySelector('.phd-track-secondary').setAttribute('d',secondary);
+        nodes.forEach((node,i) => {
+          const q=helix(i,phase);
+          node.style.left='50%'; node.style.top='50%';
+          node.style.transform='translate(-50%,-50%) translate3d('+q.x+'px,'+q.y+'px,'+q.z+'px) rotateY('+(Math.sin(q.angle)*.65)+'rad) rotateZ('+(-Math.sin(q.angle)*3)+'deg)';
+          node.style.opacity=String(Math.max(.08,1-Math.abs(i-phase)*.42));
+          node.style.pointerEvents=Math.abs(i-phase)<1.6?'auto':'none';
+        });
+        const index = Math.min(3, Math.floor(p * 4));
+        if (index !== active) {
+          active = index;
+          articles.forEach((article,i) => article.hidden = i !== index);
+          nodes.forEach((node,i) => node.setAttribute('aria-pressed', String(i === index)));
+          section.querySelector('.phd-progress b').textContent = String(index+1).padStart(2,'0') + ' / 04';
+        }
+        section.querySelector('.phd-progress i').style.transform = 'scaleX(' + p + ')';
+      }
+      function tick(now) {
+        if (!enabled || document.hidden) { raf=null; last=0; return; }
+        const dt = Math.min(64, now - (last || now - 16.667)); last=now;
+        shown += (target-shown) * (1-Math.exp(-dt/110));
+        if (Math.abs(target-shown)<.0004) { shown=target; raf=null; last=0; }
+        else raf=requestAnimationFrame(tick);
+        paint(shown);
+      }
+      function scroll() {
+        if (!enabled) return;
+        target=progress();
+        if (raf===null && !document.hidden) raf=requestAnimationFrame(tick);
+      }
+      function configure() {
+        enabled=media.matches && !prefersReducedMotion.matches;
+        section.classList.toggle('spiral-live',enabled);
+        if (raf!==null) cancelAnimationFrame(raf);
+        raf=null; last=0; active=-1;
+        if (enabled) { shown=target=progress(); paint(shown); }
+        else articles.forEach(article => article.hidden=false);
+        if (window.AOS) AOS.refresh();
+      }
+      nodes.forEach((node,i) => node.addEventListener('click', () => {
+        if (!enabled) return;
+        const p=(i+.5)/4;
+        window.scrollTo({top:section.offsetTop+p*(section.offsetHeight-innerHeight),behavior:'smooth'});
+      }));
+      addEventListener('scroll',scroll,{passive:true});
+      addEventListener('resize',configure);
+      document.addEventListener('visibilitychange',scroll);
+      media.addEventListener('change',configure);
+      prefersReducedMotion.addEventListener('change',configure);
+      configure();
+    })();
+
     /* ---------- Scroll-scrubbed hero ----------
        Scroll position through the pinned hero drives which frame of the zebrafish
        shot is on screen. Frames are pre-decoded images drawn to a canvas, so there
@@ -866,8 +1057,8 @@
       const ring   = hero.querySelector('.hero-ring circle');
       const ctx    = canvas.getContext('2d', { alpha: false });
 
-      const FRAME_COUNT = 96;
-      const frameUrl = i => 'assets/hero/f' + String(i).padStart(3, '0') + '.webp';
+      const FRAME_COUNT = 240;
+      const frameUrl = i => 'assets/hero-1002/f' + String(i).padStart(3, '0') + '.webp';
       const images = new Array(FRAME_COUNT);
 
       const bands = [...hero.querySelectorAll('.band')].map(el => {
@@ -898,20 +1089,13 @@
         ctx.globalAlpha = 1;
       }
 
-      /* Cross-dissolve between the two neighbouring frames instead of snapping to
-         the nearest one. 96 stills then read as continuous motion rather than a
-         flipbook, which is what actually makes the scrub feel smooth. */
+      /* Use every source frame without blending moving edges into double images. */
       function drawFrame(index, force) {
-        const at = clamp(index, 0, FRAME_COUNT - 1);
-        if (!force && Math.abs(at - shownFrame) < 0.01) return;
-        const lo = Math.floor(at);
-        const hi = Math.min(FRAME_COUNT - 1, lo + 1);
-        const base = images[lo];
-        if (!base) return;
+        const at = clamp(Math.round(index), 0, FRAME_COUNT - 1);
+        if (!force && at === shownFrame) return;
+        if (!images[at]) return;
         shownFrame = at;
-        paint(base, 1);                       // opaque base fully covers the previous frame
-        const mix = at - lo;
-        if (hi !== lo && mix > 0.01 && images[hi]) paint(images[hi], mix);
+        paint(images[at], 1);
       }
 
       function sizeCanvas() {
@@ -954,9 +1138,14 @@
       let target = 0, shown = 0, rafId = null, lastTick = 0, onScreen = true;
 
       function tick(now) {
-        const dt = Math.min(100, now - (lastTick || now));
+        if (!onScreen || document.hidden) {
+          rafId = null;
+          lastTick = 0;
+          return;
+        }
+        const dt = Math.min(64, now - (lastTick || now - 16.667));
         lastTick = now;
-        shown += (target - shown) * (1 - Math.pow(1 - 0.12, dt / 16.667));
+        shown += (target - shown) * (1 - Math.pow(1 - 0.10, dt / 16.667));
         if (Math.abs(target - shown) < 0.0002) {
           shown = target;
           rafId = null;
@@ -1012,7 +1201,7 @@
       }
 
       loadFrames().then(failedCount => {
-        if (failedCount > FRAME_COUNT * 0.1) {   // too broken to scrub: stay still
+        if (failedCount > 0) {   // too broken to scrub: stay still
           hero.classList.add('no-video');
           return;
         }
